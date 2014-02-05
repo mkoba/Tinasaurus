@@ -28,7 +28,8 @@ public final class R {
         public static final int logo=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f090004;
+        public static final int action_settings=0x7f090005;
+        public static final int button1=0x7f090004;
         public static final int groupname=0x7f090003;
         public static final int login=0x7f090001;
         public static final int logo=0x7f090000;
@@ -36,6 +37,7 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
+        public static final int activity_signup=0x7f030001;
     }
     public static final class menu {
         public static final int main=0x7f080000;
