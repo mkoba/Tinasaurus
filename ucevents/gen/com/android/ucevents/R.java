@@ -43,6 +43,7 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
+        public static final int events=0x7f050008;
         public static final int forgetpass=0x7f050005;
         public static final int groupname=0x7f050006;
         public static final int hello_world=0x7f050002;

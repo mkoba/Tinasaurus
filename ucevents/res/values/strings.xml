@@ -10,4 +10,5 @@
 	<string name="groupname">by Seriousaurus</string>
 	<string name="ucevents">UCevents</string>
 	<color name="blue">#2F4963</color>
+	<string name="events">Events</string>
 </resources>
