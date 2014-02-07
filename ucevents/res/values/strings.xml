@@ -11,4 +11,11 @@
 	<string name="ucevents">UCevents</string>
 	<color name="blue">#2F4963</color>
 	<string name="events">Events</string>
+	<string name="back">Back</string>
+	<string name="first_name">First Name</string>
+	<string name="last_name">Last Name</string>
+	<string name="password">Password</string>
+	<string name="confirm_password">Confirm Password</string>
+	<string name="email">UCSD email</string>
+	<string name="email_login">Email</string>
 </resources>
