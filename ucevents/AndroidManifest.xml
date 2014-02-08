@@ -26,6 +26,22 @@
             android:name="com.android.ucevents.signupActivity"
             android:label="signup" >
         </activity>
+        <activity
+            android:name="com.ucevents.login.loginActivity"
+            android:label="login" >
+        </activity>
+		<activity
+            android:name="com.ucevents.events.eventsActivity"
+            android:label="events" >
+        </activity>        
+        <activity
+            android:name="com.ucevents.events.categoryEventsActivity"
+            android:label="categoryEvents" >
+        </activity>
+         <activity
+            android:name="com.ucevents.events.allEventsActivity"
+            android:label="allEvents" >
+        </activity>
     </application>
 
 </manifest>

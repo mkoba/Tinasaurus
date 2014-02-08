@@ -38,6 +38,18 @@ public class MainActivity extends Activity {
 				startActivity(i);
 				}
 			});
+		
+		blogin = (Button) findViewById(R.id.login);
+		blogin.setOnClickListener(new OnClickListener() {
+			 
+			//@Override
+			public void onClick(View arg0) {
+		
+				Intent i= new Intent(MainActivity.this, com.ucevents.login.loginActivity.class);
+			
+				startActivity(i);
+				}
+			});
 	}
 
 }
