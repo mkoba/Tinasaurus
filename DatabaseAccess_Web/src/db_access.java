@@ -11,6 +11,7 @@ import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
 
 public class db_access {
 	public static void main(String [] args) throws IOException{
+		//sup dudes
 		AWSCredentials credentials = 
 				new PropertiesCredentials(new File("src/AwsCredentials.properties"));
 		AmazonEC2Client amazonEC2Client = new AmazonEC2Client(credentials);
