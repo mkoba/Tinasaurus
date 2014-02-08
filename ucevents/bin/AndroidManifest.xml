@@ -23,8 +23,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.android.ucevents.signupActivity"
+            android:name="com.ucevents.signup.signupActivity"
             android:label="signup" >
+        </activity>
+        <activity
+            android:name="com.ucevents.tab.Tabs"
+            android:label="tab" >
+        </activity>
+        <activity
+            android:name="com.ucevents.tab.FragEvents"
+            android:label="tabevents" >
+        </activity>
+        <activity
+            android:name="comcom.ucevents.tab.FragProfile"
+                       android:label="tabprof" >
+        </activity>
+        <activity
+            android:name="comcom.ucevents.tab.FragSchedule"
+                      android:label="tabsched" >
+        </activity>
+        <activity
+            android:name="com.ucevents.login.loginActivity"
+            android:label="login" >
+        </activity>
+		<activity
+            android:name="com.ucevents.events.eventsActivity"
+            android:label="events" >
+        </activity>        
+        <activity
+            android:name="com.ucevents.events.categoryEventsActivity"
+            android:label="categoryEvents" >
+        </activity>
+         <activity
+            android:name="com.ucevents.events.allEventsActivity"
+            android:label="allEvents" >
         </activity>
     </application>
 

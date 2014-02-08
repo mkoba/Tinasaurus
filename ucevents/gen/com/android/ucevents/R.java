@@ -28,30 +28,46 @@ public final class R {
         public static final int logo=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f090012;
-        public static final int back=0x7f090010;
-        public static final int button1=0x7f090004;
-        public static final int button2=0x7f090005;
-        public static final int confirmpassword=0x7f09000e;
-        public static final int confirmpasswordinput=0x7f09000f;
-        public static final int email=0x7f090000;
-        public static final int emailinput=0x7f090001;
-        public static final int firstname=0x7f09000a;
-        public static final int firstnameinput=0x7f09000b;
-        public static final int groupname=0x7f090009;
-        public static final int lastname=0x7f09000c;
-        public static final int lastnameinput=0x7f09000d;
-        public static final int login=0x7f090007;
-        public static final int logo=0x7f090006;
-        public static final int password=0x7f090002;
-        public static final int passwordinput=0x7f090003;
-        public static final int signUp=0x7f090008;
-        public static final int signup=0x7f090011;
+        public static final int action_settings=0x7f09001b;
+        public static final int back=0x7f090018;
+        public static final int bloginback=0x7f09000d;
+        public static final int bloginpage=0x7f09000c;
+        public static final int confirmpassword=0x7f090016;
+        public static final int confirmpasswordinput=0x7f090017;
+        public static final int email=0x7f090008;
+        public static final int emailinput=0x7f090009;
+        public static final int firstname=0x7f090012;
+        public static final int firstnameinput=0x7f090013;
+        public static final int groupname=0x7f090011;
+        public static final int ibCareer=0x7f090004;
+        public static final int ibClub=0x7f090005;
+        public static final int ibFood=0x7f090002;
+        public static final int ibOther=0x7f090007;
+        public static final int ibSelectEvent=0x7f090000;
+        public static final int ibSocial=0x7f090006;
+        public static final int ibSport=0x7f090001;
+        public static final int ibStudy=0x7f090003;
+        public static final int lastname=0x7f090014;
+        public static final int lastnameinput=0x7f090015;
+        public static final int login=0x7f09000f;
+        public static final int logo=0x7f09000e;
+        public static final int password=0x7f09000a;
+        public static final int passwordinput=0x7f09000b;
+        public static final int realtabcontent=0x7f09001a;
+        public static final int signUp=0x7f090010;
+        public static final int signup=0x7f090019;
     }
     public static final class layout {
-        public static final int activity_login=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int activity_signup=0x7f030002;
+        public static final int activity_events=0x7f030000;
+        public static final int activity_events_category=0x7f030001;
+        public static final int activity_login=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_menu=0x7f030004;
+        public static final int activity_signup=0x7f030005;
+        public static final int activity_tab=0x7f030006;
+        public static final int frag_events=0x7f030007;
+        public static final int frag_profile=0x7f030008;
+        public static final int frag_schedule=0x7f030009;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -67,6 +83,7 @@ public final class R {
         public static final int first_name=0x7f05000a;
         public static final int forgetpass=0x7f050005;
         public static final int groupname=0x7f050006;
+        public static final int hello_blank_fragment=0x7f050010;
         public static final int hello_world=0x7f050002;
         public static final int last_name=0x7f05000b;
         public static final int login=0x7f050003;

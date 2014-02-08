@@ -1,5 +1,7 @@
 package com.android.ucevents;
 
+import com.ucevents.signup.signupActivity;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -34,6 +36,18 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
 		
 				Intent i= new Intent(MainActivity.this, signupActivity.class);
+			
+				startActivity(i);
+				}
+			});
+		
+		blogin = (Button) findViewById(R.id.login);
+		blogin.setOnClickListener(new OnClickListener() {
+			 
+			//@Override
+			public void onClick(View arg0) {
+		
+				Intent i= new Intent(MainActivity.this, com.ucevents.login.loginActivity.class);
 			
 				startActivity(i);
 				}

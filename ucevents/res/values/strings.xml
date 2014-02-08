@@ -6,16 +6,20 @@
     <string name="hello_world">Hello world!</string>
     <string name="login">Login</string>
     <string name="signup">Sign Up</string>
-	<string name="forgetpass">Forget Password?</string>
-	<string name="groupname">by Seriousaurus</string>
-	<string name="ucevents">UCevents</string>
-	<color name="blue">#2F4963</color>
-	<string name="events">Events</string>
-	<string name="back">Back</string>
-	<string name="first_name">First Name</string>
-	<string name="last_name">Last Name</string>
-	<string name="password">Password</string>
-	<string name="confirm_password">Confirm Password</string>
-	<string name="email">UCSD email</string>
-	<string name="email_login">Email</string>
+    <string name="forgetpass">Forget Password?</string>
+    <string name="groupname">by Seriousaurus</string>
+    <string name="ucevents">UCevents</string>
+
+    <color name="blue">#2F4963</color>
+
+    <string name="events">Events</string>
+    <string name="back">Back</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">UCSD email</string>
+    <string name="email_login">Email</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
