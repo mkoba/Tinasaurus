@@ -1,5 +1,7 @@
 package com.ucevents.login;
+import com.android.ucevents.MainActivity;
 import com.android.ucevents.R;
+import com.ucevents.signup.signupActivity;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -17,5 +19,21 @@ public class loginActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		addListenerOnButton();
+	}
+
+	private void addListenerOnButton() {
+		bLogin = (Button) findViewById(R.id.bloginpage);
+		bLogin.setOnClickListener(new OnClickListener() {
+			 
+			//@Override
+			public void onClick(View arg0) {
+		
+				Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
+			
+				startActivity(i);
+				}
+			});
+		
 	}
 }

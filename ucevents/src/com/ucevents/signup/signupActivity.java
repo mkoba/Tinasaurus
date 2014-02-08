@@ -1,4 +1,7 @@
-package com.android.ucevents;
+package com.ucevents.signup;
+
+import com.android.ucevents.R;
+import com.android.ucevents.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
