@@ -41,7 +41,7 @@ public class db_access {
 		}
 		Connection connection = null;
 		try{
-			connection = DriverManager.getConnection("jdbc:mysql://ec2-54-200-149-123.us-west-2.compute.amazonaws.com:3306/test?user=ec2-user&password=root");
+			connection = DriverManager.getConnection("jdbc:mysql://ec2-54-200-149-123.us-west-2.compute.amazonaws.com:3306/test", "cse190", "cse190");
 		} catch (SQLException e){
 			System.out.println("Driver Manager failed");
 			e.printStackTrace();
