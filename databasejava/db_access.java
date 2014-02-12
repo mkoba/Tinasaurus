@@ -157,32 +157,36 @@ public class DB_Access {
 	
 	///////////////////////////////// DELETE /////////////////////////////////
 	
-	public void deleteUserInterests(int userID, int interestID) throws SQLException{
-		p_stmt = connection.prepareStatement("DELETE " +
-						      "FROM user_interests e " +
-						      "WHERE ? = e.userid AND ? = e.interestid;");
-		p_stmt.setInt(1, userID);
-		p_stmt.setInt(2, interestID);
-		p_stmt.executeQuery();
-	}
+	public void deleteUserInterests(String userID, String interestID) throws SQLException{
+	userID = escapeAp(userID);
+	interestID = escapeAp(interestID);
+	p_stmt = connection.preparedStatement("DELETE " +
+					      "FROM user_interests e " +
+					      "WHERE ? = e.userid AND ? = e.interestid;");
+	p_stmt.setString(1, userID);
+	p_stmt.setString(2, interestID);
+	p_stmt.executeQuery();
+}
 
-	public void deleteEvent(int eventID, int userID) throws SQLException{
-		p_stmt = connection.prepareStatement("DELETE " + 
-						      "FROM attendees a, events e " +
-						      "WHERE ? = a.eventid AND " +
-						      "? = e.hostid;");
-		p_stmt.setInt(1, eventID);
-		p_stmt.setInt(2, userID);
-		p_stmt.executeQuery();
+	public void deleteEvent(String eventID, String userID) throws SQLException{
+	userID = escapeAp(eventID);
+	userID = escapeAp(userID);
+	p_stmt = connection.preparedStatement("DELETE " + 
+					      "FROM attendees a, events e " +
+					      "WHERE ? = a.eventid AND "
+					      "? = e.hostid;");
+	p_stmt.setString(1, eventID);
+	p_stmt.setString(2, userID);
+	p_stmt.executeQuery();
 
-		p_stmt = connection.prepareStatement("DELETE " +
-						      "FROM events e " +
-						      "WHERE (eventID) = e.id AND " + 
-						      "(userID) = e.hostid);");
-		p_stmt.setInt(1, eventID);
-		p_stmt.setInt(2, userID);
-		p_stmt.executeQuery();
-	}
+	p_stmt = connection.preparedStatement("DELETE " +
+					      "FROM events e " +
+					      "WHERE (eventID) = e.id AND " + 
+					      "(userID) = e.hostid);");
+	p_stmt.setString(1, eventID);
+	p_stmt.setString(2, userID);
+	p_stmt.executeQuery();
+}
 	
 	public static void main(String [] args) throws IOException{
 		//sup dudes
