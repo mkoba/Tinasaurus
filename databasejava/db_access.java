@@ -77,6 +77,7 @@ public class DB_Access {
 			userid = rs.getInt(1);
 		}
 		for(int i = 0; i < interests.length; i++){
+			interests[i] = escapeAp(interests[i]);
 			rs = stmt.executeQuery("SELECT id FROM interests WHERE name = " + interests[i]);
 			while(rs.next()){
 				interestid = rs.getInt(1);
@@ -141,6 +142,7 @@ public class DB_Access {
 		
 		int interestid = 0;
 		for(int i = 0; i < interests.length; i++){
+			interests[i] = escapeAp(interests[i]);
 			rs = stmt.executeQuery("SELECT id FROM interests WHERE name = '" + interests[i] + "'");
 			while(rs.next()){
 				interestid = rs.getInt(1);
