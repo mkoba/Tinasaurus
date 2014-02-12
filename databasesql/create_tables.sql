@@ -6,29 +6,25 @@ DROP TABLE IF EXISTS events CASCADE;
 DROP TABLE IF EXISTS user_information CASCADE;
 
 CREATE TABLE IF NOT EXISTS user_information (
-id INT NOT NULL AUTO_INCREMENT,
 fname VARCHAR(100) NOT NULL,
 lname VARCHAR(100) NOT NULL,
-ucsd_email VARCHAR(100) NOT NULL,
-PRIMARY KEY (id)
+ucsd_email VARCHAR(100) NOT NULL UNIQUE PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS interests (
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(100)
+name VARCHAR(100) UNIQUE PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS user_interests (
-userid INT NOT NULL,
-interestid INT NOT NULL,
-PRIMARY KEY (userid, interestid),
-FOREIGN KEY (userid) REFERENCES user_information(id),
-FOREIGN KEY (interestid) REFERENCES interests(id)
+user VARCHAR(100) NOT NULL,
+interest VARCHAR(100) NOT NULL,
+PRIMARY KEY (user, interest),
+FOREIGN KEY (user) REFERENCES user_information(ucsd_email),
+FOREIGN KEY (interest) REFERENCES interests(name)
 );
 
 CREATE TABLE IF NOT EXISTS events (
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR (100) NOT NULL,
+name VARCHAR (100) NOT NULL UNIQUE PRIMARY KEY,
 location VARCHAR (100) NOT NULL,
 hour INT NOT NULL,
 min INT NOT NULL,
@@ -36,22 +32,23 @@ month INT NOT NULL,
 date INT NOT NULL,
 year INT NOT NULL,
 description VARCHAR(100),
-hostid INT NOT NULL,
+host VARCHAR(100) NOT NULL,
 public BOOL NOT NULL,
-FOREIGN KEY (hostid) REFERENCES user_information(id)
+FOREIGN KEY (host) REFERENCES user_information(ucsd_email)
 );
 
 CREATE TABLE IF NOT EXISTS event_category (
-eventid INT NOT NULL,
-interestid INT NOT NULL,
-PRIMARY KEY (eventid, interestid),
-FOREIGN KEY (eventid) REFERENCES events(id),
-FOREIGN KEY (interestid) REFERENCES interests(id)
+event VARCHAR(100) NOT NULL,
+interest VARCHAR(100) NOT NULL,
+PRIMARY KEY (event, interest),
+FOREIGN KEY (event) REFERENCES events(name),
+FOREIGN KEY (interest) REFERENCES interests(name)
 );
+
 CREATE TABLE IF NOT EXISTS attendees (
-eventid INT NOT NULL,
-attendeeid INT NOT NULL,
-PRIMARY KEY (eventid, attendeeid),
-FOREIGN KEY (eventid) REFERENCES events(id),
-FOREIGN KEY (attendeeid) REFERENCES user_information(id)
+event VARCHAR (100) NOT NULL,
+attendee VARCHAR(100) NOT NULL,
+PRIMARY KEY (event, attendee),
+FOREIGN KEY (event) REFERENCES events(name),
+FOREIGN KEY (attendee) REFERENCES user_information(ucsd_email)
 );
