@@ -60,37 +60,27 @@ public class DB_Access {
 		return s;
 	}
 	
-	public int insertUser(String fname, String lname, String email, String[] interests) throws SQLException{
+	public void insertUser(String fname, String lname, String email, String[] interests) throws SQLException{
 		fname = escapeAp(fname);
 		lname = escapeAp(lname);
 		email = escapeAp(email);
 
-		p_stmt = connection.prepareStatement("INSERT INTO user_information (fname, lname, email) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+		p_stmt = connection.prepareStatement("INSERT INTO user_information (fname, lname, ucsd_email) VALUES (?, ?, ?)");
 		p_stmt.setString(1, fname);
 		p_stmt.setString(2, lname);
 		p_stmt.setString(3, email);
 		p_stmt.executeUpdate();
-		int interestid = 0;
-		int userid = 0;
-		rs = stmt.executeQuery("SELECT id FROM user_information WHERE fname = " + fname + " AND lname = " + lname + " AND email = " + email);
-		while (rs.next()){
-			userid = rs.getInt(1);
-		}
+		
 		for(int i = 0; i < interests.length; i++){
-			interests[i] = escapeAp(interests[i]);
-			rs = stmt.executeQuery("SELECT id FROM interests WHERE name = " + interests[i]);
-			while(rs.next()){
-				interestid = rs.getInt(1);
-			}
-			p_stmt = connection.prepareStatement("INSERT INTO user_interests (userid, interestid) VALUES (?, ?)");
-			p_stmt.setInt(1, userid);
-			p_stmt.setInt(2, interestid);
+			p_stmt = connection.prepareStatement("INSERT INTO user_interests (user, interest) VALUES (?, ?)");
+			p_stmt.setString(1, email);
+			p_stmt.setString(2, interests[i]);
 			p_stmt.executeUpdate();
 		}
-		return userid;
 	}
 
 	public void insertInterest(String interest) throws SQLException{
+		interest = escapeAp(interest);
 		p_stmt = connection.prepareStatement("INSERT INTO interests (name) VALUES (?)");
 		p_stmt.setString(1, interest);
 		p_stmt.executeUpdate();
@@ -103,10 +93,10 @@ public class DB_Access {
 	// Date --> int for month, int for day, int for year
 	// Description --> String
 	// public --> boolean
-	// hostid --> given
-	public int insertEvent(String title, String location, int hour, int minute, boolean pm, 
+	// host --> given
+	public void insertEvent(String title, String location, int hour, int minute, boolean pm, 
 						   String[] interests, int month, int day, int year, String description, 
-						   boolean public_flag, int hostid) throws SQLException{
+						   boolean public_flag, String host) throws SQLException{
 		int eventid = 0;
 		
 		if (pm){
@@ -115,8 +105,9 @@ public class DB_Access {
 		
 		title = escapeAp(title);
 		description = escapeAp(description);
+		host = escapeAp(host);
 		
-		p_stmt = connection.prepareStatement("INSERT INTO events (name, location, hour, min, month, date, year, description, hostid, public) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+		p_stmt = connection.prepareStatement("INSERT INTO events (name, location, hour, min, month, date, year, description, host, public) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 		p_stmt.setString(1, title);
 		p_stmt.setString(2, location);
 		p_stmt.setInt(3, hour);
@@ -125,44 +116,73 @@ public class DB_Access {
 		p_stmt.setInt(6, day);
 		p_stmt.setInt(7, year);
 		p_stmt.setString(8, description);
-		p_stmt.setInt(9, hostid);
+		p_stmt.setString(9, host);
 		p_stmt.setBoolean(10, public_flag);
 		p_stmt.executeUpdate();
 		
-		
-		rs = stmt.executeQuery("SELECT id FROM events WHERE name = '" + title + "' AND location = '" + location + "' AND hour = " + hour + " AND min = " + minute
-								+ " AND month = " + month + " AND date = " + day + " AND year = " + year + " AND description = '" + description 
-								+ "' AND hostid = " + hostid);
-		while(rs.next()){
-			eventid = rs.getInt(1);
-			System.out.println("eventid: " + eventid);
-		}
-		
-		System.out.println("eventid: " + eventid);
-		
-		int interestid = 0;
 		for(int i = 0; i < interests.length; i++){
-			interests[i] = escapeAp(interests[i]);
-			rs = stmt.executeQuery("SELECT id FROM interests WHERE name = '" + interests[i] + "'");
-			while(rs.next()){
-				interestid = rs.getInt(1);
-			}
-			p_stmt = connection.prepareStatement("INSERT INTO event_category (eventid, interestid) VALUES (?, ?)");
-			p_stmt.setInt(1, eventid);
-			p_stmt.setInt(2, interestid);
+			p_stmt = connection.prepareStatement("INSERT INTO event_category (event, interest) VALUES (?, ?)");
+			p_stmt.setString(1, title);
+			p_stmt.setString(2, interests[i]);
 			p_stmt.executeUpdate();
 		}
-		
-		return eventid;
 	}
 	
-	public void insertAttendee(int userid, int eventid) throws SQLException{
-		p_stmt = connection.prepareStatement("INSERT INTO attendees (eventid, attendeeid) VALUES (?, ?)");
-		p_stmt.setInt(1, eventid);
-		p_stmt.setInt(2, userid);
+	public void insertAttendee(String user, String event) throws SQLException{
+		event = escapeAp(event);
+		user = escapeAp(user);
+		
+		p_stmt = connection.prepareStatement("INSERT INTO attendees (event, attendee) VALUES (?, ?)");
+		p_stmt.setString(1, event);
+		p_stmt.setString(2, user);
 		p_stmt.executeUpdate();
 	}
 	
+	///////////////////////////////// UPDATE /////////////////////////////////
+	
+	public void updateEvents(int id, String title, String location, int hour, int minute, boolean pm,
+            int month, int day, int year, String description) throws SQLException{
+		location=escapeAp(location);
+		p_stmt = connection.prepareStatement("UPDATE events SET title='"+title+"' AND location='"+location+"' AND hour="+hour+" AND minute="+minute
+											+ "AND pm="+pm+" AND month="+month+" AND day="+day+" AND year="+year+" AND description='"+description
+											+ "' WHERE id="+id);
+		p_stmt.executeUpdate();
+	}
+
+	public void updateUser(int id, String fname, String lname, String ucsd_email) throws SQLException{
+		p_stmt = connection.prepareStatement("UPDATE user_information SET fname='"+fname+"' AND lname='"+lname+"' AND ucsd_email='"+ucsd_email
+				+ "' WHERE id="+id);
+		p_stmt.executeUpdate();
+	}
+	
+	///////////////////////////////// DELETE /////////////////////////////////
+	
+	public void deleteUserInterests(int userID, int interestID) throws SQLException{
+		p_stmt = connection.prepareStatement("DELETE " +
+						      "FROM user_interests e " +
+						      "WHERE ? = e.userid AND ? = e.interestid;");
+		p_stmt.setInt(1, userID);
+		p_stmt.setInt(2, interestID);
+		p_stmt.executeQuery();
+	}
+
+	public void deleteEvent(int eventID, int userID) throws SQLException{
+		p_stmt = connection.prepareStatement("DELETE " + 
+						      "FROM attendees a, events e " +
+						      "WHERE ? = a.eventid AND " +
+						      "? = e.hostid;");
+		p_stmt.setInt(1, eventID);
+		p_stmt.setInt(2, userID);
+		p_stmt.executeQuery();
+
+		p_stmt = connection.prepareStatement("DELETE " +
+						      "FROM events e " +
+						      "WHERE (eventID) = e.id AND " + 
+						      "(userID) = e.hostid);");
+		p_stmt.setInt(1, eventID);
+		p_stmt.setInt(2, userID);
+		p_stmt.executeQuery();
+	}
 	
 	public static void main(String [] args) throws IOException{
 		//sup dudes
@@ -180,14 +200,17 @@ public class DB_Access {
 		*/
 		DB_Access db = new DB_Access();
 		String[] event_category = {"food"};
-		/*
+		String[] interests = {"food", "sports"};
+		
 		try {
-			db.insertEvent("Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, 3);
+			db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
+			db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
+			//db.insertEvent("jclin06@ucsd.edu+Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("FAILED :(");
 			System.exit(1);
-		}*/
+		}
 	}
 }
