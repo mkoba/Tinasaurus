@@ -47,7 +47,24 @@ public class DB_Access {
 		}
 	}
 	
+	private String escapeAp(String s){
+		int i = -1;
+		i = s.indexOf("'", i+1);
+		
+		while (i != -1){
+			s = s.substring(0, i) + "\\" + s.substring(i);
+			i+=2;
+			i = s.indexOf("'", i);
+		}
+		
+		return s;
+	}
+	
 	public int insertUser(String fname, String lname, String email, String[] interests) throws SQLException{
+		fname = escapeAp(fname);
+		lname = escapeAp(lname);
+		email = escapeAp(email);
+
 		p_stmt = connection.prepareStatement("INSERT INTO user_information (fname, lname, email) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 		p_stmt.setString(1, fname);
 		p_stmt.setString(2, lname);
@@ -95,6 +112,9 @@ public class DB_Access {
 			hour += 12;
 		}
 		
+		title = escapeAp(title);
+		description = escapeAp(description);
+		
 		p_stmt = connection.prepareStatement("INSERT INTO events (name, location, hour, min, month, date, year, description, hostid, public) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 		p_stmt.setString(1, title);
 		p_stmt.setString(2, location);
@@ -107,6 +127,7 @@ public class DB_Access {
 		p_stmt.setInt(9, hostid);
 		p_stmt.setBoolean(10, public_flag);
 		p_stmt.executeUpdate();
+		
 		
 		rs = stmt.executeQuery("SELECT id FROM events WHERE name = '" + title + "' AND location = '" + location + "' AND hour = " + hour + " AND min = " + minute
 								+ " AND month = " + month + " AND date = " + day + " AND year = " + year + " AND description = '" + description 
@@ -157,13 +178,14 @@ public class DB_Access {
 		*/
 		DB_Access db = new DB_Access();
 		String[] event_category = {"food"};
+		/*
 		try {
-			db.insertEvent("Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Lets eat together :)", false, 3);
+			db.insertEvent("Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, 3);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("FAILED :(");
 			System.exit(1);
-		}
+		}*/
 	}
 }
