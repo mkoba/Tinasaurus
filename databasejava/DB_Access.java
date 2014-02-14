@@ -140,20 +140,50 @@ public class DB_Access {
 	
 	///////////////////////////////// UPDATE /////////////////////////////////
 	
-	public void updateEvents(int id, String title, String location, int hour, int minute, boolean pm,
-            int month, int day, int year, String description) throws SQLException{
-		location=escapeAp(location);
-		p_stmt = connection.prepareStatement("UPDATE events SET title='"+title+"' AND location='"+location+"' AND hour="+hour+" AND minute="+minute
-											+ "AND pm="+pm+" AND month="+month+" AND day="+day+" AND year="+year+" AND description='"+description
-											+ "' WHERE id="+id);
-		p_stmt.executeUpdate();
-	}
+	// Title --> String
+		// Location --> String
+		// Time --> int for hour, int for minute, bool for pm
+		// Category --> String[] interests
+		// Date --> int for month, int for day, int for year
+		// Description --> String
+		public void updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
+			                     int month, int day, int year, String description, String name, String ucsd_email) throws SQLException{
+			location=escapeAp(location);
+			p_stmt = connection.prepareStatement("UPDATE events SET location=? AND hour=? AND minute=?"
+				+ "AND pm=? AND month=? AND day=? AND year=? AND description=? WHERE name=?");
+			p_stmt.setString(1, location);
+			p_stmt.setInt(2, hour);
+			p_stmt.setInt(3, minute);
+			p_stmt.setBoolean(4, pm);
+			p_stmt.setInt(5, month);
+			p_stmt.setInt(6, day);
+			p_stmt.setInt(7, year);
+			p_stmt.setString(8, description);
+			p_stmt.setString(9, name);
+			p_stmt.executeQuery();
+			
+			p_stmt = connection.prepareStatement("DELETE FROM event_category WHERE name=?");
+			p_stmt.setString(1, name);
+			p_stmt.executeQuery();
+			for(int i = 0; i < interests.length; i++){
+				/*rs = stmt.executeQuery("SELECT id FROM interests WHERE name = " + interest[i]);
+				while(rs.next()){
+					interestid = rs.getInt(1);
+				}*/
+				p_stmt = connection.prepareStatement("INSERT INTO user_interests (userid, interestid) VALUES (?, ?)");
+				p_stmt.setString(1, ucsd_email);
+				p_stmt.setString(2, interests[i]);
+				p_stmt.executeQuery();
+			}
+		}
 
-	public void updateUser(int id, String fname, String lname, String ucsd_email) throws SQLException{
-		p_stmt = connection.prepareStatement("UPDATE user_information SET fname='"+fname+"' AND lname='"+lname+"' AND ucsd_email='"+ucsd_email
-				+ "' WHERE id="+id);
-		p_stmt.executeUpdate();
-	}
+		public void updateUser(int id, String fname, String lname, String ucsd_email) throws SQLException{
+			p_stmt = connection.prepareStatement("UPDATE user_information SET fname=? AND lname=? AND ucsd_email=? WHERE id=?");
+			p_stmt.setString(1, fname);
+			p_stmt.setString(2, lname);
+			p_stmt.setString(3, ucsd_email);
+			p_stmt.executeQuery();
+		}
 	
 	///////////////////////////////// DELETE /////////////////////////////////
 	
