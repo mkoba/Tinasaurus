@@ -207,6 +207,18 @@ public class DB_Access {
 		p_stmt.executeUpdate();
 	}
 
+	public void deleteAttendee(String event, String attendee){
+		event = escapeAp(event);
+		attendee = escapeAp(attendee);
+
+		p_stmt = connection.prepareStatement("DELETE " +
+					  	     "FROM attendees "+
+						     "WHERE ? = event and ? = attendee");
+		p_stmt.setString(1, event);
+		p_stmt.setString(2, attendee);
+		p_stmt.executeUpdate();
+	}
+/////
 	
 	public static void main(String [] args) throws IOException{
 		//sup dudes
