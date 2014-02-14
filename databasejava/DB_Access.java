@@ -157,35 +157,24 @@ public class DB_Access {
 	
 	///////////////////////////////// DELETE /////////////////////////////////
 	
-	public void deleteUserInterests(String userID, String interestID) throws SQLException{
-		userID = escapeAp(userID);
-		interestID = escapeAp(interestID);
+	public void deleteUserInterests(String user, String interest) throws SQLException{
+		user = escapeAp(user);
+		interest = escapeAp(interest);
 		p_stmt = connection.prepareStatement("DELETE " +
 						      "FROM user_interests e " +
-						      "WHERE ? = e.user AND ? = e.interest;");
-		p_stmt.setString(1, userID);
-		p_stmt.setString(2, interestID);
-		p_stmt.executeQuery();
+						      " WHERE ? = e.user AND ? = e.interest;");
+		p_stmt.setString(1, user);
+		p_stmt.setString(2, interest);
+		p_stmt.executeUpdate();
 	}
 
-		public void deleteEvent(String eventID, String userID) throws SQLException{
-		userID = escapeAp(eventID);
-		userID = escapeAp(userID);
+	public void deleteEvent(String event) throws SQLException{
+		event = escapeAp(event);
 		p_stmt = connection.prepareStatement("DELETE " + 
-						      "FROM attendees a, events e " +
-						      "WHERE ? = a.eventid AND " +
-						      "? = e.hostid;");
-		p_stmt.setString(1, eventID);
-		p_stmt.setString(2, userID);
-		p_stmt.executeQuery();
-
-		p_stmt = connection.prepareStatement("DELETE " +
-						      "FROM events e " +
-						      "WHERE (eventID) = e.id AND " + 
-						      "(userID) = e.hostid);");
-		p_stmt.setString(1, eventID);
-		p_stmt.setString(2, userID);
-		p_stmt.executeQuery();
+						      "FROM events" +
+						      " WHERE name = ?");
+		p_stmt.setString(1, event);
+		p_stmt.executeUpdate();
 	}
 
 	
@@ -208,9 +197,10 @@ public class DB_Access {
 		String[] interests = {"food", "sports"};
 		
 		try {
-			db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
-			db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
-			//db.insertEvent("jclin06@ucsd.edu+Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");
+			//db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
+			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
+			db.insertEvent("jclin06@ucsd.edu+Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");
+			//db.deleteEvent("jclin06@ucsd.edu+Dinner with Judy");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
