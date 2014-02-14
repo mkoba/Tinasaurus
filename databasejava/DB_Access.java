@@ -161,8 +161,8 @@ public class DB_Access {
 		user = escapeAp(user);
 		interest = escapeAp(interest);
 		p_stmt = connection.prepareStatement("DELETE " +
-						      "FROM user_interests e " +
-						      " WHERE ? = e.user AND ? = e.interest;");
+						      "FROM user_interests " +
+						      "WHERE ? = user AND ? = interest;");
 		p_stmt.setString(1, user);
 		p_stmt.setString(2, interest);
 		p_stmt.executeUpdate();
@@ -197,10 +197,11 @@ public class DB_Access {
 		String[] interests = {"food", "sports"};
 		
 		try {
-			//db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
+			db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
 			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
-			db.insertEvent("jclin06@ucsd.edu+Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");
+			//db.insertEvent("jclin06@ucsd.edu+Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");
 			//db.deleteEvent("jclin06@ucsd.edu+Dinner with Judy");
+			//db.deleteUserInterests("lcam@ucsd.edu", "food");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
