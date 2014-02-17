@@ -221,8 +221,20 @@ public class DB_Access {
 		p_stmt.setString(1, event);
 		p_stmt.executeUpdate();
 	}
+
+	public void deleteAttendee(String event, String attendee) throws SQLException{
+		event = escapeAp(event);
+		attendee = escapeAp(attendee);
+
+		p_stmt = connection.prepareStatement("DELETE " +
+					  	     "FROM attendees "+
+						     "WHERE ? = event and ? = attendee");
+		p_stmt.setString(1, event);
+		p_stmt.setString(2, attendee);
+		p_stmt.executeUpdate();
+	}
 	
-	/////////////////// SELECT /////////////////////
+	///////////////////////////////// SELECT /////////////////////////////////
 	
 	// Get user's information -- fname, lname, email, interests
 	public List<String> getUserInformation(String user) throws SQLException{
@@ -368,6 +380,7 @@ public class DB_Access {
 		List<String> result = new ArrayList<String>();
 		return result;
 	}
+
 	
 	public static void main(String [] args) throws IOException{
 		//sup dudes
@@ -395,6 +408,8 @@ public class DB_Access {
 			//db.deleteUserInterests("lcam@ucsd.edu", "food");
 			//db.updateEvents("Tina's Apartment", 7, 30, event_category, true, 2, 16, 2014, "I want to eat dinner at the bistro! Let's eat together :)", "jclin06@ucsd.edu+Dinner with Judy", "jclin06@ucsd.edu");
 			//db.updateUser("MARI", "KOBAB", "mkoba@ucsd.edu");
+			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
+			//db.deleteAttendee("jclin06@ucsd.edu+Dinner with Judy", "mkoba@ucsd.edu");
 			List<String> result = db.getUserInformation("tszutu@ucsd.edu");
 			for(int i = 0; i < result.size(); i++){
 				System.out.println(result.get(i));
