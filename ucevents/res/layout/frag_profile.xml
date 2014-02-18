@@ -7,8 +7,36 @@
         tools:context=".DeviceFragment" >
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile" />
+        android:text="@string/profile"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+
+     <ImageView
+        android:id="@+id/profile_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"
+        android:paddingTop="20dp" />
+    
+    <TextView
+        android:id="@+id/about_me_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/about_me" 
+        android:paddingTop="25dp"/>
+
+    <TextView
+        android:id="@+id/user_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User information" />
 
 </LinearLayout>
+
+
+
+
