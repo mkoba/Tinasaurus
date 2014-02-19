@@ -6,9 +6,41 @@
         android:orientation="vertical"
         tools:context=".DeviceFragment" >
 
+    <ImageView
+        android:id="@+id/profilepic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+    
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Profile" />
+    
+   <EditText
+        android:id="@+id/f_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Insert First Name" />
+   
+    <EditText
+        android:id="@+id/l_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Insert last Name" />
 
+    <EditText
+        android:id="@+id/interest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Insert Interest" />
+
+    <Button
+        android:id="@+id/Done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="done" />
 </LinearLayout>
