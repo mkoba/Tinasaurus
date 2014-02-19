@@ -1,30 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".DeviceFragment" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    android:gravity="center"
+    android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/profilepic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher" />
-    
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile" />
-    
-   <EditText
+
+    <EditText
         android:id="@+id/f_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Insert First Name" />
-   
     <EditText
         android:id="@+id/l_name"
         android:layout_width="match_parent"
@@ -45,8 +38,4 @@
         android:layout_height="wrap_content"
         android:text="done" />
 
-
 </LinearLayout>
-
-
-
