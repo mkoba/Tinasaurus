@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
@@ -148,19 +150,28 @@ public class DB_Access {
 		// Description --> String
 		public void updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
 			                     int month, int day, int year, String description, String name, String ucsd_email) throws SQLException{
-			location=escapeAp(location);
-			p_stmt = connection.prepareStatement("UPDATE events SET location=? AND hour=? AND minute=?"
-				+ "AND pm=? AND month=? AND day=? AND year=? AND description=? WHERE name=?");
+			location = escapeAp(location);
+			System.out.println(location);
+			description = escapeAp(description);
+			name = escapeAp(name);
+			ucsd_email = escapeAp(ucsd_email);
+			if (pm){
+				hour += 12;
+			}
+			
+			//UPDATE events SET location='Tina\'s Apartment' AND date=15 WHERE name='tszutu@ucsd.edu+Basketball Game!';
+			p_stmt = connection.prepareStatement("UPDATE events SET location=? AND hour=? AND min=? "
+				+ "AND month=? AND date=? AND year=? AND description=? WHERE name=?;");
 			p_stmt.setString(1, location);
 			p_stmt.setInt(2, hour);
 			p_stmt.setInt(3, minute);
-			p_stmt.setBoolean(4, pm);
-			p_stmt.setInt(5, month);
-			p_stmt.setInt(6, day);
-			p_stmt.setInt(7, year);
-			p_stmt.setString(8, description);
-			p_stmt.setString(9, name);
-			p_stmt.executeQuery();
+			p_stmt.setInt(4, month);
+			p_stmt.setInt(5, day);
+			p_stmt.setInt(6, year);
+			p_stmt.setString(7, description);
+			p_stmt.setString(8, name);
+			System.out.println(p_stmt);
+			p_stmt.executeUpdate();
 			
 			p_stmt = connection.prepareStatement("DELETE FROM event_category WHERE name=?");
 			p_stmt.setString(1, name);
@@ -170,19 +181,23 @@ public class DB_Access {
 				while(rs.next()){
 					interestid = rs.getInt(1);
 				}*/
-				p_stmt = connection.prepareStatement("INSERT INTO user_interests (userid, interestid) VALUES (?, ?)");
-				p_stmt.setString(1, ucsd_email);
+				p_stmt = connection.prepareStatement("INSERT INTO event_category (name, interest) VALUES (?, ?)");
+				p_stmt.setString(1, name);
 				p_stmt.setString(2, interests[i]);
-				p_stmt.executeQuery();
+				p_stmt.executeUpdate();
 			}
 		}
 
-		public void updateUser(int id, String fname, String lname, String ucsd_email) throws SQLException{
-			p_stmt = connection.prepareStatement("UPDATE user_information SET fname=? AND lname=? AND ucsd_email=? WHERE id=?");
+		public void updateUser(String fname, String lname, String ucsd_email) throws SQLException{
+			fname = escapeAp(fname);
+			lname = escapeAp(lname);
+			ucsd_email = escapeAp(ucsd_email);
+			
+			p_stmt = connection.prepareStatement("UPDATE user_information SET fname=? AND lname=? WHERE ucsd_email=?");
 			p_stmt.setString(1, fname);
 			p_stmt.setString(2, lname);
 			p_stmt.setString(3, ucsd_email);
-			p_stmt.executeQuery();
+			p_stmt.executeUpdate();
 		}
 	
 	///////////////////////////////// DELETE /////////////////////////////////
@@ -207,7 +222,7 @@ public class DB_Access {
 		p_stmt.executeUpdate();
 	}
 
-	public void deleteAttendee(String event, String attendee){
+	public void deleteAttendee(String event, String attendee) throws SQLException{
 		event = escapeAp(event);
 		attendee = escapeAp(attendee);
 
@@ -218,7 +233,154 @@ public class DB_Access {
 		p_stmt.setString(2, attendee);
 		p_stmt.executeUpdate();
 	}
-/////
+	
+	///////////////////////////////// SELECT /////////////////////////////////
+	
+	// Get user's information -- fname, lname, email, interests
+	public List<String> getUserInformation(String user) throws SQLException{
+		List<String> result = new ArrayList<String>();
+		user = escapeAp(user);
+		p_stmt = connection.prepareStatement("SELECT * FROM user_information WHERE ucsd_email = ?");
+		p_stmt.setString(1, user);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			result.add(rs.getString("fname"));
+			result.add(rs.getString("lname"));
+			result.add(rs.getString("ucsd_email"));
+		}
+		
+		p_stmt = connection.prepareStatement("SELECT * FROM user_interests WHERE user = ?");
+		p_stmt.setString(1, user);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			result.add(rs.getString("interest"));
+		}
+		
+		return result;
+	}
+	
+	// Get user's interests
+	public List<String> getUserInterests(String user) throws SQLException{
+		List<String> result = new ArrayList<String>();
+		user = escapeAp(user);
+		p_stmt = connection.prepareStatement("SELECT * FROM user_interests WHERE user = ?");
+		p_stmt.setString(1, user);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			result.add(rs.getString("interest"));
+		}
+		
+		return result;
+	}
+	
+	// Get all events
+	public List<List<String>> getAllEvents() throws SQLException{
+		List<List<String>> result = new ArrayList<List<String>>();
+		p_stmt = connection.prepareStatement("SELECT * FROM events");
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			List<String> event = new ArrayList<String>();
+			event.add(rs.getString("name"));
+			event.add(rs.getString("location"));
+			event.add(rs.getString("hour"));
+			event.add(rs.getString("min"));
+			event.add(rs.getString("month"));
+			event.add(rs.getString("date"));
+			event.add(rs.getString("year"));
+			event.add(rs.getString("description"));
+			result.add(event);
+		}
+		return result;
+	}
+
+	// Get all events in a category
+	public List<List<String>> getEventsInCategory(String category) throws SQLException{
+		List<List<String>> result = new ArrayList<List<String>>();
+		category = escapeAp(category);
+		p_stmt = connection.prepareStatement("SELECT name, location, hour, min, month, date, year, description " +
+											 "FROM events, event_category " + 
+											 "WHERE events.name = event_category.event AND event_category.interest = ?");
+		p_stmt.setString(1, category);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			List<String> event = new ArrayList<String>();
+			event.add(rs.getString("name"));
+			event.add(rs.getString("location"));
+			event.add(rs.getString("hour"));
+			event.add(rs.getString("min"));
+			event.add(rs.getString("month"));
+			event.add(rs.getString("date"));
+			event.add(rs.getString("year"));
+			event.add(rs.getString("description"));
+			result.add(event);
+		}
+		return result;
+	}
+	
+	// Get all events that suit a user's interest
+	public List<List<String>> getEventsFromUserInterests(String user) throws SQLException{
+		List<List<String>> result = new ArrayList<List<String>>();
+		user = escapeAp(user);
+		p_stmt = connection.prepareStatement("SELECT * FROM user_interests WHERE user = ?");
+		p_stmt.setString(1, user);
+		ResultSet rs = p_stmt.executeQuery();
+		
+		while(rs.next()){
+			String interest = rs.getString("interest");
+			result.addAll(getEventsInCategory(interest));
+		}
+		return result;
+	}
+	
+	// Get all events a user is attending
+	public List<List<String>> getEventsUserAttending(String user) throws SQLException{
+		List<List<String>> result = new ArrayList<List<String>>();
+		user = escapeAp(user);
+		p_stmt = connection.prepareStatement("SELECT event FROM attendees WHERE attendee = ?");
+		p_stmt.setString(1, user);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			List<String> event = new ArrayList<String>();
+			String event_id = rs.getString("event");
+			p_stmt = connection.prepareStatement("SELECT name, location, hour, min, month, date, year, description " +
+											 	 "FROM events " + 
+											 	 "WHERE name = ?");
+			p_stmt.setString(1, event_id);
+			ResultSet rs_tmp = p_stmt.executeQuery();
+			while(rs_tmp.next()){
+				event.add(rs_tmp.getString("name"));
+				event.add(rs_tmp.getString("location"));
+				event.add(rs_tmp.getString("hour"));
+				event.add(rs_tmp.getString("min"));
+				event.add(rs_tmp.getString("month"));
+				event.add(rs_tmp.getString("date"));
+				event.add(rs_tmp.getString("year"));
+				event.add(rs_tmp.getString("description"));
+			}
+			result.add(event);
+		}
+		
+		return result;
+	}
+	
+	// Get all events a user is hosting
+	public List<List<String>> getEventsUserHosting(String user) throws SQLException{
+		List<List<String>> result = new ArrayList<List<String>>();
+		return result;
+	}
+	
+	// Get all attendees of an event
+	public List<String> getAttendees(String event) throws SQLException{
+		List<String> result = new ArrayList<String>();
+		return result;
+	}
+	
+	// Get all information about an Event (including attendees)
+	public List<String> getEventInformation(String event) throws SQLException{
+		List<String> result = new ArrayList<String>();
+		return result;
+	}
+
 	
 	public static void main(String [] args) throws IOException{
 		//sup dudes
@@ -239,11 +401,29 @@ public class DB_Access {
 		String[] interests = {"food", "sports"};
 		
 		try {
-			db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
+			//db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
 			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
 			//db.insertEvent("jclin06@ucsd.edu+Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");
 			//db.deleteEvent("jclin06@ucsd.edu+Dinner with Judy");
 			//db.deleteUserInterests("lcam@ucsd.edu", "food");
+			//db.updateEvents("Tina's Apartment", 7, 30, event_category, true, 2, 16, 2014, "I want to eat dinner at the bistro! Let's eat together :)", "jclin06@ucsd.edu+Dinner with Judy", "jclin06@ucsd.edu");
+			//db.updateUser("MARI", "KOBAB", "mkoba@ucsd.edu");
+			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
+			//db.deleteAttendee("jclin06@ucsd.edu+Dinner with Judy", "mkoba@ucsd.edu");
+			List<String> result = db.getUserInformation("tszutu@ucsd.edu");
+			for(int i = 0; i < result.size(); i++){
+				System.out.println(result.get(i));
+			}
+			
+			System.out.println("**********************************");
+			
+			List<List<String>> r = db.getEventsUserAttending("tszutu@ucsd.edu");
+			for (int i = 0; i < r.size(); i++){
+				System.out.println("EVENT " + i);
+				for (int j = 0; j < r.get(i).size(); j++){
+					System.out.println(r.get(i).get(j));
+				}
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

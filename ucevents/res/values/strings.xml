@@ -23,5 +23,17 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="allEvents">All Events</string>
     <string name="byCategory">By Category</string>
-
+    
+    <string name="profile">Profile</string>
+	<string name="about_me">About Me</string>
+	<string name="select_interests">Select Interests</string>
+	
+	<string name="sports">Sports</string>
+	<string name="food">Food</string>
+	<string name="study">Study</string>
+	<string name="career">Career</string>
+	<string name="club">Club/Org</string>
+	<string name="social">Social</string>
+	<string name="sport">Sport</string>
+	<string name ="other">Other</string>
 </resources>
