@@ -394,7 +394,31 @@ public class DB_Access {
 	}
 	
 	// Get all attendees of an event
-	public List<String> getAttendees(String event) throws SQLException{
+	public List<List<String>> getAttendees(String event) throws SQLException{
+		List<List<String>> result = new ArrayList<List<String>>();
+		event = escapeAp(event);
+		p_stmt = connection.prepareStatement("SELECT attendee FROM attendees WHERE event = ?");
+		p_stmt.setString(1, event);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			List<String> attendee = new ArrayList<String>();
+			String attendee_id = rs.getString("attendee");
+			p_stmt = connection.prepareStatement("SELECT fname, lname" +
+											 	 "FROM user_information " + 
+											 	 "WHERE user_email = ?");
+			p_stmt.setString(1, attendee_id);
+			ResultSet rs_tmp = p_stmt.executeQuery();
+			while(rs_tmp.next()){
+				attendee.add(rs_tmp.getString("fname"));
+				attendee.add(rs_tmp.getString("lname"));
+			}
+			result.add(attendee);
+		}
+		return result;
+	}
+	
+	// Get all attendees of an event
+	/*public List<String> getAttendeess(String event) throws SQLException{
 		List<String> result = new ArrayList<String>();
 		event = escapeAp(event);
 		p_stmt = connection.prepareStatement("SELECT attendee FROM attendees WHERE event = ?");
@@ -404,7 +428,7 @@ public class DB_Access {
 			result.add(rs.getString("attendee"));
 		}
 		return result;
-	}
+	}*/
 	
 	// Get all information about an Event (including attendees)
 	public List<String> getEventInformation(String event) throws SQLException{
@@ -422,11 +446,31 @@ public class DB_Access {
 			result.add(rs.getString("year"));
 			result.add(rs.getString("description"));
 		}
+		String hostid=rs.getString("host");
+		p_stmt = connection.prepareStatement("SELECT fname,lname FROM user_information WHERE ucsd_email = ?");
+		p_stmt.setString(1, hostid);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			result.add(rs.getString("fname"));
+			result.add(rs.getString("lname"));
+		}
+		
 		p_stmt = connection.prepareStatement("SELECT attendee FROM attendees WHERE event = ?");
 		p_stmt.setString(1, event);
 		rs = p_stmt.executeQuery();
 		while(rs.next()){
-			result.add(rs.getString("attendee"));
+			//List<String> attendee = new ArrayList<String>();
+			String attendee_id = rs.getString("attendee");
+			p_stmt = connection.prepareStatement("SELECT fname, lname" +
+											 	 "FROM user_information " + 
+											 	 "WHERE user_email = ?");
+			p_stmt.setString(1, attendee_id);
+			ResultSet rs_tmp = p_stmt.executeQuery();
+			while(rs_tmp.next()){
+				result.add(rs_tmp.getString("fname"));
+				result.add(rs_tmp.getString("lname"));
+			}
+			//result.add(attendee);
 		}
 		return result;
 	}
