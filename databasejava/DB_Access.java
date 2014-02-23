@@ -1,3 +1,4 @@
+package database;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -7,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
@@ -15,6 +18,8 @@ import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.CreateSecurityGroupRequest;
 import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
+import com.amazonaws.util.json.JSONException;
+import com.amazonaws.util.json.JSONObject;
 
 public class DB_Access {
 	private Connection connection;
@@ -237,25 +242,26 @@ public class DB_Access {
 	///////////////////////////////// SELECT /////////////////////////////////
 	
 	// Get user's information -- fname, lname, email, interests
-	public List<String> getUserInformation(String user) throws SQLException{
-		List<String> result = new ArrayList<String>();
+	public JSONObject getUserInformation(String user) throws SQLException, JSONException{
+		JSONObject result = new JSONObject();
 		user = escapeAp(user);
 		p_stmt = connection.prepareStatement("SELECT * FROM user_information WHERE ucsd_email = ?");
 		p_stmt.setString(1, user);
 		rs = p_stmt.executeQuery();
 		while(rs.next()){
-			result.add(rs.getString("fname"));
-			result.add(rs.getString("lname"));
-			result.add(rs.getString("ucsd_email"));
+			result.put("fname", rs.getString("fname"));
+			result.put("lname", rs.getString("lname"));
+			result.put("ucsd_email", rs.getString("ucsd_email"));
 		}
 		
 		p_stmt = connection.prepareStatement("SELECT * FROM user_interests WHERE user = ?");
 		p_stmt.setString(1, user);
 		rs = p_stmt.executeQuery();
+		List<String> interests = new ArrayList<String>();
 		while(rs.next()){
-			result.add(rs.getString("interest"));
+			interests.add(rs.getString("interest"));
 		}
-		
+		result.put("interests", interests);
 		return result;
 	}
 	
@@ -404,8 +410,8 @@ public class DB_Access {
 			List<String> attendee = new ArrayList<String>();
 			String attendee_id = rs.getString("attendee");
 			p_stmt = connection.prepareStatement("SELECT fname, lname" +
-											 	 "FROM user_information " + 
-											 	 "WHERE user_email = ?");
+											 	 " FROM user_information " + 
+											 	 "WHERE ucsd_email = ?");
 			p_stmt.setString(1, attendee_id);
 			ResultSet rs_tmp = p_stmt.executeQuery();
 			while(rs_tmp.next()){
@@ -433,9 +439,10 @@ public class DB_Access {
 	// Get all information about an Event (including attendees)
 	public List<String> getEventInformation(String event) throws SQLException{
 		List<String> result = new ArrayList<String>();
-		p_stmt = connection.prepareStatement("SELECT * FROM event WHERE name = ?");
+		p_stmt = connection.prepareStatement("SELECT * FROM events WHERE name = ?");
 		p_stmt.setString(1, event);
 		rs = p_stmt.executeQuery();
+		String hostid = "";
 		while(rs.next()){
 			result.add(rs.getString("name"));
 			result.add(rs.getString("location"));
@@ -445,9 +452,9 @@ public class DB_Access {
 			result.add(rs.getString("date"));
 			result.add(rs.getString("year"));
 			result.add(rs.getString("description"));
+			hostid=rs.getString("host");
 		}
-		String hostid=rs.getString("host");
-		p_stmt = connection.prepareStatement("SELECT fname,lname FROM user_information WHERE ucsd_email = ?");
+		p_stmt = connection.prepareStatement("SELECT fname, lname FROM user_information WHERE ucsd_email = ?");
 		p_stmt.setString(1, hostid);
 		rs = p_stmt.executeQuery();
 		while(rs.next()){
@@ -462,8 +469,8 @@ public class DB_Access {
 			//List<String> attendee = new ArrayList<String>();
 			String attendee_id = rs.getString("attendee");
 			p_stmt = connection.prepareStatement("SELECT fname, lname" +
-											 	 "FROM user_information " + 
-											 	 "WHERE user_email = ?");
+											 	 " FROM user_information " + 
+											 	 "WHERE ucsd_email = ?");
 			p_stmt.setString(1, attendee_id);
 			ResultSet rs_tmp = p_stmt.executeQuery();
 			while(rs_tmp.next()){
@@ -476,7 +483,7 @@ public class DB_Access {
 	}
 	//////
 	
-	public static void main(String [] args) throws IOException{
+	public static void main(String [] args) throws IOException, JSONException{
 		//sup dudes
 		AWSCredentials credentials = 
 				new PropertiesCredentials(new File("src/AwsCredentials.properties"));
@@ -496,13 +503,12 @@ public class DB_Access {
 		
 		try {
 			//db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
-			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
-			//db.insertEvent("jclin06@ucsd.edu+Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");
-			//db.deleteEvent("jclin06@ucsd.edu+Dinner with Judy");
+			//db.insertEvent("jclin06@ucsd.edu_Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");
+			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu_Dinner with Judy");
+			//db.deleteEvent("jclin06@ucsd.edu_Dinner with Judy");
 			//db.deleteUserInterests("lcam@ucsd.edu", "food");
-			//db.updateEvents("Tina's Apartment", 7, 30, event_category, true, 2, 16, 2014, "I want to eat dinner at the bistro! Let's eat together :)", "jclin06@ucsd.edu+Dinner with Judy", "jclin06@ucsd.edu");
+			//db.updateEvents("Tina's Apartment", 7, 30, event_category, true, 2, 16, 2014, "I want to eat dinner at the bistro! Let's eat together :)", "jclin06@ucsd.edu_Dinner with Judy", "jclin06@ucsd.edu");
 			//db.updateUser("MARI", "KOBAB", "mkoba@ucsd.edu");
-			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
 			//db.deleteAttendee("jclin06@ucsd.edu+Dinner with Judy", "mkoba@ucsd.edu");
 			/*List<String> result = db.getUserInformation("tszutu@ucsd.edu");
 			for(int i = 0; i < result.size(); i++){
@@ -510,14 +516,18 @@ public class DB_Access {
 			}
 			
 			System.out.println("**********************************");*/
-			
-			List<List<String>> r = db.getEventsUserHosting("tszutu@ucsd.edu");
+			/*
+			List<List<String>> r = db.getAttendees("jclin06@ucsd.edu_Dinner with Judy");
 			for (int i = 0; i < r.size(); i++){
 				System.out.println("EVENT " + i);
 				for (int j = 0; j < r.get(i).size(); j++){
 					System.out.println(r.get(i).get(j));
 				}
-			}
+			}*/
+			JSONObject json = db.getUserInformation("tszutu@ucsd.edu");
+			System.out.println(json.get("fname"));
+			System.out.println(json.get("lname"));
+			System.out.println(json.get("ucsd_email"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
