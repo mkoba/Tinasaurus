@@ -160,8 +160,8 @@ public class DB_Access {
 			}
 			
 			//UPDATE events SET location='Tina\'s Apartment' AND date=15 WHERE name='tszutu@ucsd.edu+Basketball Game!';
-			p_stmt = connection.prepareStatement("UPDATE events SET location=? AND hour=? AND min=? "
-				+ "AND month=? AND date=? AND year=? AND description=? WHERE name=?;");
+			p_stmt = connection.prepareStatement("UPDATE events SET location=? , hour=? , min=? "
+				+ ", month=? , date=? , year=? , description=? WHERE name=?");
 			p_stmt.setString(1, location);
 			p_stmt.setInt(2, hour);
 			p_stmt.setInt(3, minute);
@@ -173,15 +173,15 @@ public class DB_Access {
 			System.out.println(p_stmt);
 			p_stmt.executeUpdate();
 			
-			p_stmt = connection.prepareStatement("DELETE FROM event_category WHERE name=?");
+			p_stmt = connection.prepareStatement("DELETE FROM event_category WHERE event=?");
 			p_stmt.setString(1, name);
-			p_stmt.executeQuery();
+			p_stmt.executeUpdate();
 			for(int i = 0; i < interests.length; i++){
 				/*rs = stmt.executeQuery("SELECT id FROM interests WHERE name = " + interest[i]);
 				while(rs.next()){
 					interestid = rs.getInt(1);
 				}*/
-				p_stmt = connection.prepareStatement("INSERT INTO event_category (name, interest) VALUES (?, ?)");
+				p_stmt = connection.prepareStatement("INSERT INTO event_category (event, interest) VALUES (?, ?)");
 				p_stmt.setString(1, name);
 				p_stmt.setString(2, interests[i]);
 				p_stmt.executeUpdate();
@@ -193,7 +193,7 @@ public class DB_Access {
 			lname = escapeAp(lname);
 			ucsd_email = escapeAp(ucsd_email);
 			
-			p_stmt = connection.prepareStatement("UPDATE user_information SET fname=? AND lname=? WHERE ucsd_email=?");
+			p_stmt = connection.prepareStatement("UPDATE user_information SET fname=? , lname=? WHERE ucsd_email=?");
 			p_stmt.setString(1, fname);
 			p_stmt.setString(2, lname);
 			p_stmt.setString(3, ucsd_email);
@@ -366,21 +366,115 @@ public class DB_Access {
 	// Get all events a user is hosting
 	public List<List<String>> getEventsUserHosting(String user) throws SQLException{
 		List<List<String>> result = new ArrayList<List<String>>();
+		user = escapeAp(user);
+		p_stmt = connection.prepareStatement("SELECT name FROM events WHERE host = ?");
+		p_stmt.setString(1, user);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			List<String> event = new ArrayList<String>();
+			String event_id = rs.getString("name");
+			p_stmt = connection.prepareStatement("SELECT name, location, hour, min, month, date, year, description " +
+											 	 "FROM events " + 
+											 	 "WHERE name = ?");
+			p_stmt.setString(1, event_id);
+			ResultSet rs_tmp = p_stmt.executeQuery();
+			while(rs_tmp.next()){
+				event.add(rs_tmp.getString("name"));
+				event.add(rs_tmp.getString("location"));
+				event.add(rs_tmp.getString("hour"));
+				event.add(rs_tmp.getString("min"));
+				event.add(rs_tmp.getString("month"));
+				event.add(rs_tmp.getString("date"));
+				event.add(rs_tmp.getString("year"));
+				event.add(rs_tmp.getString("description"));
+			}
+			result.add(event);
+		}
 		return result;
 	}
 	
 	// Get all attendees of an event
-	public List<String> getAttendees(String event) throws SQLException{
-		List<String> result = new ArrayList<String>();
+	public List<List<String>> getAttendees(String event) throws SQLException{
+		List<List<String>> result = new ArrayList<List<String>>();
+		event = escapeAp(event);
+		p_stmt = connection.prepareStatement("SELECT attendee FROM attendees WHERE event = ?");
+		p_stmt.setString(1, event);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			List<String> attendee = new ArrayList<String>();
+			String attendee_id = rs.getString("attendee");
+			p_stmt = connection.prepareStatement("SELECT fname, lname" +
+											 	 "FROM user_information " + 
+											 	 "WHERE user_email = ?");
+			p_stmt.setString(1, attendee_id);
+			ResultSet rs_tmp = p_stmt.executeQuery();
+			while(rs_tmp.next()){
+				attendee.add(rs_tmp.getString("fname"));
+				attendee.add(rs_tmp.getString("lname"));
+			}
+			result.add(attendee);
+		}
 		return result;
 	}
+	
+	// Get all attendees of an event
+	/*public List<String> getAttendeess(String event) throws SQLException{
+		List<String> result = new ArrayList<String>();
+		event = escapeAp(event);
+		p_stmt = connection.prepareStatement("SELECT attendee FROM attendees WHERE event = ?");
+		p_stmt.setString(1, event);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			result.add(rs.getString("attendee"));
+		}
+		return result;
+	}*/
 	
 	// Get all information about an Event (including attendees)
 	public List<String> getEventInformation(String event) throws SQLException{
 		List<String> result = new ArrayList<String>();
+		p_stmt = connection.prepareStatement("SELECT * FROM event WHERE name = ?");
+		p_stmt.setString(1, event);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			result.add(rs.getString("name"));
+			result.add(rs.getString("location"));
+			result.add(rs.getString("hour"));
+			result.add(rs.getString("min"));
+			result.add(rs.getString("month"));
+			result.add(rs.getString("date"));
+			result.add(rs.getString("year"));
+			result.add(rs.getString("description"));
+		}
+		String hostid=rs.getString("host");
+		p_stmt = connection.prepareStatement("SELECT fname,lname FROM user_information WHERE ucsd_email = ?");
+		p_stmt.setString(1, hostid);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			result.add(rs.getString("fname"));
+			result.add(rs.getString("lname"));
+		}
+		
+		p_stmt = connection.prepareStatement("SELECT attendee FROM attendees WHERE event = ?");
+		p_stmt.setString(1, event);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			//List<String> attendee = new ArrayList<String>();
+			String attendee_id = rs.getString("attendee");
+			p_stmt = connection.prepareStatement("SELECT fname, lname" +
+											 	 "FROM user_information " + 
+											 	 "WHERE user_email = ?");
+			p_stmt.setString(1, attendee_id);
+			ResultSet rs_tmp = p_stmt.executeQuery();
+			while(rs_tmp.next()){
+				result.add(rs_tmp.getString("fname"));
+				result.add(rs_tmp.getString("lname"));
+			}
+			//result.add(attendee);
+		}
 		return result;
 	}
-
+	//////
 	
 	public static void main(String [] args) throws IOException{
 		//sup dudes
@@ -410,14 +504,14 @@ public class DB_Access {
 			//db.updateUser("MARI", "KOBAB", "mkoba@ucsd.edu");
 			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu+Dinner with Judy");
 			//db.deleteAttendee("jclin06@ucsd.edu+Dinner with Judy", "mkoba@ucsd.edu");
-			List<String> result = db.getUserInformation("tszutu@ucsd.edu");
+			/*List<String> result = db.getUserInformation("tszutu@ucsd.edu");
 			for(int i = 0; i < result.size(); i++){
 				System.out.println(result.get(i));
 			}
 			
-			System.out.println("**********************************");
+			System.out.println("**********************************");*/
 			
-			List<List<String>> r = db.getEventsUserAttending("tszutu@ucsd.edu");
+			List<List<String>> r = db.getEventsUserHosting("tszutu@ucsd.edu");
 			for (int i = 0; i < r.size(); i++){
 				System.out.println("EVENT " + i);
 				for (int j = 0; j < r.get(i).size(); j++){
