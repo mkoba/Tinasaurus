@@ -1,4 +1,4 @@
-//package database;
+package database;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -18,6 +18,7 @@ import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.CreateSecurityGroupRequest;
 import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
+import com.amazonaws.util.json.JSONArray;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
 
@@ -266,42 +267,47 @@ public class DB_Access {
 	}
 	
 	// Get user's interests
-	public List<String> getUserInterests(String user) throws SQLException{
-		List<String> result = new ArrayList<String>();
+	public JSONObject getUserInterests(String user) throws SQLException, JSONException{
+		JSONObject result = new JSONObject();
+		List<String> interests = new ArrayList<String>();
 		user = escapeAp(user);
 		p_stmt = connection.prepareStatement("SELECT * FROM user_interests WHERE user = ?");
 		p_stmt.setString(1, user);
 		rs = p_stmt.executeQuery();
 		while(rs.next()){
-			result.add(rs.getString("interest"));
+			interests.add(rs.getString("interest"));
 		}
+		result.put("interests", interests);
 		
 		return result;
 	}
 	
 	// Get all events
-	public List<List<String>> getAllEvents() throws SQLException{
-		List<List<String>> result = new ArrayList<List<String>>();
+	public JSONObject getAllEvents() throws SQLException, JSONException{
+		JSONObject result = new JSONObject();
+		List<JSONObject> eventslist = new ArrayList<JSONObject>();
 		p_stmt = connection.prepareStatement("SELECT * FROM events");
 		rs = p_stmt.executeQuery();
 		while(rs.next()){
-			List<String> event = new ArrayList<String>();
-			event.add(rs.getString("name"));
-			event.add(rs.getString("location"));
-			event.add(rs.getString("hour"));
-			event.add(rs.getString("min"));
-			event.add(rs.getString("month"));
-			event.add(rs.getString("date"));
-			event.add(rs.getString("year"));
-			event.add(rs.getString("description"));
-			result.add(event);
+			JSONObject event = new JSONObject();
+			event.put("name", rs.getString("name"));
+			event.put("location", rs.getString("location"));
+			event.put("hour", rs.getString("hour"));
+			event.put("min", rs.getString("min"));
+			event.put("month", rs.getString("month"));
+			event.put("date", rs.getString("date"));
+			event.put("year", rs.getString("year"));
+			event.put("description", rs.getString("description"));
+			eventslist.add(event);
 		}
+		result.put("events", eventslist);
 		return result;
 	}
 
 	// Get all events in a category
-	public List<List<String>> getEventsInCategory(String category) throws SQLException{
-		List<List<String>> result = new ArrayList<List<String>>();
+	public JSONObject getEventsInCategory(String category) throws SQLException, JSONException{
+		JSONObject result = new JSONObject();
+		List<JSONObject> eventslist = new ArrayList<JSONObject>();
 		category = escapeAp(category);
 		p_stmt = connection.prepareStatement("SELECT name, location, hour, min, month, date, year, description " +
 											 "FROM events, event_category " + 
@@ -309,35 +315,41 @@ public class DB_Access {
 		p_stmt.setString(1, category);
 		rs = p_stmt.executeQuery();
 		while(rs.next()){
-			List<String> event = new ArrayList<String>();
-			event.add(rs.getString("name"));
-			event.add(rs.getString("location"));
-			event.add(rs.getString("hour"));
-			event.add(rs.getString("min"));
-			event.add(rs.getString("month"));
-			event.add(rs.getString("date"));
-			event.add(rs.getString("year"));
-			event.add(rs.getString("description"));
-			result.add(event);
+			JSONObject event = new JSONObject();
+			event.put("name", rs.getString("name"));
+			event.put("location", rs.getString("location"));
+			event.put("hour", rs.getString("hour"));
+			event.put("min", rs.getString("min"));
+			event.put("month", rs.getString("month"));
+			event.put("date", rs.getString("date"));
+			event.put("year", rs.getString("year"));
+			event.put("description", rs.getString("description"));
+			eventslist.add(event);
 		}
+		result.put("events", eventslist);
 		return result;
 	}
 	
 	// Get all events that suit a user's interest
-	public List<List<String>> getEventsFromUserInterests(String user) throws SQLException{
-		List<List<String>> result = new ArrayList<List<String>>();
+	public JSONObject getEventsFromUserInterests(String user) throws SQLException, JSONException{
+		JSONObject result = new JSONObject();
 		user = escapeAp(user);
 		p_stmt = connection.prepareStatement("SELECT * FROM user_interests WHERE user = ?");
 		p_stmt.setString(1, user);
 		ResultSet rs = p_stmt.executeQuery();
-		
+		List<JSONObject> eventslist = new ArrayList<JSONObject>();
 		while(rs.next()){
 			String interest = rs.getString("interest");
-			result.addAll(getEventsInCategory(interest));
+			JSONObject eventsincategory = getEventsInCategory(interest);
+			JSONArray events = eventsincategory.getJSONArray("events");
+			for(int i = 0; i < events.length(); i++){
+				eventslist.add(events.getJSONObject(i));
+			}
 		}
+		
+		result.put("events", eventslist);
 		return result;
 	}
-	
 	// Get all events a user is attending
 	public JSONObject getEventsUserAttending(String user) throws SQLException, JSONException{
 		JSONObject result = new JSONObject();
@@ -520,10 +532,8 @@ public class DB_Access {
 					System.out.println(r.get(i).get(j));
 				}
 			}*/
-			JSONObject json = db.getUserInformation("tszutu@ucsd.edu");
-			System.out.println(json.get("fname"));
-			System.out.println(json.get("lname"));
-			System.out.println(json.get("ucsd_email"));
+			JSONObject json = db.getEventsFromUserInterests("mkoba@ucsd.edu");
+			System.out.println(json.toString());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
