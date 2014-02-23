@@ -32,10 +32,21 @@ public class FragEvents extends Fragment {
 			@Override
 			public void onClick(View v) {
 				//view= inflater.inflate(R.layout.activity_allevents, container, false);
-				Intent intent = new Intent(getActivity(), com.ucevents.events.allEventsActivity.class);
+				Intent intent = new Intent(getActivity(), com.ucevents.events.EventsListActivity.class);
 				getActivity().startActivity(intent);
 			}
 		});
+		
+		bbyCategory  = (Button) view.findViewById(R.id.bbyCategory);
+		bbyCategory.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				//view= inflater.inflate(R.layout.activity_allevents, container, false);
+				Intent intent = new Intent(getActivity(), com.ucevents.events.categoryEventsActivity.class);
+				getActivity().startActivity(intent);
+			}
+		});
+		
 		return view;
 
 	}

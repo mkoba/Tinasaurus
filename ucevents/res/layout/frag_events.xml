@@ -18,6 +18,12 @@
         android:layout_height="wrap_content"
         android:text="@string/byCategory" />
     
+    <Button
+        android:id="@+id/bUserInterest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/byUserInterest" />
+    
     <FrameLayout
         android:id="@+id/eventsViewer"
         android:name="com.ucevents.events.innerEventsFrag"
