@@ -47,15 +47,15 @@
             android:label="login" >
         </activity>
 		<activity
-            android:name="com.ucevents.events.eventsActivity"
+            android:name="com.ucevents.events.EventsActivity"
             android:label="events" >
         </activity>        
         <activity
-            android:name="com.ucevents.events.categoryEventsActivity"
+            android:name="com.ucevents.events.CategoryEventsActivity"
             android:label="categoryEvents" >
         </activity>
          <activity
-            android:name="com.ucevents.events.allEventsActivity"
+            android:name="com.ucevents.events.EventsListActivity"
             android:label="allEvents" >
         </activity>
         <activity
@@ -70,6 +70,7 @@
             android:name="com.ucevents.schedule.AddEvent"
             android:label="AddEvent" >
         </activity>
+
     </application>
     
 

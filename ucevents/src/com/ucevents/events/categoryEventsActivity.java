@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class categoryEventsActivity extends Activity{
+public class CategoryEventsActivity extends Activity{
 	ImageButton ibSport;
 	ImageButton ibFood;
 	ImageButton ibStudy;
@@ -18,6 +18,8 @@ public class categoryEventsActivity extends Activity{
 	ImageButton ibClub;
 	ImageButton ibSocial;
 	ImageButton ibOther;
+	String key;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,29 +30,82 @@ public class categoryEventsActivity extends Activity{
 	}
 
 	private void addListenerOnButton() {
-		// TODO Auto-generated method stub
-		final String key="categoryType";
-		
-		final Intent i = new Intent(getApplicationContext(), com.ucevents.events.eventsActivity.class);
-		final Bundle bundle = new Bundle();
-		
 		ibSport = (ImageButton) findViewById(R.id.ibSport);
 		ibSport.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0){
-				bundle.putInt(key, R.id.ibSport);
-				i.putExtras(bundle);
+				Intent i2 = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class);
+				i2.putExtra("key", "sport");
+				startActivity(i2);
+			}
+			
+		});
+		
+		key="food";
+		ibFood = (ImageButton) findViewById(R.id.ibFood);
+		ibFood.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0){
+				Intent i = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class );
+				i.putExtra("key", "food");
 				startActivity(i);
 			}
 			
 		});
 		
-		ibFood = (ImageButton) findViewById(R.id.ibFood);
+		key="study";
 		ibStudy = (ImageButton) findViewById(R.id.ibStudy);
-		ibCareer = (ImageButton) findViewById(R.id.ibCareer);
-		ibClub = (ImageButton) findViewById(R.id.ibClub);
-		ibSocial = (ImageButton) findViewById(R.id.ibSocial);
-		ibOther = (ImageButton) findViewById(R.id.ibOther);
+		ibStudy.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0){
+				Intent i = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class );
+				i.putExtra("key", "study");
+				startActivity(i);
+			}
+			
+		});
 		
+		key="career";
+		ibCareer = (ImageButton) findViewById(R.id.ibCareer);
+		ibCareer.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0){
+				Intent i = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class );
+				i.putExtra("key", "career");
+				startActivity(i);
+			}
+			
+		});
+		
+		key="club";
+		ibClub = (ImageButton) findViewById(R.id.ibClub);
+		ibClub.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0){
+				Intent i = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class );
+				i.putExtra("key", "club");
+				startActivity(i);
+			}
+			
+		});
+		
+		key="social";
+		ibSocial = (ImageButton) findViewById(R.id.ibSocial);
+		ibSocial.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0){
+				Intent i = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class );
+				i.putExtra("key", "social");
+				startActivity(i);
+			}
+			
+		});
+		
+		key="other";
+		ibOther = (ImageButton) findViewById(R.id.ibOther);
+		ibOther.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0){
+				Intent i = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class );
+				i.putExtra("key", "other");
+				startActivity(i);
+			}
+			
+		});
 		
 		
 	}
