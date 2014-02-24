@@ -1,4 +1,4 @@
-//package database;
+package database;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -8,16 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
-import com.amazonaws.services.ec2.model.CreateSecurityGroupRequest;
-import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
 import com.amazonaws.util.json.JSONArray;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
@@ -66,6 +61,19 @@ public class DB_Access {
 		}
 
 		return s;
+	}
+	
+	public String[] parseArray(String s){
+		List<String> result = new ArrayList<String>();
+		int prev = 1;
+		int i = 0;
+		while((i = s.indexOf(",", prev)) != -1){
+			result.add(s.substring(prev, i).trim());
+			prev = i+1;
+			i = s.indexOf(",", prev);
+		}
+		result.add(s.substring(prev, s.length()-1).trim());
+		return result.toArray(new String[result.size()]);
 	}
 
 	public void insertUser(String fname, String lname, String email, String[] interests) throws SQLException{
@@ -350,7 +358,6 @@ public class DB_Access {
 		result.put("events", eventslist);
 		return result;
 	}
-
 	// Get all events a user is attending
 	public JSONObject getEventsUserAttending(String user) throws SQLException, JSONException{
 		JSONObject result = new JSONObject();
@@ -538,8 +545,15 @@ public class DB_Access {
 					System.out.println(r.get(i).get(j));
 				}
 			}*/
-			JSONObject json = db.getEventsUserAttending("mkoba@ucsd.edu");
+			JSONObject json = db.getEventsUserHosting("mkoba@ucsd.edu");
 			System.out.println(json.toString());
+			json = db.getAllEvents();
+			System.out.println(json.toString());
+			
+			String[] result = db.parseArray("[hello, world]");
+			for (int i = 0; i < result.length; i++){
+				System.out.println("i: " + result[i]);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
