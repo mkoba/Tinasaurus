@@ -18,7 +18,7 @@ public class Events implements Parcelable{
 	public Events() {
 		
 	}
-	
+	//
 	public Events(int eventid, String name, int time, String location,
 			int month, int date, int year, String description, int hostid, int iconid) {
 		super();
