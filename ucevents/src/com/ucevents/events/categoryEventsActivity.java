@@ -30,16 +30,9 @@ public class CategoryEventsActivity extends Activity{
 	}
 
 	private void addListenerOnButton() {
-	
-		
-		//final Intent i = new Intent(getApplicationContext(), com.ucevents.events.EventsListActivity.class);
-		final Bundle bundle = new Bundle();
-		
 		ibSport = (ImageButton) findViewById(R.id.ibSport);
 		ibSport.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0){
-				//bundle.putString(key, "sport");
-				//i.putExtras(bundle);
 				Intent i2 = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class);
 				i2.putExtra("key", "sport");
 				startActivity(i2);
