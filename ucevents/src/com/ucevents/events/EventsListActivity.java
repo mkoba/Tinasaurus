@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -30,14 +31,13 @@ public class EventsListActivity extends Activity{
 		Bundle bundle = getIntent().getExtras();
 		value = bundle.getString("key");
 		Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
-		//System.out.println("key value: " + value);
 		populateEventList();
 		populateListView();
-		addListenerOnButton();
+		registerClickCallback();
 		
 	}
 
-
+	// this will be later populated from db
 	private void populateEventList() {
 		eventlist.add(new Events(1, "Roaming", 300, "CENTER 200", 2, 14, 2014, "Valentine Fest", 1, R.drawable.play_icon));
 		eventlist.add(new Events(2, "BOBALAND", 400, "CENTER 200", 2, 14, 2014, "Milk Tea Fest", 1,R.drawable.play_icon));
@@ -101,9 +101,26 @@ public class EventsListActivity extends Activity{
 		
 	}
 
-	private void addListenerOnButton() {
-		// TODO Auto-generated method stub
+
+	private void registerClickCallback() {
+		ListView list = (ListView) findViewById(R.id.lvallEvents);
+		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			// position: place in list
+			@Override
+			public void onItemClick(AdapterView<?> parent, View viewClicked,
+			int position, long id) {
+				
+				Events clickedEvent = eventlist.get(position);
+				//Toast.makeText(getApplicationContext(), clickedEvent.getDescription(), Toast.LENGTH_SHORT).show();
+				Intent i = new Intent(EventsListActivity.this, com.ucevents.events.IndividualEventsActivity.class);
+				Bundle b = new Bundle();
+				b.putParcelable("chosenEvent", clickedEvent);
+				i.putExtras(b);
+				startActivity(i);
+			}
+		});
 		
 	}
+
 
 }

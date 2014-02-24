@@ -58,6 +58,10 @@
             android:name="com.ucevents.events.EventsListActivity"
             android:label="allEvents" >
         </activity>
+        <activity
+            android:name="com.ucevents.events.IndividualEventsActivity"
+            android:label="individualEvent">
+        </activity>
     </application>
 
 </manifest>
