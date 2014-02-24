@@ -4,11 +4,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/ibSelectEvent"
-        android:layout_width="124dp"
-        android:layout_height="111dp"
-        android:src="@drawable/logo" />           
-                
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:src="@drawable/food" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Korean BBQ"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Location:" />
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Date" />
+
+    <TextView
+        android:id="@+id/textTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Time" />
+
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Info:" />
+
+    <CheckBox
+        android:id="@+id/checkBoxRSVP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RSVP" />
+
+    <TextView
+        android:id="@+id/textRSVPCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="RSVP Count:" />
 
 </LinearLayout>
