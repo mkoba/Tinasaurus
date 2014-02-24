@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EventsListActivity extends Activity{
 	String value;
@@ -28,7 +29,8 @@ public class EventsListActivity extends Activity{
 		setContentView(R.layout.activity_allevents);
 		Bundle bundle = getIntent().getExtras();
 		value = bundle.getString("key");
-		System.out.println("key value: " + value);
+		Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
+		//System.out.println("key value: " + value);
 		populateEventList();
 		populateListView();
 		addListenerOnButton();

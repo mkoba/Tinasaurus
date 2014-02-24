@@ -36,4 +36,5 @@
 	<string name="social">Social</string>
 	<string name="sport">Sport</string>
 	<string name ="other">Other</string>
+	<string name="byUserInterest">User\'s Interests</string>
 </resources>

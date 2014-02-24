@@ -18,6 +18,7 @@ import android.widget.Button;
 public class FragEvents extends Fragment {
 	Button ballEvents;
 	Button bbyCategory;
+	Button bUserInterest;
 	
 
 	@Override
@@ -33,6 +34,7 @@ public class FragEvents extends Fragment {
 			public void onClick(View v) {
 				//view= inflater.inflate(R.layout.activity_allevents, container, false);
 				Intent intent = new Intent(getActivity(), com.ucevents.events.EventsListActivity.class);
+				intent.putExtra("key", "all");
 				getActivity().startActivity(intent);
 			}
 		});
@@ -42,10 +44,22 @@ public class FragEvents extends Fragment {
 			@Override
 			public void onClick(View v) {
 				//view= inflater.inflate(R.layout.activity_allevents, container, false);
-				Intent intent = new Intent(getActivity(), com.ucevents.events.categoryEventsActivity.class);
+				Intent intent = new Intent(getActivity(), com.ucevents.events.CategoryEventsActivity.class);
 				getActivity().startActivity(intent);
 			}
 		});
+		
+		bUserInterest = (Button) view.findViewById(R.id.bUserInterest);
+		bUserInterest.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				//view= inflater.inflate(R.layout.activity_allevents, container, false);
+				Intent intent = new Intent(getActivity(), com.ucevents.events.EventsListActivity.class);
+				intent.putExtra("key", "interest");
+				getActivity().startActivity(intent);
+			}
+		});		
+		
 		
 		return view;
 
