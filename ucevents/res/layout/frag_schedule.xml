@@ -6,9 +6,30 @@
         android:orientation="vertical"
         tools:context=".DeviceFragment" >
 
+
+    <Button
+        android:id="@+id/addEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Event" />
+        
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Schedule" />
+    
+    <ImageButton
+        android:id="@+id/firstEvent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/logo" />
+            
+    <ImageButton
+        android:id="@+id/secondEvent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/logo" />
 
 </LinearLayout>
