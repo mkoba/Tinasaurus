@@ -8,6 +8,8 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -70,6 +72,7 @@
             android:name="com.ucevents.schedule.AddEvent"
             android:label="AddEvent" >
         </activity>
+
         <activity
             android:name="com.ucevents.menu.MenuActivity"
             android:label="Menu">
@@ -82,7 +85,11 @@
             android:name="com.ucevents.schedule.ScheduleActivity"
             android:label="schedule"></activity>
 
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="3a9e2ee0861d8cd84ec8ffc3005078949cd21368"/>
+
+
     </application>
     
 
 </manifest>
+
