@@ -10,7 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ucevents.R;
+
 import com.ucevents.menu.MenuActivity;
+
+import com.google.analytics.tracking.android.EasyTracker;
+
 
 public class IndividualEventsActivity extends MenuActivity {
 	ImageView ivIconID;
@@ -62,5 +66,22 @@ public class IndividualEventsActivity extends MenuActivity {
 		});
 		
 		// add code: grab rsvp count from db
+	}
+	
+	/**
+	 * An example Activity using Google Analytics and EasyTracker.
+	 */
+	  @Override
+	  public void onStart() {
+	    super.onStart();
+	    // The rest of your onStart() code.
+	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    // The rest of your onStop() code.
+	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	}
 }

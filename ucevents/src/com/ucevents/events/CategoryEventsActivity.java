@@ -1,7 +1,11 @@
 package com.ucevents.events;
 
 import com.android.ucevents.R;
+
 import com.ucevents.menu.MenuActivity;
+
+import com.google.analytics.tracking.android.EasyTracker;
+
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -110,5 +114,22 @@ public class CategoryEventsActivity extends MenuActivity{
 		});
 		
 		
+	}
+	
+	/**
+	 * An example Activity using Google Analytics and EasyTracker.
+	 */
+	  @Override
+	  public void onStart() {
+	    super.onStart();
+	    // The rest of your onStart() code.
+	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    // The rest of your onStop() code.
+	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	}
 }

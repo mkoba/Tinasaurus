@@ -1,5 +1,6 @@
 package com.android.ucevents;
 
+import com.google.analytics.tracking.android.*;
 import com.ucevents.signup.signupActivity;
 
 import android.os.Bundle;
@@ -17,9 +18,25 @@ public class MainActivity extends Activity {
 	Button blogin;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		//google analytics portion 
+		Tracker tracker = GoogleAnalytics.getInstance(this).getTracker("UA-48367059-1");
+		
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_main);
 		addListenerOnButton();
+		
+	/*	// Set screen name on the tracker to be sent with all hits.
+		MyApp.getGaTracker().set(Fields.SCREEN_NAME, "Main Activity");
+		
+		// Send a screen view for "Home Screen"
+		tracker.send(MapBuilder
+		    .createAppView()
+		    .build()
+		);
+		
+		// Clear the screen name field when we're done.
+		tracker.set(Fields.SCREEN_NAME, null);*/
 	}
 	
 	public void addListenerOnButton() {
@@ -46,6 +63,23 @@ public class MainActivity extends Activity {
 				startActivity(i);
 				}
 			});
+	}
+	
+	/**
+	 * An example Activity using Google Analytics and EasyTracker.
+	 */
+	  @Override
+	  public void onStart() {
+	    super.onStart();
+	    // The rest of your onStart() code.
+	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    // The rest of your onStop() code.
+	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	}
 
 }

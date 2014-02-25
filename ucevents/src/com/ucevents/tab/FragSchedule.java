@@ -6,6 +6,7 @@ import java.util.List;
 import com.android.ucevents.MainActivity;
 import com.android.ucevents.R;
 import com.android.ucevents.R.layout;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.ucevents.events.Events;
 import com.ucevents.signup.signupActivity;
 
@@ -21,6 +22,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import android.app.Activity;
+
+import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -115,5 +120,20 @@ public class FragSchedule extends Fragment {
 			return itemView;
 		}
 		
-*/
+*/	/**
+	 * An example Activity using Google Analytics and EasyTracker.
+	 */
+	 /* @Override
+	  public void onStart() {
+	    super.onStart();
+	    // The rest of your onStart() code.
+	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    // The rest of your onStop() code.
+	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	}*/
 }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.ucevents"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppBaseThemeDark"  >
+        <activity
+            android:name="com.android.ucevents.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.ucevents.signup.signupActivity"
+            android:label="signup" >
+        </activity>
+        <activity
+            android:name="com.ucevents.tab.Tabs"
+            android:label="tab" >
+        </activity>
+        <activity
+            android:name="com.ucevents.tab.FragEvents"
+            android:label="tabevents" >
+        </activity>
+        <activity
+            android:name="comcom.ucevents.tab.FragProfile"
+                       android:label="tabprof" >
+        </activity>
+        <activity
+            android:name="comcom.ucevents.tab.FragSchedule"
+                      android:label="tabsched" >
+        </activity>
+        <activity
+            android:name="com.ucevents.login.loginActivity"
+            android:label="login" >
+        </activity>
+		<activity
+            android:name="com.ucevents.events.EventsActivity"
+            android:label="events" >
+        </activity>        
+        <activity
+            android:name="com.ucevents.events.CategoryEventsActivity"
+            android:label="categoryEvents" >
+        </activity>
+         <activity
+            android:name="com.ucevents.events.EventsListActivity"
+            android:label="allEvents" >
+        </activity>
+        <activity
+            android:name="com.ucevents.events.IndividualEventsActivity"
+            android:label="individualEvent">
+        </activity>
+        <activity
+            android:name="com.ucevents.events.profileActivity"
+            android:label="profileActivity" >
+        </activity>
+        <activity
+            android:name="com.ucevents.schedule.AddEvent"
+            android:label="AddEvent" >
+        </activity>
+
+        <activity
+            android:name="com.ucevents.menu.MenuActivity"
+            android:label="Menu">
+        </activity>
+        <activity
+            android:name="com.ucevents.profile.ProfileActivity"
+            android:label="profile">
+        </activity>
+        <activity 
+            android:name="com.ucevents.schedule.ScheduleActivity"
+            android:label="schedule"></activity>
+
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="3a9e2ee0861d8cd84ec8ffc3005078949cd21368"/>
+
+
+    </application>
+    
+
+</manifest>
+
