@@ -29,8 +29,8 @@ public class loginActivity extends Activity{
 			//@Override
 			public void onClick(View arg0) {
 		
-				Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
-			
+				//Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
+				Intent i= new Intent(loginActivity.this, com.ucevents.events.EventsActivity.class);
 				startActivity(i);
 				}
 			});

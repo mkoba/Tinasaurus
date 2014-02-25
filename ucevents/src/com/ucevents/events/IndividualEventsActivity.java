@@ -10,8 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ucevents.R;
+import com.ucevents.menu.MenuActivity;
 
-public class IndividualEventsActivity extends Activity {
+public class IndividualEventsActivity extends MenuActivity {
 	ImageView ivIconID;
 	TextView tvName;
 	TextView tvLocation;

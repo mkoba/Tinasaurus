@@ -13,6 +13,7 @@
     <color name="blue">#2F4963</color>
 
     <string name="events">Events</string>
+    <string name="schedule">Schedule</string>
     <string name="back">Back</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>

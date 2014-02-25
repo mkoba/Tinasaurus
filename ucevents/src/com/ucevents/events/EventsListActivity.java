@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.ucevents.R;
+import com.ucevents.menu.MenuActivity;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -21,7 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EventsListActivity extends Activity{
+public class EventsListActivity extends MenuActivity{
 	String value;
 	private List<Events> eventlist = new ArrayList<Events>();
 	@Override

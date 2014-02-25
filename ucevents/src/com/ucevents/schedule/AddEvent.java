@@ -12,9 +12,10 @@ import android.view.View.OnClickListener;
 
 import com.android.ucevents.MainActivity;
 import com.android.ucevents.R;
+import com.ucevents.menu.MenuActivity;
 import com.ucevents.signup.signupActivity;
 
-public class AddEvent extends Activity{
+public class AddEvent extends MenuActivity{
 	Button createBut;
 	
 	public void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,8 @@
 package com.ucevents.events;
 
 import com.android.ucevents.R;
+import com.ucevents.menu.MenuActivity;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class CategoryEventsActivity extends Activity{
+public class CategoryEventsActivity extends MenuActivity{
 	ImageButton ibSport;
 	ImageButton ibFood;
 	ImageButton ibStudy;
