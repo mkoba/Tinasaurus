@@ -10,8 +10,16 @@ package com.android.ucevents;
 public final class R {
     public static final class attr {
     }
+    public static final class bool {
+        /** Enable automatic activity tracking
+         */
+        public static final int ga_autoActivityTracking=0x7f050000;
+        /** Enable automatic exception tracking
+         */
+        public static final int ga_reportUncaughtExceptions=0x7f050001;
+    }
     public static final class color {
-        public static final int blue=0x7f060000;
+        public static final int blue=0x7f070000;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -20,76 +28,158 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f060000;
+        public static final int activity_vertical_margin=0x7f060001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int logo=0x7f020001;
+        public static final int calendar_icon=0x7f020000;
+        public static final int career=0x7f020001;
+        public static final int club=0x7f020002;
+        public static final int food=0x7f020003;
+        public static final int ic_action_computer=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int logo=0x7f020006;
+        public static final int other=0x7f020007;
+        public static final int play_icon=0x7f020008;
+        public static final int schedule_icon=0x7f020009;
+        public static final int social=0x7f02000a;
+        public static final int sport=0x7f02000b;
+        public static final int study_icon=0x7f02000c;
+        public static final int studying=0x7f02000d;
     }
     public static final class id {
-        public static final int action_settings=0x7f09001b;
-        public static final int back=0x7f090018;
-        public static final int bloginback=0x7f09000d;
-        public static final int bloginpage=0x7f09000c;
-        public static final int confirmpassword=0x7f090016;
-        public static final int confirmpasswordinput=0x7f090017;
-        public static final int email=0x7f090008;
-        public static final int emailinput=0x7f090009;
-        public static final int firstname=0x7f090012;
-        public static final int firstnameinput=0x7f090013;
-        public static final int groupname=0x7f090011;
-        public static final int ibCareer=0x7f090004;
-        public static final int ibClub=0x7f090005;
-        public static final int ibFood=0x7f090002;
-        public static final int ibOther=0x7f090007;
-        public static final int ibSelectEvent=0x7f090000;
-        public static final int ibSocial=0x7f090006;
-        public static final int ibSport=0x7f090001;
-        public static final int ibStudy=0x7f090003;
-        public static final int lastname=0x7f090014;
-        public static final int lastnameinput=0x7f090015;
-        public static final int login=0x7f09000f;
-        public static final int logo=0x7f09000e;
-        public static final int password=0x7f09000a;
-        public static final int passwordinput=0x7f09000b;
-        public static final int realtabcontent=0x7f09001a;
-        public static final int signUp=0x7f090010;
-        public static final int signup=0x7f090019;
+        public static final int Done=0x7f0a0008;
+        public static final int action_event=0x7f0a0046;
+        public static final int action_profile=0x7f0a0048;
+        public static final int action_schedule=0x7f0a0047;
+        public static final int action_settings=0x7f0a0049;
+        public static final int addEvent=0x7f0a0043;
+        public static final int bUserInterest=0x7f0a0040;
+        public static final int back=0x7f0a0035;
+        public static final int ballEvents=0x7f0a003e;
+        public static final int bbyCategory=0x7f0a003f;
+        public static final int bloginback=0x7f0a0026;
+        public static final int bloginpage=0x7f0a0025;
+        public static final int career_txt=0x7f0a0018;
+        public static final int checkBoxRSVP=0x7f0a000f;
+        public static final int club_txt=0x7f0a001c;
+        public static final int confirmpassword=0x7f0a0033;
+        public static final int confirmpasswordinput=0x7f0a0034;
+        public static final int datePicker1=0x7f0a0005;
+        public static final int description=0x7f0a0007;
+        public static final int email=0x7f0a0021;
+        public static final int emailinput=0x7f0a0022;
+        public static final int eventTime=0x7f0a0004;
+        public static final int event_name=0x7f0a0003;
+        public static final int event_pic=0x7f0a0001;
+        public static final int events2=0x7f0a0011;
+        public static final int eventsViewer=0x7f0a0041;
+        public static final int f_name=0x7f0a002c;
+        public static final int firstEvent=0x7f0a0044;
+        public static final int firstname=0x7f0a002f;
+        public static final int firstnameinput=0x7f0a0030;
+        public static final int food_txt=0x7f0a0015;
+        public static final int groupname=0x7f0a002a;
+        public static final int ibCareer=0x7f0a0017;
+        public static final int ibClub=0x7f0a001b;
+        public static final int ibFood=0x7f0a0013;
+        public static final int ibOther=0x7f0a001f;
+        public static final int ibSocial=0x7f0a0014;
+        public static final int ibSport=0x7f0a001d;
+        public static final int ibStudy=0x7f0a0019;
+        public static final int interest=0x7f0a002e;
+        public static final int item_ivevent_icon=0x7f0a0038;
+        public static final int item_tvName=0x7f0a0039;
+        public static final int item_txtDate=0x7f0a003a;
+        public static final int item_txtDescription=0x7f0a003b;
+        public static final int item_txtLocation=0x7f0a003d;
+        public static final int item_txtTime=0x7f0a003c;
+        public static final int ivIconID=0x7f0a0009;
+        public static final int l_name=0x7f0a002d;
+        public static final int lastname=0x7f0a0031;
+        public static final int lastnameinput=0x7f0a0032;
+        public static final int location=0x7f0a0006;
+        public static final int login=0x7f0a0028;
+        public static final int logo=0x7f0a0027;
+        public static final int lvallEvents=0x7f0a0000;
+        public static final int other_txt=0x7f0a0020;
+        public static final int password=0x7f0a0023;
+        public static final int passwordinput=0x7f0a0024;
+        public static final int profilepic=0x7f0a002b;
+        public static final int pubic=0x7f0a0002;
+        public static final int realtabcontent=0x7f0a0037;
+        public static final int scrollView1=0x7f0a0012;
+        public static final int secondEvent=0x7f0a0045;
+        public static final int signUp=0x7f0a0029;
+        public static final int signup=0x7f0a0036;
+        public static final int social_txt=0x7f0a0016;
+        public static final int sport_txt=0x7f0a001e;
+        public static final int study_txt=0x7f0a001a;
+        public static final int textRSVPCount=0x7f0a0010;
+        public static final int textView1=0x7f0a0042;
+        public static final int tvDate=0x7f0a000c;
+        public static final int tvDescription=0x7f0a000e;
+        public static final int tvLocation=0x7f0a000b;
+        public static final int tvName=0x7f0a000a;
+        public static final int tvTime=0x7f0a000d;
     }
     public static final class layout {
-        public static final int activity_events=0x7f030000;
-        public static final int activity_events_category=0x7f030001;
-        public static final int activity_login=0x7f030002;
-        public static final int activity_main=0x7f030003;
-        public static final int activity_menu=0x7f030004;
-        public static final int activity_signup=0x7f030005;
-        public static final int activity_tab=0x7f030006;
-        public static final int frag_events=0x7f030007;
-        public static final int frag_profile=0x7f030008;
-        public static final int frag_schedule=0x7f030009;
+        public static final int activity_actionbar=0x7f030000;
+        public static final int activity_allevents=0x7f030001;
+        public static final int activity_create_event=0x7f030002;
+        public static final int activity_events=0x7f030003;
+        public static final int activity_events_category=0x7f030004;
+        public static final int activity_login=0x7f030005;
+        public static final int activity_main=0x7f030006;
+        public static final int activity_menu=0x7f030007;
+        public static final int activity_profile=0x7f030008;
+        public static final int activity_signup=0x7f030009;
+        public static final int activity_tab=0x7f03000a;
+        public static final int eventslistview=0x7f03000b;
+        public static final int frag_events=0x7f03000c;
+        public static final int frag_profile=0x7f03000d;
+        public static final int frag_schedule=0x7f03000e;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int activity_main_actions=0x7f090000;
+        public static final int main=0x7f090001;
     }
     public static final class string {
-        public static final int action_settings=0x7f050001;
-        public static final int app_name=0x7f050000;
-        public static final int back=0x7f050009;
-        public static final int confirm_password=0x7f05000d;
-        public static final int email=0x7f05000e;
-        public static final int email_login=0x7f05000f;
-        public static final int events=0x7f050008;
-        public static final int first_name=0x7f05000a;
-        public static final int forgetpass=0x7f050005;
-        public static final int groupname=0x7f050006;
-        public static final int hello_blank_fragment=0x7f050010;
-        public static final int hello_world=0x7f050002;
-        public static final int last_name=0x7f05000b;
-        public static final int login=0x7f050003;
-        public static final int password=0x7f05000c;
-        public static final int signup=0x7f050004;
-        public static final int ucevents=0x7f050007;
+        public static final int about_me=0x7f040016;
+        public static final int action_settings=0x7f040002;
+        public static final int allEvents=0x7f040013;
+        public static final int app_name=0x7f040001;
+        public static final int back=0x7f04000b;
+        public static final int byCategory=0x7f040014;
+        public static final int byUserInterest=0x7f040020;
+        public static final int career=0x7f04001b;
+        public static final int club=0x7f04001c;
+        public static final int confirm_password=0x7f04000f;
+        public static final int email=0x7f040010;
+        public static final int email_login=0x7f040011;
+        public static final int events=0x7f040009;
+        public static final int first_name=0x7f04000c;
+        public static final int food=0x7f040019;
+        public static final int forgetpass=0x7f040006;
+        /** Replace placeholder ID with your tracking ID
+         */
+        public static final int ga_trackingId=0x7f040000;
+        public static final int groupname=0x7f040007;
+        public static final int hello_blank_fragment=0x7f040012;
+        public static final int hello_world=0x7f040003;
+        public static final int last_name=0x7f04000d;
+        public static final int login=0x7f040004;
+        public static final int other=0x7f04001f;
+        public static final int password=0x7f04000e;
+        public static final int profile=0x7f040015;
+        public static final int schedule=0x7f04000a;
+        public static final int select_interests=0x7f040017;
+        public static final int signup=0x7f040005;
+        public static final int social=0x7f04001d;
+        public static final int sport=0x7f04001e;
+        public static final int sports=0x7f040018;
+        public static final int study=0x7f04001a;
+        public static final int ucevents=0x7f040008;
     }
     public static final class style {
         /** 
@@ -113,10 +203,11 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseThemeDark=0x7f080002;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f080001;
     }
 }
