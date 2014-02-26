@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.google.analytics.tracking.android.EasyTracker;
 
 
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends MenuActivity {
 
 	Button bsignUp;
 	@Override
