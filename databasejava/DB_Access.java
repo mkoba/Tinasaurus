@@ -202,7 +202,7 @@ public class DB_Access {
 		}
 	}
 
-	public void updateUser(String fname, String lname, String ucsd_email) throws SQLException{
+	public void updateUser(String fname, String lname, String ucsd_email, String[] interests) throws SQLException{
 		fname = escapeAp(fname);
 		lname = escapeAp(lname);
 		ucsd_email = escapeAp(ucsd_email);
@@ -212,6 +212,16 @@ public class DB_Access {
 		p_stmt.setString(2, lname);
 		p_stmt.setString(3, ucsd_email);
 		p_stmt.executeUpdate();
+		
+		p_stmt = connection.prepareStatement("DELETE FROM user_interests WHERE user=?");
+		p_stmt.setString(1, ucsd_email);
+		p_stmt.executeUpdate();
+		for(int i = 0; i < interests.length; i++){
+			p_stmt = connection.prepareStatement("INSERT INTO user_interests (user, interest) VALUES (?, ?)");
+			p_stmt.setString(1, ucsd_email);
+			p_stmt.setString(2, interests[i]);
+			p_stmt.executeUpdate();
+		}
 	}
 
 	///////////////////////////////// DELETE /////////////////////////////////
