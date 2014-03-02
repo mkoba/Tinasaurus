@@ -31,7 +31,7 @@ public class ProfileEditActivity extends MenuActivity {
 	
 	
 	public void addListenerOnButton() {
-		pDone = (Button) findViewById(R.id.Done);
+		pDone = (Button) findViewById(R.id.done);
 		pDone.setOnClickListener(new OnClickListener() {
 			 
 			//@Override

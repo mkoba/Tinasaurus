@@ -33,9 +33,9 @@
         android:hint="Insert Interest" />
 
     <Button
-        android:id="@+id/Done"
+        android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="done" />
+        android:text="Edit" />
 
 </LinearLayout>
