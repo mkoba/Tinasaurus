@@ -24,6 +24,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="allEvents">All Events</string>
     <string name="byCategory">By Category</string>
+    <string name ="interest">Interest</string>
     
     <string name="profile">Profile</string>
 	<string name="about_me">About Me</string>
