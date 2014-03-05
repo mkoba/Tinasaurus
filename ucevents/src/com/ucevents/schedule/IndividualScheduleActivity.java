@@ -20,7 +20,6 @@ public class IndividualScheduleActivity extends MenuActivity {
 	TextView tvDate;
 	TextView tvTime;
 	TextView tvDescription;
-	CheckBox cbRSVP;
 	TextView tvRSVPCount;
 	
 	@Override
@@ -32,7 +31,7 @@ public class IndividualScheduleActivity extends MenuActivity {
 		
 		// grab event clicked from bundle
 		Events chosenEvent = b.getParcelable("chosenEvent");
-		//Toast.makeText(getApplicationContext(), chosenEvent.getDescription(), Toast.LENGTH_SHORT).show();
+		
 		ivIconID = (ImageView) findViewById(R.id.ivIconID);
 		ivIconID.setImageResource(chosenEvent.getIconid());
 		
@@ -54,13 +53,7 @@ public class IndividualScheduleActivity extends MenuActivity {
 		tvDescription.setText(chosenEvent.getDescription());
 		
 		tvRSVPCount = (CheckBox) findViewById(R.id.checkBoxRSVP);
-		tvRSVPCount.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// update db with RSVP value here
-				Toast.makeText(getApplicationContext(), "RSVP", Toast.LENGTH_SHORT).show();
-			}
-		});
+
 		
 		// add code: grab rsvp count from db
 	}
