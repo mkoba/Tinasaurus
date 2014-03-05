@@ -61,6 +61,7 @@ public class MenuActivity extends Activity{
 	private void clickedSchedule() {
 		//Toast.makeText(getApplicationContext(), "Schedule", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(MenuActivity.this, com.ucevents.schedule.ScheduleActivity.class);
+		intent.putExtra("key", "all");
 		startActivity(intent);
 	}
 	
