@@ -36,6 +36,18 @@ public class loginActivity extends Activity{
 				}
 			});
 		
+		bBack = (Button) findViewById(R.id.bloginback);
+		bBack.setOnClickListener(new OnClickListener() {
+			 
+			//@Override
+			public void onClick(View arg0) {
+		
+				//Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
+				Intent i= new Intent(loginActivity.this, com.android.ucevents.MainActivity.class);
+				startActivity(i);
+				}
+			});
+		
 	}
 	
 	/**
