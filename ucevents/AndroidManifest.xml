@@ -85,11 +85,16 @@
         <activity 
             android:name="com.ucevents.schedule.ScheduleActivity"
             android:label="schedule">
+      </activity>
+       <activity
+            android:name="com.ucevents.schedule.IndividualScheduleActivity"
+            android:label="individualSchedule">
         </activity>
         <activity 
             android:name="com.ucevents.profile.ProfileEditActivity"
             android:label="profileedit">
         </activity>
+        
         
 
         <meta-data android:name="com.crashlytics.ApiKey" android:value="3a9e2ee0861d8cd84ec8ffc3005078949cd21368"/>
