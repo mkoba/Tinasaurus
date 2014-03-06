@@ -113,7 +113,6 @@ public class DB_Access {
 	public void insertEvent(String title, String location, int hour, int minute, boolean pm, 
 			String[] interests, int month, int day, int year, String description, 
 			boolean public_flag, String host) throws SQLException{
-		int eventid = 0;
 
 		if (pm){
 			hour += 12;
@@ -299,23 +298,37 @@ public class DB_Access {
 
 		return result;
 	}
+	
+	public String getHost(String event) throws SQLException{
+		PreparedStatement ps = connection.prepareStatement("SELECT fname, lname FROM events, user_information WHERE events.host = user_information.ucsd_email");
+		ResultSet rs = ps.executeQuery();
+		String host = null;
+		while(rs.next()){
+			host = rs.getString("fname") + " " + rs.getString("lname");
+		}
+		return host;
+	}
 
 	// Get all events
-	public JSONObject getAllEvents() throws SQLException, JSONException{
+	public JSONObject getAllEvents(String user) throws SQLException, JSONException{
 		JSONObject result = new JSONObject();
 		List<JSONObject> eventslist = new ArrayList<JSONObject>();
 		p_stmt = connection.prepareStatement("SELECT * FROM events");
-		rs = p_stmt.executeQuery();
+		ResultSet rs = p_stmt.executeQuery();
 		while(rs.next()){
 			JSONObject event = new JSONObject();
 			event.put("name", rs.getString("name"));
 			event.put("location", rs.getString("location"));
-			event.put("hour", rs.getString("hour"));
-			event.put("min", rs.getString("min"));
-			event.put("month", rs.getString("month"));
-			event.put("date", rs.getString("date"));
-			event.put("year", rs.getString("year"));
+			event.put("hour", rs.getInt("hour"));
+			event.put("min", rs.getInt("min"));
+			event.put("month", rs.getInt("month"));
+			event.put("date", rs.getInt("date"));
+			event.put("year", rs.getInt("year"));
 			event.put("description", rs.getString("description"));
+			JSONObject attendees = getAttendees(rs.getString("name"), user);
+			event.put("attendees", attendees.get("attendees"));
+			event.put("user_attending", attendees.getBoolean("user_attending"));
+			event.put("host", getHost(rs.getString("name")));
 			eventslist.add(event);
 		}
 		result.put("events", eventslist);
@@ -323,7 +336,7 @@ public class DB_Access {
 	}
 
 	// Get all events in a category
-	public JSONObject getEventsInCategory(String category) throws SQLException, JSONException{
+	public JSONObject getEventsInCategory(String category, String user) throws SQLException, JSONException{
 		JSONObject result = new JSONObject();
 		List<JSONObject> eventslist = new ArrayList<JSONObject>();
 		category = escapeAp(category);
@@ -336,12 +349,16 @@ public class DB_Access {
 			JSONObject event = new JSONObject();
 			event.put("name", rs.getString("name"));
 			event.put("location", rs.getString("location"));
-			event.put("hour", rs.getString("hour"));
-			event.put("min", rs.getString("min"));
-			event.put("month", rs.getString("month"));
-			event.put("date", rs.getString("date"));
-			event.put("year", rs.getString("year"));
+			event.put("hour", rs.getInt("hour"));
+			event.put("min", rs.getInt("min"));
+			event.put("month", rs.getInt("month"));
+			event.put("date", rs.getInt("date"));
+			event.put("year", rs.getInt("year"));
 			event.put("description", rs.getString("description"));
+			JSONObject attendees = getAttendees(rs.getString("name"), user);
+			event.put("attendees", attendees.get("attendees"));
+			event.put("user_attending", attendees.getBoolean("user_attending"));
+			event.put("host", getHost(rs.getString("name")));
 			eventslist.add(event);
 		}
 		result.put("events", eventslist);
@@ -358,7 +375,7 @@ public class DB_Access {
 		List<JSONObject> eventslist = new ArrayList<JSONObject>();
 		while(rs.next()){
 			String interest = rs.getString("interest");
-			JSONObject eventsincategory = getEventsInCategory(interest);
+			JSONObject eventsincategory = getEventsInCategory(interest, user);
 			JSONArray events = eventsincategory.getJSONArray("events");
 			for(int i = 0; i < events.length(); i++){
 				eventslist.add(events.getJSONObject(i));
@@ -390,12 +407,16 @@ public class DB_Access {
 			while(rs_tmp.next()){
 				event.put("name", rs_tmp.getString("name"));
 				event.put("location", rs_tmp.getString("location"));
-				event.put("hour", rs_tmp.getString("hour"));
-				event.put("min", rs_tmp.getString("min"));
-				event.put("month", rs_tmp.getString("month"));
-				event.put("date", rs_tmp.getString("date"));
-				event.put("year", rs_tmp.getString("year"));
+				event.put("hour", rs_tmp.getInt("hour"));
+				event.put("min", rs_tmp.getInt("min"));
+				event.put("month", rs_tmp.getInt("month"));
+				event.put("date", rs_tmp.getInt("date"));
+				event.put("year", rs_tmp.getInt("year"));
 				event.put("description", rs_tmp.getString("description"));
+				JSONObject attendees = getAttendees(rs_tmp.getString("name"), user);
+				event.put("attendees", attendees.get("attendees"));
+				event.put("user_attending", attendees.getBoolean("user_attending"));
+				event.put("host", getHost(rs_tmp.getString("name")));
 				eventslist.add(event);
 			}
 			result.put("events",eventslist);
@@ -426,12 +447,16 @@ public class DB_Access {
 			while(rs_tmp.next()){
 				event.put("name", rs_tmp.getString("name"));
 				event.put("location", rs_tmp.getString("location"));
-				event.put("hour", rs_tmp.getString("hour"));
-				event.put("min", rs_tmp.getString("min"));
-				event.put("month", rs_tmp.getString("month"));
-				event.put("date", rs_tmp.getString("date"));
-				event.put("year", rs_tmp.getString("year"));
+				event.put("hour", rs_tmp.getInt("hour"));
+				event.put("min", rs_tmp.getInt("min"));
+				event.put("month", rs_tmp.getInt("month"));
+				event.put("date", rs_tmp.getInt("date"));
+				event.put("year", rs_tmp.getInt("year"));
 				event.put("description", rs_tmp.getString("description"));
+				JSONObject attendees = getAttendees(rs.getString("name"), user);
+				event.put("attendees", attendees.get("attendees"));
+				event.put("user_attending", attendees.getBoolean("user_attending"));
+				event.put("host", getHost(rs_tmp.getString("name")));
 				eventslist.add(event);
 			}
 			result.put("events", eventslist);
@@ -440,17 +465,19 @@ public class DB_Access {
 	}
 
 	// Get all attendees of an event
-	public JSONObject getAttendees(String event) throws SQLException, JSONException{
+	public JSONObject getAttendees(String event, String user) throws SQLException, JSONException{
 		JSONObject result = new JSONObject();
-		//public List<List<String>> getAttendees(String event) throws SQLException{
-		//List<List<String>> result = new ArrayList<List<String>>();
 		event = escapeAp(event);
 		p_stmt = connection.prepareStatement("SELECT attendee FROM attendees WHERE event = ?");
 		p_stmt.setString(1, event);
 		rs = p_stmt.executeQuery();
 		List<String> attendee = new ArrayList<String>();
+		boolean user_attending = false;
 		while(rs.next()){
 			String attendee_id = rs.getString("attendee");
+			if (attendee_id.equals(user)){
+				user_attending = true;
+			}
 			p_stmt = connection.prepareStatement("SELECT fname, lname" +
 					" FROM user_information " + 
 					"WHERE ucsd_email = ?");
@@ -462,6 +489,7 @@ public class DB_Access {
 			}
 			result.put("attendees", attendee);
 		}
+		result.put("user_attending", user_attending);
 		return result;
 	}
 
@@ -532,7 +560,7 @@ public class DB_Access {
 		String[] event_category = {"food"};
 		String[] interests = {"food", "sports"};
 
-		try {
+		/*try {*/
 			//db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
 			//db.insertEvent("jclin06@ucsd.edu_Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");
 			//db.insertAttendee("mkoba@ucsd.edu", "jclin06@ucsd.edu_Dinner with Judy");
@@ -555,9 +583,9 @@ public class DB_Access {
 					System.out.println(r.get(i).get(j));
 				}
 			}*/
-			JSONObject json = db.getEventsUserHosting("mkoba@ucsd.edu");
+			/*JSONObject json = db.getEventsUserHosting("mkoba@ucsd.edu");
 			System.out.println(json.toString());
-			json = db.getAllEvents();
+			json = db.getAllEvents("mkoba@ucsd.edu");
 			System.out.println(json.toString());
 			
 			String[] result = db.parseArray("[hello, world]");
@@ -569,6 +597,6 @@ public class DB_Access {
 			e.printStackTrace();
 			System.out.println("FAILED :(");
 			System.exit(1);
-		}
+		}*/
 	}
 }
