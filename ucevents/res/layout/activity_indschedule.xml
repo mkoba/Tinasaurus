@@ -52,7 +52,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:text="RSVP Count:" />
+        android:text="Number of Attendees" />
+    <Button
+        android:id="@+id/attendes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="List of Attendes" />
 
     <Button
         android:id="@+id/decline"
