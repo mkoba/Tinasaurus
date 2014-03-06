@@ -10,11 +10,16 @@ import com.ucevents.menu.MenuActivity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.analytics.tracking.android.EasyTracker;
@@ -28,7 +33,24 @@ public class ProfileActivity extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		addListenerOnButton();
+			
+		
+
+	 
+	    TextView firstName = (TextView)findViewById(R.id.f_name);
+	    firstName.setText("Leon");
+	    
+	    TextView lastName = (TextView)findViewById(R.id.l_name);
+	    lastName.setText("is");
+	    
+	    TextView email = (TextView)findViewById(R.id.email);
+	    email.setText("a");
+
+	    
+	    TextView interest = (TextView)findViewById(R.id.interest);
+	    interest.setText("Simba");
 	}
+	
 	
 
 	
@@ -45,8 +67,8 @@ public class ProfileActivity extends MenuActivity {
 				}
 			});
 
-	}
-	
+	}    
+    
 	/**
 	 * An example Activity using Google Analytics and EasyTracker.
 	 */
