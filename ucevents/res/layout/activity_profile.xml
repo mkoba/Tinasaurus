@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher" />
 
-    <EditText
+   <!--  <EditText
         android:id="@+id/f_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,6 +31,27 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Insert Interest" />
+ -->
+
+    <TextView
+        android:id="@+id/f_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="First Name" />
+   <TextView
+        android:id="@+id/l_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Last Name" />
+    <TextView
+        android:id="@+id/interest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Interest" />
+
 
     <Button
         android:id="@+id/edit"
