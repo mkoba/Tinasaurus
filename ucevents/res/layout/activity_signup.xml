@@ -1,6 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<ScrollView
+  	xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<LinearLayout 
+   android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
@@ -59,31 +64,50 @@
         android:ems="10"
         android:inputType="textPassword" />
     
-     <TextView
-        android:id="@+id/interest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/interest" />
-
-    <EditText
-        android:id="@+id/interestinput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"/>
-        <!-- android:inputType="textInterest" --> 
-
     <TextView
         android:id="@+id/confirmpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirm_password" />
 
-    <EditText
-        android:id="@+id/confirmpasswordinput"
+   	<EditText
+        android:id="@+id/passwordinput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword" />
+    <TextView 
+        android:id="@+id/interest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/interest"/>
+   
+    <CheckBox
+        android:id="@+id/career"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Career" />
+    <CheckBox
+        android:id="@+id/food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food" />
+   <CheckBox
+        android:id="@+id/organization"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Organization" />
+
+    <CheckBox
+        android:id="@+id/sport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sport" />
+    <CheckBox
+        android:id="@+id/study"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Study" />
 
     <Button
         android:id="@+id/back"
@@ -98,3 +122,4 @@
         android:text="@string/signup" />
 
 </LinearLayout>
+</ScrollView>

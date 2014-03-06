@@ -47,12 +47,6 @@
         android:paddingLeft="10dp"
         android:text="Info:" />
 
-    <CheckBox
-        android:id="@+id/checkBoxRSVP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="RSVP" />
-
     <TextView
         android:id="@+id/textRSVPCount"
         android:layout_width="wrap_content"
@@ -60,4 +54,11 @@
         android:paddingLeft="10dp"
         android:text="RSVP Count:" />
 
+    <Button
+        android:id="@+id/decline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="Decline" />
+    
 </LinearLayout>
