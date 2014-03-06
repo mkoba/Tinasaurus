@@ -24,6 +24,13 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Insert last Name" />
+    
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Insert Email" />
 
     <EditText
         android:id="@+id/interest"
