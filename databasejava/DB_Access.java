@@ -311,6 +311,16 @@ public class DB_Access {
 		}
 		return host;
 	}
+	
+	public JSONArray getEventCategory(String event) throws SQLException{
+		PreparedStatement ps = connection.prepareStatement("SELECT * FROM event_category WHERE event = '" + event + "'");
+		ResultSet rs = ps.executeQuery();
+		JSONArray categories = new JSONArray();
+		while(rs.next()){
+			categories.put(rs.getString(2));
+		}
+		return categories;
+	}
 
 	// Get all events
 	public JSONObject getAllEvents(String user) throws SQLException, JSONException{
@@ -330,8 +340,9 @@ public class DB_Access {
 			event.put("description", rs.getString("description"));
 			JSONObject attendees = getAttendees(rs.getString("name"), user);
 			event.put("attendees", attendees.get("attendees"));
-			event.put("user_attending", attendees.getBoolean("user_attending"));
+			event.put("attending", attendees.getBoolean("attending"));
 			event.put("host", getHost(rs.getString("name")));
+			event.put("category", getEventCategory(rs.getString("name")));
 			eventslist.add(event);
 		}
 		result.put("events", eventslist);
@@ -360,8 +371,9 @@ public class DB_Access {
 			event.put("description", rs.getString("description"));
 			JSONObject attendees = getAttendees(rs.getString("name"), user);
 			event.put("attendees", attendees.get("attendees"));
-			event.put("user_attending", attendees.getBoolean("user_attending"));
+			event.put("attending", attendees.getBoolean("attending"));
 			event.put("host", getHost(rs.getString("name")));
+			event.put("category", getEventCategory(rs.getString("name")));
 			eventslist.add(event);
 		}
 		result.put("events", eventslist);
@@ -392,16 +404,14 @@ public class DB_Access {
 	public JSONObject getEventsUserAttending(String user) throws SQLException, JSONException{
 		JSONObject result = new JSONObject();
 		List<JSONObject> eventslist = new ArrayList<JSONObject>();
-		//public List<List<String>> getEventsUserAttending(String user) throws SQLException{
-		//List<List<String>> result = new ArrayList<List<String>>();
 		user = escapeAp(user);
 		p_stmt = connection.prepareStatement("SELECT event FROM attendees WHERE attendee = ?");
 		p_stmt.setString(1, user);
-		rs = p_stmt.executeQuery();
+		ResultSet rs = p_stmt.executeQuery();
 		while(rs.next()){
-			//List<String> event = new ArrayList<String>();
-			JSONObject event = new JSONObject();
 			String event_id = rs.getString("event");
+			System.out.println(event_id);
+			JSONObject event = new JSONObject();
 			p_stmt = connection.prepareStatement("SELECT name, location, hour, min, month, date, year, description " +
 					"FROM events " + 
 					"WHERE name = ?");
@@ -418,12 +428,14 @@ public class DB_Access {
 				event.put("description", rs_tmp.getString("description"));
 				JSONObject attendees = getAttendees(rs_tmp.getString("name"), user);
 				event.put("attendees", attendees.get("attendees"));
-				event.put("user_attending", attendees.getBoolean("user_attending"));
+				event.put("attending", attendees.getBoolean("attending"));
 				event.put("host", getHost(rs_tmp.getString("name")));
+				event.put("category", getEventCategory(rs_tmp.getString("name")));
 				eventslist.add(event);
 			}
-			result.put("events",eventslist);
 		}
+
+		result.put("events",eventslist);
 
 		return result;
 	}
@@ -458,12 +470,13 @@ public class DB_Access {
 				event.put("description", rs_tmp.getString("description"));
 				JSONObject attendees = getAttendees(rs.getString("name"), user);
 				event.put("attendees", attendees.get("attendees"));
-				event.put("user_attending", attendees.getBoolean("user_attending"));
+				event.put("attending", attendees.getBoolean("attending"));
 				event.put("host", getHost(rs_tmp.getString("name")));
+				event.put("category", getEventCategory(rs_tmp.getString("name")));
 				eventslist.add(event);
 			}
-			result.put("events", eventslist);
 		}
+		result.put("events", eventslist);
 		return result;
 	}
 
@@ -473,13 +486,13 @@ public class DB_Access {
 		event = escapeAp(event);
 		p_stmt = connection.prepareStatement("SELECT attendee FROM attendees WHERE event = ?");
 		p_stmt.setString(1, event);
-		rs = p_stmt.executeQuery();
+		ResultSet rs = p_stmt.executeQuery();
 		List<String> attendee = new ArrayList<String>();
-		boolean user_attending = false;
+		boolean attending = false;
 		while(rs.next()){
 			String attendee_id = rs.getString("attendee");
 			if (attendee_id.equals(user)){
-				user_attending = true;
+				attending = true;
 			}
 			p_stmt = connection.prepareStatement("SELECT fname, lname" +
 					" FROM user_information " + 
@@ -492,7 +505,7 @@ public class DB_Access {
 			}
 			result.put("attendees", attendee);
 		}
-		result.put("user_attending", user_attending);
+		result.put("attending", attending);
 		return result;
 	}
 
@@ -562,7 +575,12 @@ public class DB_Access {
 		DB_Access db = new DB_Access();
 		String[] event_category = {"food"};
 		String[] interests = {"food", "sports"};
-
+		try {
+			db.getEventsUserAttending("tszutu@ucsd.edu");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/*try {*/
 			//db.insertUser("Leon", "Cam", "lcam@ucsd.edu", interests);
 			//db.insertEvent("jclin06@ucsd.edu_Dinner with Judy", "Bistro", 6, 30, true, event_category, 2, 15, 2014, "I want to eat dinner at the bistro! Let's eat together :)", false, "jclin06@ucsd.edu");

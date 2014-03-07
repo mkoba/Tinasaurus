@@ -1,10 +1,13 @@
 package com.ucevents.events;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.util.Arrays;
+import java.util.List;
 
-public class Events implements Parcelable{
-	private int eventid;
+import android.os.Parcelable;
+import android.os.Parcel;
+
+public class Events implements Parcelable {
+	private String eventid;
 	private String name;
 	private int time;
 	private String location;
@@ -12,15 +15,14 @@ public class Events implements Parcelable{
 	private int date;
 	private int year;
 	private String description;
-	private int hostid;
+	private String host;
 	private int iconid;
-	
-	public Events() {
-		
-	}
-	//
-	public Events(int eventid, String name, int time, String location,
-			int month, int date, int year, String description, int hostid, int iconid) {
+	private List<String> attendees;
+	private boolean attending;
+
+	public Events(String eventid, String name, int time, String location,
+			int month, int date, int year, String description, String host,
+			int iconid, String[] attendees, boolean attending) {
 		super();
 		this.eventid = eventid;
 		this.name = name;
@@ -30,10 +32,12 @@ public class Events implements Parcelable{
 		this.date = date;
 		this.year = year;
 		this.description = description;
-		this.hostid = hostid;
+		this.host = host;
 		this.iconid = iconid;
+		this.attendees = Arrays.asList(attendees);
+		this.attending = attending;
 	}
-	public int getEventid() {
+	public String getEventid() {
 		return eventid;
 	}
 	public String getName() {
@@ -57,22 +61,28 @@ public class Events implements Parcelable{
 	public String getDescription() {
 		return description;
 	}
-	public int getHostid() {
-		return hostid;
+	public String getHostid() {
+		return host;
 	}
-	
+
 	public int getIconid() {
 		return iconid;
 	}
-	
+	public List<String> getAttendees(){
+		return attendees;
+	}
+	public boolean getAttending(){
+		return attending;
+	}
+
 	@Override
 	public int describeContents() {
 		return 0;
 	}
-	
+
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(eventid);
+		dest.writeString(eventid);
 		dest.writeString(name);
 		dest.writeInt(time);
 		dest.writeString(location);
@@ -80,41 +90,27 @@ public class Events implements Parcelable{
 		dest.writeInt(date);
 		dest.writeInt(year);
 		dest.writeString(description);
-		dest.writeInt(hostid);
+		dest.writeString(host);
 		dest.writeInt(iconid);
+		dest.writeStringArray(attendees.toArray(new String[attendees.size()]));
+		dest.writeByte((byte) (attending ? 1 : 0));
 	}
-	
+
 	public static final Parcelable.Creator<Events> CREATOR =
 			new Parcelable.Creator<Events>() {
+		@Override
+		public Events createFromParcel(Parcel source) {
+			Events event = new Events(source.readString(), source.readString(), source.readInt(), source.readString(), source.readInt(), 
+					source.readInt(), source.readInt(), source.readString(), source.readString(), source.readInt(), source.createStringArray(), 
+					source.readByte() != 0);
+			return event;
 
-        @Override
+		}
 
-        public Events createFromParcel(Parcel source) {
-        	//Events event = new Events();
-        	Events event = new Events(source.readInt(), source.readString(), source.readInt(), source.readString(), source.readInt(), 
-        			source.readInt(), source.readInt(), source.readString(), source.readInt(), source.readInt());
-            /*event.eventid = source.readInt();
-            event.name = source.readString();
-            event.time = source.readInt();
-            event.location = source.readString();
-            event.month = source.readInt();
-            event.year = source.readInt();
-            event.description = source.readString();
-            event.hostid = source.readInt();
-            event.iconid = source.readInt();*/
-            				
-            return event;
+		@Override
+		public Events[] newArray(int size) {
+			return null;
+		}
+	};
 
-        }
-
-
-        @Override
-
-        public Events[] newArray(int size) {
-
-            return null;
-
-        }
-
-    };
 }
