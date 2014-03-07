@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ucevents.R;
+import com.android.ucevents.UCEvents_App;
 import com.ucevents.menu.MenuActivity;
 
 public class ScheduleActivity extends MenuActivity {
@@ -48,31 +49,18 @@ public class ScheduleActivity extends MenuActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
-
 		addOnClickListener();
-
-
-		//sendPostRequest("mkoba@ucsd.edu");
 		Bundle bundle = getIntent().getExtras();
 		value = bundle.getString("key");
 		Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
 		populateEventList();
-		//populateListView();
-		//registerClickCallback();
 	}
 
 	// this will be later populated from db
 	private void populateEventList() {
-		sendPostRequest("tszutu@ucsd.edu");
-		Log.d("SIZEOF SCHLIST", "" + schList.size());
-		/*
-		schList.add(new Events(1, "Roaming", 300, "CENTER 200", 2, 14, 2014, "Valentine Fest", 1, R.drawable.play_icon));
-		schList.add(new Events(2, "BOBALAND", 400, "CENTER 200", 2, 14, 2014, "Milk Tea Fest", 1,R.drawable.play_icon));
-		schList.add(new Events(3, "ADVENture time", 300, "CENTER 202", 2, 14, 2014, "Dinosaurs Fest", 1, R.drawable.schedule_icon));
-		schList.add(new Events(4, "SLEEP", 300, "CENTER 200", 2, 14, 2014, "Pillows Fest", 1, R.drawable.calendar_icon));
-		schList.add(new Events(5, "EATTING PARTY", 600, "WLH 200", 2, 14, 2014, "Pizza Fest", 1, R.drawable.study_icon));
-		schList.add(new Events(6, "EATTING PARTY", 300, "LALA 200", 2, 14, 2014, "Pizza Fest", 1, R.drawable.study_icon));
-		schList.add(new Events(7, "MUSIC", 300, "CENTER 200", 2, 14, 2014, "Pizza Fest", 1, R.drawable.schedule_icon));*/
+		//TODO: Replace email with userid
+		String userid = ((UCEvents_App)getApplicationContext()).getUserId();
+		sendPostRequest(userid);
 	}
 
 	private void populateListView() {

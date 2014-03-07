@@ -1,6 +1,7 @@
 package com.ucevents.login;
 import com.android.ucevents.MainActivity;
 import com.android.ucevents.R;
+import com.android.ucevents.UCEvents_App;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.ucevents.signup.signupActivity;
 
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class loginActivity extends Activity{
 	Button bLogin;
@@ -29,7 +31,9 @@ public class loginActivity extends Activity{
 			 
 			//@Override
 			public void onClick(View arg0) {
-		
+				String userid = ((EditText)findViewById(R.id.emailinput)).getText().toString();
+				UCEvents_App app = ((UCEvents_App)getApplicationContext());
+				app.setUserId(userid);
 				//Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
 				Intent i= new Intent(loginActivity.this, com.ucevents.events.EventsActivity.class);
 				startActivity(i);
