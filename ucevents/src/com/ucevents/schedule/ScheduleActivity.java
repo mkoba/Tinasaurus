@@ -72,7 +72,7 @@ public class ScheduleActivity extends MenuActivity {
 
 	private class MyListAdapter extends ArrayAdapter<Schedule> {
 		public MyListAdapter() {
-			super(ScheduleActivity.this, R.layout.eventslistview, schList);
+			super(ScheduleActivity.this, R.layout.schedulelistview, schList);
 		}
 
 		@Override

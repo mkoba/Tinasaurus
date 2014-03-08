@@ -64,10 +64,10 @@ public class IndividualScheduleActivity extends MenuActivity {
 		
 		//tvRSVPCount = (CheckBox) findViewById(R.id.checkBoxRSVP);
 
-		//addListenerOnButton();
+		addListenerOnButton();
 		
 	}
-	/*
+	
 	private void addListenerOnButton() {
 		bDecline = (Button) findViewById(R.id.decline);
 		bDecline.setOnClickListener(new OnClickListener() {
@@ -75,11 +75,12 @@ public class IndividualScheduleActivity extends MenuActivity {
 			//@Override
 			public void onClick(View arg0) {
 				Intent i= new Intent(IndividualScheduleActivity.this, com.ucevents.schedule.ScheduleActivity.class);
+				i.putExtra("key", "all");
 				startActivity(i);
 				}
 			});
 	}
-		*/
+		
 	
 	
 	/**
