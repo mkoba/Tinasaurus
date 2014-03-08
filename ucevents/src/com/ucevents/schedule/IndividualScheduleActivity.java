@@ -1,6 +1,7 @@
 package com.ucevents.schedule;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -30,7 +31,8 @@ public class IndividualScheduleActivity extends MenuActivity {
 		Bundle b = this.getIntent().getExtras();
 		
 		// grab event clicked from bundle
-		Events chosenEvent = b.getParcelable("chosenEvent");
+		Schedule chosenEvent = b.getParcelable("chosenEvent");
+		Log.d("NAME", "" + chosenEvent.getName());
 		
 		ivIconID = (ImageView) findViewById(R.id.ivIconID);
 		ivIconID.setImageResource(chosenEvent.getIconid());
