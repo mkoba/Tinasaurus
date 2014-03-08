@@ -1,16 +1,21 @@
 package com.ucevents.schedule;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ucevents.R;
+import com.android.ucevents.UCEvents_App;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.ucevents.events.Events;
+import com.ucevents.login.loginActivity;
 import com.ucevents.menu.MenuActivity;
 
 public class IndividualScheduleActivity extends MenuActivity {
@@ -22,6 +27,9 @@ public class IndividualScheduleActivity extends MenuActivity {
 	TextView tvDescription;
 	TextView tvRSVPCount;
 	
+	Button bDecline;
+	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -52,11 +60,25 @@ public class IndividualScheduleActivity extends MenuActivity {
 		tvDescription = (TextView) findViewById(R.id.tvDescription);
 		tvDescription.setText(chosenEvent.getDescription());
 		
-		tvRSVPCount = (CheckBox) findViewById(R.id.checkBoxRSVP);
+		//tvRSVPCount = (CheckBox) findViewById(R.id.checkBoxRSVP);
 
+		//addListenerOnButton();
 		
-		// add code: grab rsvp count from db
 	}
+	/*
+	private void addListenerOnButton() {
+		bDecline = (Button) findViewById(R.id.decline);
+		bDecline.setOnClickListener(new OnClickListener() {
+			 
+			//@Override
+			public void onClick(View arg0) {
+				Intent i= new Intent(IndividualScheduleActivity.this, com.ucevents.schedule.ScheduleActivity.class);
+				startActivity(i);
+				}
+			});
+	}
+		*/
+	
 	
 	/**
 	 * An example Activity using Google Analytics and EasyTracker.
