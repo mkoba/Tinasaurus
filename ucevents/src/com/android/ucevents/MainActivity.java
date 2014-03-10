@@ -152,6 +152,8 @@ public class MainActivity extends FragmentActivity {
              b.putString("firstname", firstname);
              b.putString("lastname", lastname);
              b.putString("email", email);
+             UCEvents_App appState = ((UCEvents_App)getApplicationContext());
+             appState.setUserId(email);
              i.putExtras(b);
  			//Intent i = new Intent(MainActivity.this, LogoutActivity.class);
              startActivity(i);

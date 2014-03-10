@@ -19,9 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.ucevents.R;
+import com.android.ucevents.UCEvents_App;
 import com.ucevents.menu.MenuActivity;
 import com.ucevents.schedule.Schedule;
 import com.google.analytics.tracking.android.EasyTracker;
+
 
 
 
@@ -62,6 +64,7 @@ import android.widget.Toast;
 
 public class EventsListActivity extends MenuActivity{
     String value;
+    String userid;
     private List<Events> eventList = new ArrayList<Events>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,8 @@ public class EventsListActivity extends MenuActivity{
         Log.d("VALUE IS :", value.toString());
         Log.d("VALUE IS :", value.toString());
 
-        
+        UCEvents_App appState = ((UCEvents_App)getApplicationContext());
+        userid = appState.getUserId();
         Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
         if(value.toString().equals("food") || value.toString().equals("study") || value.toString().equals("career") || value.toString().equals("sport") || value.toString().equals("club") || value.toString().equals("social") || value.toString().equals("other")){
             populateEventList(value);
@@ -119,10 +123,10 @@ public class EventsListActivity extends MenuActivity{
                 HttpClient client = new DefaultHttpClient();
                 HttpGet get;
                 if(key == "allEvents"){
-                    get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getAllEvents");
+                    get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getAllEvents&param="+userid);
                 }
                 else{
-                    get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsInCategory&param="+key);
+                    get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsInCategory&param="+key+"&user="+userid);
                 }
                 List<NameValuePair> pairs = new ArrayList<NameValuePair>(); // to store what we get
                 
@@ -169,25 +173,30 @@ public class EventsListActivity extends MenuActivity{
                     for(int i = 0; i < listOfEvents.length(); i++){
                          JSONObject event = listOfEvents.getJSONObject(i);
                          int iconid = 0;
-                         JSONArray categories = event.getJSONArray("category");
-                         String category = categories.getString(0);
-                         if (category.equals("study")){
-                             iconid = R.drawable.study_icon;
-                         }
-                         else if (category.equals("food")){
-                             iconid = R.drawable.play_icon;
-                         }
-                         else if (category.equals("career")){
-                             iconid = R.drawable.play_icon;
-                         }
-                         else if (category.equals("organization")){
-                             iconid = R.drawable.play_icon;
-                         }
-                         else if (category.equals("sports")){
-                             iconid = R.drawable.play_icon;
-                         }
-                         else{
-                             iconid = 1;
+                         JSONArray categories = new JSONArray();
+                         try{
+                        		 categories = event.getJSONArray("category");
+		                         String category = categories.getString(0);
+		                         if (category.equals("study")){
+		                             iconid = R.drawable.study_icon;
+		                         }
+		                         else if (category.equals("food")){
+		                             iconid = R.drawable.play_icon;
+		                         }
+		                         else if (category.equals("career")){
+		                             iconid = R.drawable.play_icon;
+		                         }
+		                         else if (category.equals("organization")){
+		                             iconid = R.drawable.play_icon;
+		                         }
+		                         else if (category.equals("sports")){
+		                             iconid = R.drawable.play_icon;
+		                         }
+		                         else{
+		                             iconid = R.drawable.other_icon;
+		                         }
+                         } catch(JSONException e){
+                        	 iconid = 1;
                          }
                          JSONArray json_attendees = event.getJSONArray("attendees");
                          String[] attendees = new String[json_attendees.length()];
@@ -205,7 +214,6 @@ public class EventsListActivity extends MenuActivity{
                     return null;
                 }
                 return "SUCCESS";
-
             }
               protected void onPostExecute(String result){
                     if(result != null){
