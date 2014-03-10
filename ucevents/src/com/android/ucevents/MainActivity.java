@@ -107,9 +107,12 @@ public class MainActivity extends FragmentActivity {
 	        							ucsdNetwork=true;
 	        							
 	        						} catch (JSONException e) {
+	        							ucsdNetwork=false;
 	        							// TODO Auto-generated catch block
 	        							e.printStackTrace();
 	        						}
+	        						
+	        						ucsdUpdated();
 	        	            }
 	        	        });
 	        	        
@@ -117,36 +120,7 @@ public class MainActivity extends FragmentActivity {
 	                    
 	                    
 	                    
-	                    if(ucsdNetwork) {
-		                    /* DB access here to see if user is first time user 
-		                     * If first time user: go to signupActivity.java
-		                     * else go to EventsActivity.java
-		                     */
-		                    // new user
-		                    boolean userStatus = true;
-		                    Intent i;
-		                    if(userStatus) { // new user
-		                    	i = new Intent(MainActivity.this, com.ucevents.signup.signupActivity.class);
-		                    }
-		                    else { // returning user
-		                    	i = new Intent(MainActivity.this, com.ucevents.events.EventsActivity.class);
-		                    }
-		                    
-		                    Bundle b = new Bundle();
-		                    b.putString("firstname", firstname);
-		                    b.putString("lastname", lastname);
-		                    b.putString("email", email);
-		                    i.putExtras(b);
-		        			//Intent i = new Intent(MainActivity.this, LogoutActivity.class);
-		                    startActivity(i);
-	                    }
-	                    else {
-	                    	// if not part of UCSD network, then logout and reprompt for login
-	                    	Toast.makeText(getApplicationContext(), "Not part of UCSD network. Please login as valid user", 
-	                    			Toast.LENGTH_LONG).show();
-	                    	//Intent i = new Intent(MainActivity.this, com.android.ucevents.LogoutActivity.class);
-	                    	//startActivity(i);
-	                    }
+	                   
 	    				
 	                }
 	            }
@@ -155,6 +129,40 @@ public class MainActivity extends FragmentActivity {
 	        //Log.i(TAG, "Logged out...");
 	        //userInfoTextView.setVisibility(View.INVISIBLE);
 	    }
+	}
+	
+	
+	public void ucsdUpdated() {
+		 if(ucsdNetwork) {
+             /* DB access here to see if user is first time user 
+              * If first time user: go to signupActivity.java
+              * else go to EventsActivity.java
+              */
+             // new user
+             boolean userStatus = true;
+             Intent i;
+             if(userStatus) { // new user
+             	i = new Intent(MainActivity.this, com.ucevents.signup.signupActivity.class);
+             }
+             else { // returning user
+             	i = new Intent(MainActivity.this, com.ucevents.events.EventsActivity.class);
+             }
+             
+             Bundle b = new Bundle();
+             b.putString("firstname", firstname);
+             b.putString("lastname", lastname);
+             b.putString("email", email);
+             i.putExtras(b);
+ 			//Intent i = new Intent(MainActivity.this, LogoutActivity.class);
+             startActivity(i);
+         }
+         else {
+         	// if not part of UCSD network, then logout and reprompt for login
+         	Toast.makeText(getApplicationContext(), "Not part of UCSD network. Please login as valid user", 
+         			Toast.LENGTH_LONG).show();
+         	//Intent i = new Intent(MainActivity.this, com.android.ucevents.LogoutActivity.class);
+         	//startActivity(i);
+         }
 	}
 	
 	//listen for changes

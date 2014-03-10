@@ -3,21 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-	tools:context=".DeviceFragment" >
+	tools:context=".DeviceFragment"
+    android:background="@drawable/blue_solid" >
 
     <TextView
         android:id="@+id/events2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/events" />
+        android:textColor ="@color/WHITE"
+        android:text="@string/events"
+         />
 
     
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:paddingTop="20dp"
         android:layout_alignParentTop="true" >
 
@@ -57,6 +60,7 @@
              android:layout_alignLeft="@+id/ibFood"
              android:layout_below="@+id/ibFood"
              android:paddingLeft="60dp"
+       		 android:textColor ="@color/WHITE"
              android:text="@string/food" />
 
          <TextView
@@ -67,6 +71,7 @@
              android:layout_alignBottom="@+id/food_txt"
              android:layout_alignRight="@+id/ibSocial"
              android:paddingRight="60dp"
+             android:textColor ="@color/WHITE"
              android:text="@string/social" />
 
          <ImageButton
@@ -85,6 +90,7 @@
              android:layout_alignRight="@+id/ibCareer"
              android:layout_below="@+id/ibCareer"
              android:paddingRight="60dp"
+             android:textColor ="@color/WHITE"
              android:text="@string/career" />
 
          <ImageButton
@@ -103,6 +109,7 @@
              android:layout_alignLeft="@+id/ibStudy"
              android:layout_below="@+id/ibStudy"
              android:paddingLeft="60dp"
+             android:textColor ="@color/WHITE"
              android:text="@string/study" />
 
           <ImageButton
@@ -121,6 +128,7 @@
              android:layout_alignRight="@+id/ibClub"
              android:layout_below="@+id/ibClub"
              android:paddingRight="60dp"
+             android:textColor ="@color/WHITE"
              android:text="@string/club" />
           
           <ImageButton
@@ -139,6 +147,7 @@
              android:layout_alignLeft="@+id/ibSport"
              android:layout_below="@+id/ibSport"
              android:paddingLeft="60dp"
+             android:textColor ="@color/WHITE"
              android:text="@string/sport" />
           
           <ImageButton
@@ -157,6 +166,7 @@
              android:layout_alignLeft="@+id/ibOther"
              android:layout_below="@+id/ibOther"
              android:paddingLeft="60dp"
+             android:textColor ="@color/WHITE"
              android:text="@string/other" />
                   
           </RelativeLayout>

@@ -8,7 +8,7 @@
     <string name="logout">Logout</string>
     <string name="signup">Sign Up</string>
     <string name="forgetpass">Forget Password?</string>
-    <string name="groupname">by Seriousaurus</string>
+    <string name="groupname">by Event Handlers</string>
     <string name="ucevents">UCevents</string>
 
     <color name="blue">#2F4963</color>
@@ -40,4 +40,7 @@
 	<string name="sport">Sport</string>
 	<string name ="other">Other</string>
 	<string name="byUserInterest">User\'s Interests</string>
+	
+	<color name="yellow2">#FFFF66</color>
+    <color name="WHITE">#FFFFFF</color>
 </resources>

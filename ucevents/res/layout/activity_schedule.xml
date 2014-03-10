@@ -2,13 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/blue_solid" >
  
     <Button
         android:id="@+id/addEvent"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Event" />
+        android:text="Create Event"
+        android:textColor ="@color/WHITE" />
           
     <ListView
         android:id="@+id/lvallEvents"

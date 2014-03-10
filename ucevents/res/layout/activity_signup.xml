@@ -1,137 +1,79 @@
-<ScrollView
-  	xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/blue_solid">
+
+    <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+
 
 <LinearLayout 
    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-<!-- 
-    <TextView
-        android:id="@+id/firstname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/first_name" />
 
-    <EditText
-        android:id="@+id/firstnameinput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/lastname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/last_name" />
-
-    <EditText
-        android:id="@+id/lastnameinput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/email" />
-
-    <EditText
-        android:id="@+id/emailinput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress" />
-
-    <TextView
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/password" />
-
-    <EditText
-        android:id="@+id/passwordinput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword" />
-    
-    <TextView
-        android:id="@+id/confirmpassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/confirm_password" />
-
-   	<EditText
-        android:id="@+id/passwordinput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword" />
--->
-
-    <TextView 
+   <TextView
         android:id="@+id/interest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/interest"/>
+        android:text="@string/interest"
+        android:textColor ="@color/WHITE" />
    
     <CheckBox
         android:id="@+id/career"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Career" />
+        android:text="Career"
+        android:textColor ="@color/WHITE"  />
     <CheckBox
         android:id="@+id/food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Food" />
+        android:text="Food" 
+        android:textColor ="@color/WHITE" />
    <CheckBox
         android:id="@+id/organization"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Organization" />
+        android:text="Organization"
+        android:textColor ="@color/WHITE"  />
 	<CheckBox
         android:id="@+id/social"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Social" />
+
     <CheckBox
         android:id="@+id/sport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sport" />
+        android:text="Sport"
+        android:textColor ="@color/WHITE"  />
     <CheckBox
         android:id="@+id/study"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Study" />
+        android:text="Study" 
+        android:textColor ="@color/WHITE" />
     
      <CheckBox
         android:id="@+id/other"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Other" />
-<!--  
-    <Button
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/back" />
--->
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup" />
 
-</LinearLayout>
+        <Button
+        android:id="@+id/signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signup"
+        android:textColor="@color/WHITE" />
+        </LinearLayout>
 </ScrollView>
+    
+</LinearLayout>
+
