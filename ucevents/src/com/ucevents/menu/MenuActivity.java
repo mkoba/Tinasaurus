@@ -16,6 +16,7 @@ public class MenuActivity extends Activity{
 	Button ballEvents;
 	Button bbyCategory;
 	Button bUserInterest;
+	Button logout;
 /*	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,9 @@ public class MenuActivity extends Activity{
         case R.id.action_profile:
             clickedProfile();
             return true;
+        case R.id.action_logout:
+        	clickedLogout();
+        	return true;
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -69,6 +73,13 @@ public class MenuActivity extends Activity{
 	private void clickedProfile() {
 		//Toast.makeText(getApplicationContext(), "Profile", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(MenuActivity.this, com.ucevents.profile.ProfileActivity.class);
+		startActivity(intent);
+	}
+	
+	// clicks logout
+	private void clickedLogout() {
+		//Toast.makeText(getApplicationContext(), "Logout", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(MenuActivity.this, com.android.ucevents.LogoutActivity.class);
 		startActivity(intent);
 	}
 }
