@@ -44,7 +44,9 @@ public class IndividualScheduleActivity extends MenuActivity {
 	TextView tvTime;
 	TextView tvDescription;
 	TextView tvRSVPCount;
+	CheckBox cbRSVP;
 	String eventid;
+	String userid;
 
 	Button bDecline;
 
@@ -81,28 +83,25 @@ public class IndividualScheduleActivity extends MenuActivity {
 		tvDescription = (TextView) findViewById(R.id.tvDescription);
 		tvDescription.setText(chosenEvent.getDescription());
 
-		//tvRSVPCount = (CheckBox) findViewById(R.id.checkBoxRSVP);
-
-		addListenerOnButton();
-
-	}
-
-	private void addListenerOnButton() {
-		bDecline = (Button) findViewById(R.id.decline);
-		bDecline.setOnClickListener(new OnClickListener() {
-
-			//@Override
-			public void onClick(View arg0) {
-				String userid = ((UCEvents_App)getApplicationContext()).getUserId();
-				sendPostRequest(userid, eventid);
-				//Intent i= new Intent(IndividualScheduleActivity.this, com.ucevents.schedule.ScheduleActivity.class);
-				//i.putExtra("key", "all");
-				//startActivity(i);
+		userid = ((UCEvents_App)getApplicationContext()).getUserId();
+		
+		cbRSVP = (CheckBox) findViewById(R.id.checkBoxRSVP);
+		cbRSVP.setChecked(true);
+		cbRSVP.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// update db with RSVP value here
+				if(cbRSVP.isChecked()){
+					insertAttendee(userid, eventid);
+				}
+				else {
+					deleteAttendee(userid, eventid);
+				}
+				//Toast.makeText(getApplicationContext(), "RSVP", Toast.LENGTH_SHORT).show();
 			}
 		});
+
 	}
-
-
 
 	/**
 	 * An example Activity using Google Analytics and EasyTracker.
@@ -120,9 +119,9 @@ public class IndividualScheduleActivity extends MenuActivity {
 		// The rest of your onStop() code.
 		EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	}
-
-	private void sendPostRequest(String userid, String eventid){
-		class scheduleTask extends AsyncTask<String, Void, String> {
+	
+	private void deleteAttendee(String user, String event){
+		class eventsTask extends AsyncTask<String, Void, String> {
 			protected String doInBackground(String[] args){
 				HttpClient client = new DefaultHttpClient();
 				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/delete_query.jsp?method=deleteAttendee&attendee="+args[0]+"&event="+args[1]);
@@ -140,7 +139,65 @@ public class IndividualScheduleActivity extends MenuActivity {
 					}
 					result = sb.toString();
 					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-					if (result.equals("SUCCESS")){
+					if (result.contains("Success")){
+						return "SUCCESS";
+					}
+				} catch (ClientProtocolException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("CLIENTPROTOCAL", e1.toString());
+					return null;
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("IOEXCEPTION", e1.toString());
+					return null;
+				}
+				Log.d("RETURN FAILURE", get.getURI().getPath());
+				return "FAILED";
+			}
+			protected void onPostExecute(String result){
+				if(result != null){
+					Log.d("SUCCESS", result);
+					Toast.makeText(getApplicationContext(), "You are no longer attending.",
+							Toast.LENGTH_LONG).show();
+					return;
+				}
+				else{
+					Log.d("FAILURE", "FAILURE");
+					Toast.makeText(getApplicationContext(), "Unable to remove you from attendees. Please try again.",
+							Toast.LENGTH_LONG).show();
+					return;
+				}
+			}
+		}
+		eventsTask sendPostReqAsyncTask = new eventsTask();
+		sendPostReqAsyncTask.execute(userid, eventid);
+		Log.d("HERE", "AFTER CALL TO EXECUTE");
+		return;
+	}
+	
+	private void insertAttendee(String user, String event){
+		class eventsTask extends AsyncTask<String, Void, String> {
+			protected String doInBackground(String[] args){
+				HttpClient client = new DefaultHttpClient();
+				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertAttendee&user="+args[0]+"&event="+args[1]);
+				HttpResponse response;
+				try {
+					response = client.execute(get);
+					HttpEntity entity = response.getEntity();
+					InputStream is = entity.getContent();
+					String result = null;
+					BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+					StringBuilder sb = new StringBuilder();
+					String line = null;
+					while((line = reader.readLine()) != null){
+						sb.append(line);
+					}
+					result = sb.toString();
+					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
+					Log.d("HTML RESULT: ", result);
+					if (result.contains("Success")){
 						return "SUCCESS";
 					}
 				} catch (ClientProtocolException e1) {
@@ -159,18 +216,19 @@ public class IndividualScheduleActivity extends MenuActivity {
 			protected void onPostExecute(String result){
 				if(result != null){
 					Log.d("SUCCESS", result);
-					Intent i= new Intent(IndividualScheduleActivity.this, com.ucevents.schedule.ScheduleActivity.class);
-					i.putExtra("key", "all");
-					startActivity(i);
+					Toast.makeText(getApplicationContext(), "You are attending!",
+							Toast.LENGTH_LONG).show();
 					return;
 				}
 				else{
 					Log.d("FAILURE", "FAILURE");
+					Toast.makeText(getApplicationContext(), "Unable to add you as an attendee. Please try again.",
+							Toast.LENGTH_LONG).show();
 					return;
 				}
 			}
 		}
-		scheduleTask sendPostReqAsyncTask = new scheduleTask();
+		eventsTask sendPostReqAsyncTask = new eventsTask();
 		sendPostReqAsyncTask.execute(userid, eventid);
 		Log.d("HERE", "AFTER CALL TO EXECUTE");
 		return;
