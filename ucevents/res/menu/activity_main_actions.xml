@@ -17,4 +17,10 @@
           android:icon="@drawable/ic_action_computer"
           android:title="@string/profile"
           android:showAsAction="ifRoom" />
+    
+    <!-- Logout -->
+    <item android:id="@+id/action_logout"
+        android:icon="@drawable/ic_action_computer"
+        android:title="@string/logout"
+        android:showAsAction="ifRoom"/>
 </menu>

@@ -8,7 +8,7 @@
    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+<!-- 
     <TextView
         android:id="@+id/firstname"
         android:layout_width="wrap_content"
@@ -76,6 +76,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword" />
+-->
+
     <TextView 
         android:id="@+id/interest"
         android:layout_width="wrap_content"
@@ -97,7 +99,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Organization" />
-
+	<CheckBox
+        android:id="@+id/social"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Social" />
     <CheckBox
         android:id="@+id/sport"
         android:layout_width="wrap_content"
@@ -108,13 +114,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Study" />
-
+    
+     <CheckBox
+        android:id="@+id/other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other" />
+<!--  
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back" />
-
+-->
     <Button
         android:id="@+id/signup"
         android:layout_width="wrap_content"
