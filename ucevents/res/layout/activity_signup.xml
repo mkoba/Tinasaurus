@@ -17,7 +17,17 @@
     android:orientation="vertical" >
 
    <TextView
+    android:id="@+id/userInfoTextView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="20dp"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+     android:textColor ="@color/WHITE" />
+    
+   <TextView
         android:id="@+id/interest"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/interest"
@@ -25,36 +35,43 @@
    
     <CheckBox
         android:id="@+id/career"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Career"
         android:textColor ="@color/WHITE"  />
     <CheckBox
         android:id="@+id/food"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Food" 
         android:textColor ="@color/WHITE" />
    <CheckBox
         android:id="@+id/organization"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Organization"
         android:textColor ="@color/WHITE"  />
 	<CheckBox
         android:id="@+id/social"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Social" />
+        android:text="Social" 
+        android:textColor ="@color/WHITE"/>
 
     <CheckBox
         android:id="@+id/sport"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sport"
         android:textColor ="@color/WHITE"  />
     <CheckBox
         android:id="@+id/study"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Study" 
@@ -62,9 +79,11 @@
     
      <CheckBox
         android:id="@+id/other"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Other" />
+        android:text="Other" 
+        android:textColor ="@color/WHITE"/>
 
         <Button
         android:id="@+id/signup"
