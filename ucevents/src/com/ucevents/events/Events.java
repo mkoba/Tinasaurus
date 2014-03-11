@@ -3,10 +3,13 @@ package com.ucevents.events;
 import java.util.Arrays;
 import java.util.List;
 
+import com.ucevents.schedule.Schedule;
+
 import android.os.Parcelable;
 import android.os.Parcel;
+import android.util.Log;
 
-public class Events implements Parcelable {
+public class Events implements Comparable<Events>, Parcelable {
 	private String eventid;
 	private String name;
 	private int time;
@@ -112,5 +115,35 @@ public class Events implements Parcelable {
 			return null;
 		}
 	};
-
+	
+	@Override
+	public int compareTo(Events another) {
+		// TODO Auto-generated method stub
+		if (((Events) another).getYear() > this.getYear()){
+			return -1;
+		}
+		if (((Events) another).getYear() < this.getYear()){
+			return 1;
+		}
+		if (((Events) another).getMonth() > this.getMonth()){
+			return -1;
+		}
+		if (((Events) another).getMonth() < this.getMonth()){
+			return 1;
+		}
+		if (((Events) another).getDate() > this.getDate()){
+			return -1;
+		}
+		if (((Events) another).getDate() < this.getDate()){
+			return 1;
+		}
+		if (((Events) another).getTime() > this.getTime()){
+			return -1;
+		}
+		if (((Events) another).getTime() < this.getTime()){
+			return 1;
+		}
+		return 0;
+	}
+	
 }

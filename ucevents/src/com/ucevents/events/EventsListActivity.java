@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -23,6 +24,7 @@ import com.android.ucevents.UCEvents_App;
 import com.ucevents.menu.MenuActivity;
 import com.ucevents.schedule.Schedule;
 import com.google.analytics.tracking.android.EasyTracker;
+
 
 
 
@@ -181,16 +183,19 @@ public class EventsListActivity extends MenuActivity{
 		                             iconid = R.drawable.study_icon;
 		                         }
 		                         else if (category.equals("food")){
-		                             iconid = R.drawable.play_icon;
+		                             iconid = R.drawable.food_icon;
 		                         }
 		                         else if (category.equals("career")){
-		                             iconid = R.drawable.play_icon;
+		                             iconid = R.drawable.career_icon;
 		                         }
 		                         else if (category.equals("organization")){
-		                             iconid = R.drawable.play_icon;
+		                             iconid = R.drawable.club_icon;
 		                         }
 		                         else if (category.equals("sports")){
-		                             iconid = R.drawable.play_icon;
+		                             iconid = R.drawable.sport_icon;
+		                         }
+		                         else if (category.equals("social")){
+		                             iconid = R.drawable.social_icon;
 		                         }
 		                         else{
 		                             iconid = R.drawable.other_icon;
@@ -207,6 +212,7 @@ public class EventsListActivity extends MenuActivity{
                                  event.getInt("hour")*100+event.getInt("min"), event.getString("location"),event.getInt("month"),event.getInt("date"),
                                  event.getInt("year"), event.getString("description"), event.getString("host"), iconid, attendees, event.getBoolean("attending")));
                     }
+                    Collections.sort(eventList);
                 }catch(JSONException e){
                     // TODO Auto-generated catch block
                     e.printStackTrace();

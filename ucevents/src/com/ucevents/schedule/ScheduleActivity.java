@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -197,25 +198,35 @@ public class ScheduleActivity extends MenuActivity {
 					for (int i = 0; i < listOfEvents.length(); i++){
 						JSONObject event = listOfEvents.getJSONObject(i);
 						int iconid = 0;
-						JSONArray categories = event.getJSONArray("category");
-						String category = categories.getString(0);
-						if (category.equals("study")){
-							iconid = R.drawable.study_icon;
-						}
-						else if (category.equals("food")){
-							iconid = R.drawable.play_icon;
-						}
-						else if (category.equals("career")){
-							iconid = R.drawable.play_icon;
-						}
-						else if (category.equals("organization")){
-							iconid = R.drawable.play_icon;
-						}
-						else if (category.equals("sports")){
-							iconid = R.drawable.play_icon;
-						}
-						else{
-							iconid = 1;
+						JSONArray categories = new JSONArray();
+						try{
+							categories = event.getJSONArray("category");
+							String category = categories.getString(0);
+	                        if (category.equals("study")){
+	                            iconid = R.drawable.study_icon;
+	                        }
+	                        else if (category.equals("food")){
+	                            iconid = R.drawable.food_icon;
+	                        }
+	                        else if (category.equals("career")){
+	                            iconid = R.drawable.career_icon;
+	                        }
+	                        else if (category.equals("organization")){
+	                            iconid = R.drawable.club_icon;
+	                        }
+	                        else if (category.equals("sports")){
+	                            iconid = R.drawable.sport_icon;
+	                        }
+	                        else if (category.equals("social")){
+	                            iconid = R.drawable.social_icon;
+	                        }
+	                        else{
+	                        	Log.d("IN ELSE STATEMENT", category);
+	                            iconid = R.drawable.other_icon;
+	                        }
+						} catch (JSONException e){
+							Log.d("CAUGHT JSONEXCEPTION", "GETTING CATEGORY CAUSED JSONEXCEPTION");
+							iconid = R.drawable.other_icon;
 						}
 						JSONArray json_attendees = event.getJSONArray("attendees");
 						String[] attendees = new String[json_attendees.length()];
@@ -237,6 +248,7 @@ public class ScheduleActivity extends MenuActivity {
 			protected void onPostExecute(String result){
 				if(result != null){
 					Log.d("Result of Query", result);
+					Collections.sort(schList);
 					populateListView();
 					Log.d("LOCATION****", "POST-POPULATELISTVIEW");
 					registerClickCallback();
