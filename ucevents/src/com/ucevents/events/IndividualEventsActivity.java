@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,6 +20,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,44 +48,44 @@ public class IndividualEventsActivity extends MenuActivity {
 	TextView tvRSVPCount;
 	String eventid;
 	String userid;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_events);
 		Bundle b = this.getIntent().getExtras();
-		
+
 		// grab event clicked from bundle
 		Events chosenEvent = b.getParcelable("chosenEvent");
 		//Toast.makeText(getApplicationContext(), chosenEvent.getDescription(), Toast.LENGTH_SHORT).show();
 		ivIconID = (ImageView) findViewById(R.id.ivIconID);
 		ivIconID.setImageResource(chosenEvent.getIconid());
-		
+
 		tvName = (TextView) findViewById(R.id.tvName);
 		tvName.setText(chosenEvent.getName());
-		
+
 		tvLocation = (TextView) findViewById(R.id.tvLocation);
 		tvLocation.setText(chosenEvent.getLocation());
-		
+
 		tvDate = (TextView) findViewById(R.id.tvDate);
 		tvDate.setText(String.valueOf(chosenEvent.getMonth()) + " " + 
 				String.valueOf(chosenEvent.getDate()) + " " +
 				String.valueOf(chosenEvent.getYear()) );
-		
+
 		tvTime = (TextView) findViewById(R.id.tvTime);
 		tvTime.setText(String.valueOf(chosenEvent.getTime()));
-		
+
 		tvDescription = (TextView) findViewById(R.id.tvDescription);
 		tvDescription.setText(chosenEvent.getDescription());
-		
+
 		eventid = chosenEvent.getEventid();
 
 		userid = ((UCEvents_App)getApplicationContext()).getUserId();
-		
+
 		cbRSVP = (CheckBox) findViewById(R.id.checkBoxRSVP);
 		//update rsvp count w value from db
-		
+
 		//On state change
 		cbRSVP.setOnClickListener(new OnClickListener() {
 			@Override
@@ -96,193 +100,194 @@ public class IndividualEventsActivity extends MenuActivity {
 				//Toast.makeText(getApplicationContext(), "RSVP", Toast.LENGTH_SHORT).show();
 			}
 		});
-		
+
 		getRSVPDB(userid, eventid);
-		
+
 		// add code: grab rsvp count from db
 	}
-	
+
 	/**
 	 * An example Activity using Google Analytics and EasyTracker.
 	 */
-	  @Override
-	  public void onStart() {
-	    super.onStart();
-	    // The rest of your onStart() code.
-	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
-	  }
-
-	  @Override
-	  public void onStop() {
-	    super.onStop();
-	    // The rest of your onStop() code.
-	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	@Override
+	public void onStart() {
+		super.onStart();
+		// The rest of your onStart() code.
+		EasyTracker.getInstance(this).activityStart(this);  // Add this method.
 	}
-	  
-		private void deleteAttendee(String user, String event){
-			class eventsTask extends AsyncTask<String, Void, String> {
-				protected String doInBackground(String[] args){
-					HttpClient client = new DefaultHttpClient();
-					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/delete_query.jsp?method=deleteAttendee&attendee="+args[0]+"&event="+args[1]);
-					HttpResponse response;
-					try {
-						response = client.execute(get);
-						HttpEntity entity = response.getEntity();
-						InputStream is = entity.getContent();
-						String result = null;
-						BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
-						StringBuilder sb = new StringBuilder();
-						String line = null;
-						while((line = reader.readLine()) != null){
-							sb.append(line);
-						}
-						result = sb.toString();
-						result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-						if (result.contains("Success")){
-							return "SUCCESS";
-						}
-					} catch (ClientProtocolException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						Log.d("CLIENTPROTOCAL", e1.toString());
-						return null;
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						Log.d("IOEXCEPTION", e1.toString());
-						return null;
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		// The rest of your onStop() code.
+		EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	}
+
+	private void deleteAttendee(String user, String event){
+		class eventsTask extends AsyncTask<String, Void, String> {
+			protected String doInBackground(String[] args){
+				HttpClient client = new DefaultHttpClient();
+				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/delete_query.jsp?method=deleteAttendee&attendee="+encodeHTML(args[0])+"&event="+encodeHTML(args[1]));
+				HttpResponse response;
+				try {
+					response = client.execute(get);
+					HttpEntity entity = response.getEntity();
+					InputStream is = entity.getContent();
+					String result = null;
+					BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+					StringBuilder sb = new StringBuilder();
+					String line = null;
+					while((line = reader.readLine()) != null){
+						sb.append(line);
 					}
-					Log.d("RETURN FAILURE", get.getURI().getPath());
-					return "FAILED";
+					result = sb.toString();
+					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
+					if (result.contains("Success")){
+						return "SUCCESS";
+					}
+				} catch (ClientProtocolException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("CLIENTPROTOCAL", e1.toString());
+					return null;
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("IOEXCEPTION", e1.toString());
+					return null;
 				}
-				protected void onPostExecute(String result){
-					if(result != null){
-						Log.d("SUCCESS", result);
-						Toast.makeText(getApplicationContext(), "You are no longer attending.",
-								Toast.LENGTH_LONG).show();
-						return;
-					}
-					else{
-						Log.d("FAILURE", "FAILURE");
-						Toast.makeText(getApplicationContext(), "Unable to remove you from attendees. Please try again.",
-								Toast.LENGTH_LONG).show();
-						return;
-					}
+				Log.d("RETURN FAILURE", get.getURI().getPath());
+				return "FAILED";
+			}
+			protected void onPostExecute(String result){
+				if(result != null){
+					Log.d("SUCCESS", result);
+					Toast.makeText(getApplicationContext(), "You are no longer attending.",
+							Toast.LENGTH_LONG).show();
+					return;
+				}
+				else{
+					Log.d("FAILURE", "FAILURE");
+					Toast.makeText(getApplicationContext(), "Unable to remove you from attendees. Please try again.",
+							Toast.LENGTH_LONG).show();
+					return;
 				}
 			}
-			eventsTask sendPostReqAsyncTask = new eventsTask();
-			sendPostReqAsyncTask.execute(userid, eventid);
-			Log.d("HERE", "AFTER CALL TO EXECUTE");
-			return;
 		}
-		
-		private void insertAttendee(String user, String event){
-			class eventsTask extends AsyncTask<String, Void, String> {
-				protected String doInBackground(String[] args){
-					HttpClient client = new DefaultHttpClient();
-					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertAttendee&user="+args[0]+"&event="+args[1]);
-					HttpResponse response;
-					try {
-						response = client.execute(get);
-						HttpEntity entity = response.getEntity();
-						InputStream is = entity.getContent();
-						String result = null;
-						BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
-						StringBuilder sb = new StringBuilder();
-						String line = null;
-						while((line = reader.readLine()) != null){
-							sb.append(line);
-						}
-						result = sb.toString();
-						result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-						Log.d("HTML RESULT: ", result);
-						if (result.contains("Success")){
-							return "SUCCESS";
-						}
-					} catch (ClientProtocolException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						Log.d("CLIENTPROTOCAL", e1.toString());
-						return null;
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						Log.d("IOEXCEPTION", e1.toString());
-						return null;
+		eventsTask sendPostReqAsyncTask = new eventsTask();
+		sendPostReqAsyncTask.execute(userid, eventid);
+		Log.d("HERE", "AFTER CALL TO EXECUTE");
+		return;
+	}
+
+	private void insertAttendee(String user, String event){
+		class eventsTask extends AsyncTask<String, Void, String> {
+			protected String doInBackground(String[] args){
+				HttpClient client = new DefaultHttpClient();
+				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertAttendee&user="+encodeHTML(args[0])+"&event="+encodeHTML(args[1]));
+				HttpResponse response;
+				try {
+					response = client.execute(get);
+					HttpEntity entity = response.getEntity();
+					InputStream is = entity.getContent();
+					String result = null;
+					BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+					StringBuilder sb = new StringBuilder();
+					String line = null;
+					while((line = reader.readLine()) != null){
+						sb.append(line);
 					}
-					return "FAILED";
+					result = sb.toString();
+					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
+					Log.d("HTML RESULT: ", result);
+					if (result.contains("Success")){
+						return "SUCCESS";
+					}
+				} catch (ClientProtocolException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("CLIENTPROTOCAL", e1.toString());
+					return null;
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("IOEXCEPTION", e1.toString());
+					return null;
 				}
-				protected void onPostExecute(String result){
-					if(result != null){
-						Log.d("SUCCESS", result);
-						Toast.makeText(getApplicationContext(), "You are attending!",
-								Toast.LENGTH_LONG).show();
-						return;
-					}
-					else{
-						Log.d("FAILURE", "FAILURE");
-						Toast.makeText(getApplicationContext(), "Unable to add you as an attendee. Please try again.",
-								Toast.LENGTH_LONG).show();
-						return;
-					}
+				return "FAILED";
+			}
+			protected void onPostExecute(String result){
+				if(result != null){
+					Log.d("SUCCESS", result);
+					Toast.makeText(getApplicationContext(), "You are attending!",
+							Toast.LENGTH_LONG).show();
+					return;
+				}
+				else{
+					Log.d("FAILURE", "FAILURE");
+					Toast.makeText(getApplicationContext(), "Unable to add you as an attendee. Please try again.",
+							Toast.LENGTH_LONG).show();
+					return;
 				}
 			}
-			eventsTask sendPostReqAsyncTask = new eventsTask();
-			sendPostReqAsyncTask.execute(userid, eventid);
-			Log.d("HERE", "AFTER CALL TO EXECUTE");
-			return;
 		}
-		
-		// Get RSVP value from DB
-		private void getRSVPDB(String user, String event){
-			class eventsTask extends AsyncTask<String, Void, String> {
-				protected String doInBackground(String[] args){
-					JSONObject json = null;
-					HttpClient client = new DefaultHttpClient();
-					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getAttendees&user="+args[0]+"&param="+args[1]);
-					HttpResponse response;
+		eventsTask sendPostReqAsyncTask = new eventsTask();
+		sendPostReqAsyncTask.execute(userid, eventid);
+		Log.d("HERE", "AFTER CALL TO EXECUTE");
+		return;
+	}
+
+	// Get RSVP value from DB
+	private void getRSVPDB(String user, String event){
+		class eventsTask extends AsyncTask<String, Void, String> {
+			protected String doInBackground(String[] args){
+				JSONObject json = null;
+				HttpClient client = new DefaultHttpClient();
+				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getAttendees&user="+encodeHTML(args[0])+"&param="+encodeHTML(args[1]));
+				Log.d("URL ACCESSING", get.getURI().getPath());
+				HttpResponse response;
+				try {
+					response = client.execute(get);
+					HttpEntity entity = response.getEntity();
+					InputStream is = entity.getContent();
+					String result = null;
+					BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+					StringBuilder sb = new StringBuilder();
+					String line = null;
+					while((line = reader.readLine()) != null){
+						sb.append(line);
+					}
+					result = sb.toString();
+					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
+					Log.d("RESULT: ", result);
 					try {
-						response = client.execute(get);
-						HttpEntity entity = response.getEntity();
-						InputStream is = entity.getContent();
-						String result = null;
-						BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
-						StringBuilder sb = new StringBuilder();
-						String line = null;
-						while((line = reader.readLine()) != null){
-							sb.append(line);
-						}
-						result = sb.toString();
-						result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-						Log.d("RESULT: ", result);
-						try {
-							json = new JSONObject(result);
-							boolean attending = json.getBoolean("attending");
-							return "" + attending;
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							Log.d("JSONEXCEPTION@87", e.toString());
-							return null;
-						}
-					} catch (ClientProtocolException e1) {
+						json = new JSONObject(result);
+						boolean attending = json.getBoolean("attending");
+						return "" + attending;
+					} catch (JSONException e) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						Log.d("CLIENTPROTOCAL", e1.toString());
-						return null;
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						Log.d("IOEXCEPTION", e1.toString());
+						e.printStackTrace();
+						Log.d("JSONEXCEPTION@87", e.toString());
 						return null;
 					}
+				} catch (ClientProtocolException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("CLIENTPROTOCAL", e1.toString());
+					return null;
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("IOEXCEPTION", e1.toString());
+					return null;
 				}
-				protected void onPostExecute(String result){
-					if(result != null){
-						Log.d("SUCCESS", result);
-						if (result.equals("true")){
-							cbRSVP.setChecked(true);
-							cbRSVP.setOnClickListener(new OnClickListener() {
+			}
+			protected void onPostExecute(String result){
+				if(result != null){
+					Log.d("SUCCESS", result);
+					if (result.equals("true")){
+						cbRSVP.setChecked(true);
+						/*cbRSVP.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View v) {
 									// update db with RSVP value here
@@ -294,11 +299,11 @@ public class IndividualEventsActivity extends MenuActivity {
 									}
 									//Toast.makeText(getApplicationContext(), "RSVP", Toast.LENGTH_SHORT).show();
 								}
-							});
-						}
-						else{
-							cbRSVP.setChecked(false);
-							cbRSVP.setOnClickListener(new OnClickListener() {
+							});*/
+					}
+					else{
+						cbRSVP.setChecked(false);
+						/*cbRSVP.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View v) {
 									// update db with RSVP value here
@@ -310,19 +315,41 @@ public class IndividualEventsActivity extends MenuActivity {
 									}
 									//Toast.makeText(getApplicationContext(), "RSVP", Toast.LENGTH_SHORT).show();
 								}
-							});
-						}
-						return;
+							});*/
 					}
-					else{
-						Log.d("FAILURE", "FAILURE");
-						return;
-					}
+					return;
+				}
+				else{
+					Log.d("FAILURE", "FAILURE");
+					return;
 				}
 			}
-			eventsTask sendPostReqAsyncTask = new eventsTask();
-			sendPostReqAsyncTask.execute(user, event);
-			Log.d("HERE", "AFTER CALL TO EXECUTE");
-			return;
 		}
+		eventsTask sendPostReqAsyncTask = new eventsTask();
+		sendPostReqAsyncTask.execute(userid, eventid);
+		Log.d("HERE", "AFTER CALL TO EXECUTE GETRSVPDB");
+		return;
+	}
+
+	public String encodeHTML(String s)
+	{
+		//s = s.replaceAll("%", "%25");
+		s = s.replaceAll(" ", "%20");
+		s = s.replaceAll("!", "%21");
+		//s = s.replaceAll("\"", "%22");
+		//s = s.replaceAll("#", "%23");
+		//s = s.replaceAll("$", "%24");
+		//s = s.replaceAll("&", "%26");
+		s = s.replaceAll("'", "%27");
+		//s = s.replaceAll("(", "%28");
+		//s = s.replaceAll(")", "%29");
+		//s = s.replaceAll("*", "%2A");
+		//s = s.replaceAll("+", "%2B");
+		//s = s.replaceAll(",", "%2C");
+		//s = s.replaceAll("-", "%2D");
+		//s = s.replaceAll(".", "%2E");
+		//s = s.replaceAll("/", "%2F");
+		return s;
+	}
+
 }

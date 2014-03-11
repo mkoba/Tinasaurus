@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,7 +155,7 @@ public class ScheduleActivity extends MenuActivity {
 				JSONObject json = null;
 				HttpClient client = new DefaultHttpClient();
 				//********** HOW TO GET USER ID?? TINAAAAA ****************//
-				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsUserAttending&param="+args[0]);
+				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsUserAttending&param="+encodeHTML(args[0]));
 				List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
 				HttpResponse response;
@@ -202,28 +203,28 @@ public class ScheduleActivity extends MenuActivity {
 						try{
 							categories = event.getJSONArray("category");
 							String category = categories.getString(0);
-	                        if (category.equals("study")){
-	                            iconid = R.drawable.study_icon;
-	                        }
-	                        else if (category.equals("food")){
-	                            iconid = R.drawable.food_icon;
-	                        }
-	                        else if (category.equals("career")){
-	                            iconid = R.drawable.career_icon;
-	                        }
-	                        else if (category.equals("organization")){
-	                            iconid = R.drawable.club_icon;
-	                        }
-	                        else if (category.equals("sports")){
-	                            iconid = R.drawable.sport_icon;
-	                        }
-	                        else if (category.equals("social")){
-	                            iconid = R.drawable.social_icon;
-	                        }
-	                        else{
-	                        	Log.d("IN ELSE STATEMENT", category);
-	                            iconid = R.drawable.other_icon;
-	                        }
+							if (category.equals("study")){
+								iconid = R.drawable.study_icon;
+							}
+							else if (category.equals("food")){
+								iconid = R.drawable.food_icon;
+							}
+							else if (category.equals("career")){
+								iconid = R.drawable.career_icon;
+							}
+							else if (category.equals("organization")){
+								iconid = R.drawable.club_icon;
+							}
+							else if (category.equals("sports")){
+								iconid = R.drawable.sport_icon;
+							}
+							else if (category.equals("social")){
+								iconid = R.drawable.social_icon;
+							}
+							else{
+								Log.d("IN ELSE STATEMENT", category);
+								iconid = R.drawable.other_icon;
+							}
 						} catch (JSONException e){
 							Log.d("CAUGHT JSONEXCEPTION", "GETTING CATEGORY CAUSED JSONEXCEPTION");
 							iconid = R.drawable.other_icon;
@@ -262,10 +263,30 @@ public class ScheduleActivity extends MenuActivity {
 			}
 		}
 		scheduleTask sendPostReqAsyncTask = new scheduleTask();
-	    sendPostReqAsyncTask.execute(user);
-	    Log.d("HERE", "AFTER CALL TO EXECUTE");
-	    return;
+		sendPostReqAsyncTask.execute(user);
+		Log.d("HERE", "AFTER CALL TO EXECUTE");
+		return;
 	}
 
+	public String encodeHTML(String s)
+	{
+		//s = s.replaceAll("%", "%25");
+		s = s.replaceAll(" ", "%20");
+		s = s.replaceAll("!", "%21");
+		//s = s.replaceAll("\"", "%22");
+		//s = s.replaceAll("#", "%23");
+		//s = s.replaceAll("$", "%24");
+		//s = s.replaceAll("&", "%26");
+		s = s.replaceAll("'", "%27");
+		//s = s.replaceAll("(", "%28");
+		//s = s.replaceAll(")", "%29");
+		//s = s.replaceAll("*", "%2A");
+		//s = s.replaceAll("+", "%2B");
+		//s = s.replaceAll(",", "%2C");
+		//s = s.replaceAll("-", "%2D");
+		//s = s.replaceAll(".", "%2E");
+		//s = s.replaceAll("/", "%2F");
+		return s;
+	}
 
 }

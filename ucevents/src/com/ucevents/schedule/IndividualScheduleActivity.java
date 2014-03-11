@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -84,7 +85,7 @@ public class IndividualScheduleActivity extends MenuActivity {
 		tvDescription.setText(chosenEvent.getDescription());
 
 		userid = ((UCEvents_App)getApplicationContext()).getUserId();
-		
+
 		cbRSVP = (CheckBox) findViewById(R.id.checkBoxRSVP);
 		cbRSVP.setChecked(true);
 		cbRSVP.setOnClickListener(new OnClickListener() {
@@ -119,12 +120,12 @@ public class IndividualScheduleActivity extends MenuActivity {
 		// The rest of your onStop() code.
 		EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	}
-	
+
 	private void deleteAttendee(String user, String event){
 		class eventsTask extends AsyncTask<String, Void, String> {
 			protected String doInBackground(String[] args){
 				HttpClient client = new DefaultHttpClient();
-				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/delete_query.jsp?method=deleteAttendee&attendee="+args[0]+"&event="+args[1]);
+				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/delete_query.jsp?method=deleteAttendee&attendee="+encodeHTML(args[0])+"&event="+encodeHTML(args[1]));
 				HttpResponse response;
 				try {
 					response = client.execute(get);
@@ -176,12 +177,12 @@ public class IndividualScheduleActivity extends MenuActivity {
 		Log.d("HERE", "AFTER CALL TO EXECUTE");
 		return;
 	}
-	
+
 	private void insertAttendee(String user, String event){
 		class eventsTask extends AsyncTask<String, Void, String> {
 			protected String doInBackground(String[] args){
 				HttpClient client = new DefaultHttpClient();
-				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertAttendee&user="+args[0]+"&event="+args[1]);
+				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertAttendee&user="+encodeHTML(args[0])+"&event="+encodeHTML(args[1]));
 				HttpResponse response;
 				try {
 					response = client.execute(get);
@@ -232,5 +233,26 @@ public class IndividualScheduleActivity extends MenuActivity {
 		sendPostReqAsyncTask.execute(userid, eventid);
 		Log.d("HERE", "AFTER CALL TO EXECUTE");
 		return;
+	}
+
+	public String encodeHTML(String s)
+	{
+		//s = s.replaceAll("%", "%25");
+		s = s.replaceAll(" ", "%20");
+		s = s.replaceAll("!", "%21");
+		//s = s.replaceAll("\"", "%22");
+		//s = s.replaceAll("#", "%23");
+		//s = s.replaceAll("$", "%24");
+		//s = s.replaceAll("&", "%26");
+		s = s.replaceAll("'", "%27");
+		//s = s.replaceAll("(", "%28");
+		//s = s.replaceAll(")", "%29");
+		//s = s.replaceAll("*", "%2A");
+		//s = s.replaceAll("+", "%2B");
+		//s = s.replaceAll(",", "%2C");
+		//s = s.replaceAll("-", "%2D");
+		//s = s.replaceAll(".", "%2E");
+		//s = s.replaceAll("/", "%2F");
+		return s;
 	}
 }
