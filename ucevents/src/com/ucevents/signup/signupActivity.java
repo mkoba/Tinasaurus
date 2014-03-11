@@ -6,6 +6,7 @@ import com.android.ucevents.R;
 import com.android.ucevents.R.layout;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.ucevents.login.loginActivity;
+import com.ucevents.menu.LogoutMenuActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,12 +16,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class signupActivity extends Activity{
+public class signupActivity extends LogoutMenuActivity{
     Button bsignUp;
     //Button bBack;
-     
+    private TextView userInfoTextView; 
 	private String firstname;
 	private String lastname;
 	private String email;
@@ -33,15 +35,20 @@ public class signupActivity extends Activity{
 	private CheckBox cbSport;
 	private CheckBox cbStudy;
 	private CheckBox cbOther;
+	private StringBuilder userInfo = new StringBuilder("");
 	
      public void onCreate(Bundle savedInstanceState) {
     	 super.onCreate(savedInstanceState);
     	 setContentView(R.layout.activity_signup);
+    	 
     	 Bundle b = this.getIntent().getExtras();
     	 firstname = b.getString("firstname");
     	 lastname = b.getString("lastname");
     	 email = b.getString("email");
+    	 userInfoTextView = (TextView) findViewById(R.id.userInfoTextView);
+    	 userInfoTextView.setText(buildUserInfoDisplay());
     	 
+    	 //initialize interests array
     	 for(int i = 0; i < 7; i++) {
     		 interests.add("false");
     	 }
@@ -181,6 +188,9 @@ public class signupActivity extends Activity{
 				}
 			});
 		
+		
+
+		
 		/*bBack = (Button) findViewById(R.id.back);
 		bBack.setOnClickListener(new OnClickListener() {
 			 
@@ -194,6 +204,28 @@ public class signupActivity extends Activity{
 			});*/
 		
 	}
+	
+	/*
+	 *  set user info to text view
+	 */
+	private String buildUserInfoDisplay() {
+	    userInfo = new StringBuilder("");
+
+	    // Example: typed access (name)
+	    // - no special permissions required
+	    userInfo.append(String.format("First Name: %s\n\n", 
+	       firstname));
+
+	    // Example: typed access (birthday)
+	    // - requires user_birthday permission
+	    userInfo.append(String.format("Last Name: %s\n\n", 
+	        lastname));
+	    
+	    userInfo.append(String.format("Email: %s\n\n", email));
+	    
+	    return userInfo.toString();
+	}
+	
  	/**
  	 * An example Activity using Google Analytics and EasyTracker.
  	 */
