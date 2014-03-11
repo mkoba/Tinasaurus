@@ -40,7 +40,7 @@
 	<string name="sport">Sport</string>
 	<string name ="other">Other</string>
 	<string name="byUserInterest">User\'s Interests</string>
-	
+	<string name="editInterest">Edit Interests</string>
 	<color name="yellow2">#FFFF66</color>
     <color name="WHITE">#FFFFFF</color>
 </resources>

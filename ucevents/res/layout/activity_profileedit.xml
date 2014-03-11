@@ -3,46 +3,99 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    android:gravity="center"
+    
     android:orientation="vertical" >
+    
 
+    
+<LinearLayout 
+     android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:gravity="center">
     <ImageView
         android:id="@+id/profilepic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:src="@drawable/ic_launcher" />
-
-    <EditText
-        android:id="@+id/f_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Insert First Name" />
-    <EditText
-        android:id="@+id/l_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Insert last Name" />
+ </LinearLayout>
+      <ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+	<TextView
+	 android:id="@+id/modifyInterest"
+	 android:layout_marginLeft="20dp"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+	 android:text="@string/editInterest"
+	 android:textColor ="@color/WHITE"    
+	 />
     
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Insert Email" />
 
-    <EditText
-        android:id="@+id/interest"
-        android:layout_width="match_parent"
+     <CheckBox
+        android:id="@+id/career"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Insert Interest" />
+        android:text="Career"
+        android:textColor ="@color/WHITE"  />
+    <CheckBox
+        android:id="@+id/food"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food" 
+        android:textColor ="@color/WHITE" />
+   <CheckBox
+        android:id="@+id/organization"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Organization"
+        android:textColor ="@color/WHITE"  />
+	<CheckBox
+        android:id="@+id/social"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Social" 
+        android:textColor ="@color/WHITE"/>
+
+    <CheckBox
+        android:id="@+id/sport"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sport"
+        android:textColor ="@color/WHITE"  />
+    <CheckBox
+        android:id="@+id/study"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Study" 
+        android:textColor ="@color/WHITE" />
+    
+     <CheckBox
+        android:id="@+id/other"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other" 
+        android:textColor ="@color/WHITE"/>
+     
 
     <Button
         android:id="@+id/done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Done" />
-
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>
