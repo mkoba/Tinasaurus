@@ -204,7 +204,7 @@ public class EventsListActivity extends MenuActivity{
 								iconid = R.drawable.other_icon;
 							}
 						} catch(JSONException e){
-							iconid = 1;
+							iconid = R.drawable.other_icon;
 						}
 						JSONArray json_attendees = event.getJSONArray("attendees");
 						String[] attendees = new String[json_attendees.length()];
