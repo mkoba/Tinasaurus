@@ -82,6 +82,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Study" />
+    <CheckBox
+        android:id="@+id/other_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other" />
 
     <Button
         android:id="@+id/Done"

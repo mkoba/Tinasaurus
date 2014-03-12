@@ -52,9 +52,9 @@ public class ScheduleActivity extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
 		addOnClickListener();
-		Bundle bundle = getIntent().getExtras();
-		value = bundle.getString("key");
-		Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
+		//Bundle bundle = getIntent().getExtras();
+		//value = bundle.getString("key");
+		//Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
 		populateEventList();
 	}
 

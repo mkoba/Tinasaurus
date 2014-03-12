@@ -67,7 +67,7 @@ public class EventsListActivity extends MenuActivity{
 		userid = appState.getUserId();
 		
 		Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
-		if(value.toString().equals("food") || value.toString().equals("study") || value.toString().equals("career") || value.toString().equals("sport") || value.toString().equals("club") || value.toString().equals("social") || value.toString().equals("other")){
+		if(value.toString().equals("food") || value.toString().equals("study") || value.toString().equals("career") || value.toString().equals("sports") || value.toString().equals("organization") || value.toString().equals("social") || value.toString().equals("other")){
 			populateEventList(value);
 		}
 		else if(value.toString().equals("interest")){
