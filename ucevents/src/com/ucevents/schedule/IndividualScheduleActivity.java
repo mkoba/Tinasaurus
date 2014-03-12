@@ -97,14 +97,26 @@ public class IndividualScheduleActivity extends MenuActivity {
 		//List population 
 		attList = (ListView) findViewById(R.id.allAttend);
 		
-		ArrayList<String> listAttend = new ArrayList<String>();//chosenEvent.getAttendees();
+		ArrayList<String> listAttend = new ArrayList<String>();
+		ArrayList<String> listView= new ArrayList<String>();
 		
 		listAttend.addAll(chosenEvent.getAttendees());
+		
+		//check for if less than 5 attendees
+		int totalSize =5; 
+		if(totalSize > listAttend.size()){
+			totalSize = listAttend.size();
+		}
+		
+		for(int i = 0; i < totalSize; i++ ){
+			listView.add(listAttend.get(i));
+		}
+		
 		
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this, 
                 android.R.layout.simple_list_item_1,
-                listAttend );
+                listView );
 
 		attList.setAdapter(arrayAdapter); 
 		
@@ -113,7 +125,7 @@ public class IndividualScheduleActivity extends MenuActivity {
 		cbRSVP = (CheckBox) findViewById(R.id.checkBoxRSVP);
 		cbRSVP.setChecked(true);
 		
-		bDecline = (Button) findViewById(R.id.decline);
+		//bDecline = (Button) findViewById(R.id.decline);
 		
 		
 		cbRSVP.setOnClickListener(new OnClickListener() {
@@ -126,9 +138,6 @@ public class IndividualScheduleActivity extends MenuActivity {
 				else {
 					deleteAttendee(userid, eventid);
 				}
-				//deleteAttendee(userid, eventid);
-				//Intent i= new Intent(IndividualScheduleActivity.this, com.ucevents.schedule.ScheduleActivity.class);
-				//startActivity(i);
 			}
 		});
 
