@@ -7,8 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.ec2.AmazonEC2;
@@ -22,6 +29,7 @@ public class DB_Access {
 	private PreparedStatement p_stmt;
 	private Statement stmt;
 	private ResultSet rs;
+	private Date date;
 
 	//Constructor :)
 	public DB_Access(){
@@ -166,11 +174,8 @@ public class DB_Access {
 		location = escapeAp(location);
 		System.out.println(location);
 		description = escapeAp(description);
-		System.out.println(description);
 		name = escapeAp(name);
-		System.out.println(name);
 		ucsd_email = escapeAp(ucsd_email);
-		System.out.println(ucsd_email);
 		if (pm){
 			hour += 12;
 		}
@@ -259,6 +264,22 @@ public class DB_Access {
 		p_stmt.setString(2, attendee);
 		p_stmt.executeUpdate();
 	}
+	
+	public boolean deleteIfPastTime(Calendar c, String event) throws SQLException{
+		Calendar current = Calendar.getInstance();
+		System.out.println(event + " c before current? " + current.after(c));
+		if (current.after(c)){
+			try{
+				System.out.println("DELETING EVENT, PAST TIME BY 2 HOURS");
+				deleteEvent(event);
+				return true;
+			}catch (Exception e){
+				System.out.println("CAUGHT EXCEPTION");
+				return false;
+			}
+		}
+		return false;
+	}
 
 	///////////////////////////////// SELECT /////////////////////////////////
 
@@ -338,26 +359,39 @@ public class DB_Access {
 		p_stmt = connection.prepareStatement("SELECT * FROM events");
 		ResultSet rs = p_stmt.executeQuery();
 		while(rs.next()){
-			JSONObject event = new JSONObject();
-			event.put("name", rs.getString("name"));
-			event.put("location", rs.getString("location"));
-			event.put("hour", rs.getInt("hour"));
-			event.put("min", rs.getInt("min"));
-			event.put("month", rs.getInt("month"));
-			event.put("date", rs.getInt("date"));
-			event.put("year", rs.getInt("year"));
-			event.put("description", rs.getString("description"));
-			JSONObject attendees = getAttendees(rs.getString("name"), user);
-			try{
-				event.put("attendees", attendees.get("attendees"));
-			} catch (JSONException e){
-				event.put("attendees", new ArrayList<String>());
-				//do nothing
+			//int year, int month, int date, int hrs, int min
+			Calendar cal = Calendar.getInstance();
+			try {
+				cal.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(rs.getInt("year")+"/"+rs.getInt("month")+"/"+ rs.getInt("date")+ " " + (rs.getInt("hour")+9) + ":" + rs.getInt("min") + ":00"));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			event.put("attending", attendees.getBoolean("attending"));
-			event.put("host", getHost(rs.getString("name")));
-			event.put("category", getEventCategory(rs.getString("name")));
-			eventslist.add(event);
+			if(deleteIfPastTime(cal, rs.getString("name"))){
+				continue;
+			}
+			else{
+				JSONObject event = new JSONObject();
+				event.put("name", rs.getString("name"));
+				event.put("location", rs.getString("location"));
+				event.put("hour", rs.getInt("hour"));
+				event.put("min", rs.getInt("min"));
+				event.put("month", rs.getInt("month"));
+				event.put("date", rs.getInt("date"));
+				event.put("year", rs.getInt("year"));
+				event.put("description", rs.getString("description"));
+				JSONObject attendees = getAttendees(rs.getString("name"), user);
+				try{
+					event.put("attendees", attendees.get("attendees"));
+				} catch (JSONException e){
+					event.put("attendees", new ArrayList<String>());
+					//do nothing
+				}
+				event.put("attending", attendees.getBoolean("attending"));
+				event.put("host", getHost(rs.getString("name")));
+				event.put("category", getEventCategory(rs.getString("name")));
+				eventslist.add(event);
+			}
 		}
 		result.put("events", eventslist);
 		return result;
@@ -374,26 +408,38 @@ public class DB_Access {
 		p_stmt.setString(1, category);
 		rs = p_stmt.executeQuery();
 		while(rs.next()){
-			JSONObject event = new JSONObject();
-			event.put("name", rs.getString("name"));
-			event.put("location", rs.getString("location"));
-			event.put("hour", rs.getInt("hour"));
-			event.put("min", rs.getInt("min"));
-			event.put("month", rs.getInt("month"));
-			event.put("date", rs.getInt("date"));
-			event.put("year", rs.getInt("year"));
-			event.put("description", rs.getString("description"));
-			JSONObject attendees = getAttendees(rs.getString("name"), user);
-			try{
-				event.put("attendees", attendees.get("attendees"));
-			} catch (JSONException e){
-				//do nothing
-				event.put("attendees", new ArrayList<String>());
+			Calendar cal = Calendar.getInstance();
+			try {
+				cal.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(rs.getInt("year")+"/"+rs.getInt("month")+"/"+ rs.getInt("date")+ " " + (rs.getInt("hour")+9) + ":" + rs.getInt("min") + ":00"));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			event.put("attending", attendees.getBoolean("attending"));
-			event.put("host", getHost(rs.getString("name")));
-			event.put("category", getEventCategory(rs.getString("name")));
-			eventslist.add(event);
+			if(deleteIfPastTime(cal, rs.getString("name"))){
+				continue;
+			}
+			else{
+				JSONObject event = new JSONObject();
+				event.put("name", rs.getString("name"));
+				event.put("location", rs.getString("location"));
+				event.put("hour", rs.getInt("hour"));
+				event.put("min", rs.getInt("min"));
+				event.put("month", rs.getInt("month"));
+				event.put("date", rs.getInt("date"));
+				event.put("year", rs.getInt("year"));
+				event.put("description", rs.getString("description"));
+				JSONObject attendees = getAttendees(rs.getString("name"), user);
+				try{
+					event.put("attendees", attendees.get("attendees"));
+				} catch (JSONException e){
+					//do nothing
+					event.put("attendees", new ArrayList<String>());
+				}
+				event.put("attending", attendees.getBoolean("attending"));
+				event.put("host", getHost(rs.getString("name")));
+				event.put("category", getEventCategory(rs.getString("name")));
+				eventslist.add(event);
+			}
 		}
 		result.put("events", eventslist);
 		return result;
@@ -437,25 +483,37 @@ public class DB_Access {
 			p_stmt.setString(1, event_id);
 			ResultSet rs_tmp = p_stmt.executeQuery();
 			while(rs_tmp.next()){
-				event.put("name", rs_tmp.getString("name"));
-				event.put("location", rs_tmp.getString("location"));
-				event.put("hour", rs_tmp.getInt("hour"));
-				event.put("min", rs_tmp.getInt("min"));
-				event.put("month", rs_tmp.getInt("month"));
-				event.put("date", rs_tmp.getInt("date"));
-				event.put("year", rs_tmp.getInt("year"));
-				event.put("description", rs_tmp.getString("description"));
-				JSONObject attendees = getAttendees(rs_tmp.getString("name"), user);
-				try{
-					event.put("attendees", attendees.get("attendees"));
-				} catch (JSONException e){
-					//do nothing
-					event.put("attendees", new ArrayList<String>());
+				Calendar cal = Calendar.getInstance();
+				try {
+					cal.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(rs.getInt("year")+"/"+rs.getInt("month")+"/"+ rs.getInt("date")+ " " + (rs.getInt("hour")+9) + ":" + rs.getInt("min") + ":00"));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				event.put("attending", attendees.getBoolean("attending"));
-				event.put("host", getHost(rs_tmp.getString("name")));
-				event.put("category", getEventCategory(rs_tmp.getString("name")));
-				eventslist.add(event);
+				if(deleteIfPastTime(cal, rs.getString("name"))){
+					break;
+				}
+				else{
+					event.put("name", rs_tmp.getString("name"));
+					event.put("location", rs_tmp.getString("location"));
+					event.put("hour", rs_tmp.getInt("hour"));
+					event.put("min", rs_tmp.getInt("min"));
+					event.put("month", rs_tmp.getInt("month"));
+					event.put("date", rs_tmp.getInt("date"));
+					event.put("year", rs_tmp.getInt("year"));
+					event.put("description", rs_tmp.getString("description"));
+					JSONObject attendees = getAttendees(rs_tmp.getString("name"), user);
+					try{
+						event.put("attendees", attendees.get("attendees"));
+					} catch (JSONException e){
+						//do nothing
+						event.put("attendees", new ArrayList<String>());
+					}
+					event.put("attending", attendees.getBoolean("attending"));
+					event.put("host", getHost(rs_tmp.getString("name")));
+					event.put("category", getEventCategory(rs_tmp.getString("name")));
+					eventslist.add(event);
+				}
 			}
 		}
 
@@ -484,25 +542,37 @@ public class DB_Access {
 			p_stmt.setString(1, event_id);
 			ResultSet rs_tmp = p_stmt.executeQuery();
 			while(rs_tmp.next()){
-				event.put("name", rs_tmp.getString("name"));
-				event.put("location", rs_tmp.getString("location"));
-				event.put("hour", rs_tmp.getInt("hour"));
-				event.put("min", rs_tmp.getInt("min"));
-				event.put("month", rs_tmp.getInt("month"));
-				event.put("date", rs_tmp.getInt("date"));
-				event.put("year", rs_tmp.getInt("year"));
-				event.put("description", rs_tmp.getString("description"));
-				JSONObject attendees = getAttendees(rs.getString("name"), user);
-				try{
-					event.put("attendees", attendees.get("attendees"));
-				} catch (JSONException e){
-					//do nothing
-					event.put("attendees", new ArrayList<String>());
+				Calendar cal = Calendar.getInstance();
+				try {
+					cal.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(rs.getInt("year")+"/"+rs.getInt("month")+"/"+ rs.getInt("date")+ " " + (rs.getInt("hour")+9) + ":" + rs.getInt("min") + ":00"));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				event.put("attending", attendees.getBoolean("attending"));
-				event.put("host", getHost(rs_tmp.getString("name")));
-				event.put("category", getEventCategory(rs_tmp.getString("name")));
-				eventslist.add(event);
+				if(deleteIfPastTime(cal, rs.getString("name"))){
+					continue;
+				}
+				else{
+					event.put("name", rs_tmp.getString("name"));
+					event.put("location", rs_tmp.getString("location"));
+					event.put("hour", rs_tmp.getInt("hour"));
+					event.put("min", rs_tmp.getInt("min"));
+					event.put("month", rs_tmp.getInt("month"));
+					event.put("date", rs_tmp.getInt("date"));
+					event.put("year", rs_tmp.getInt("year"));
+					event.put("description", rs_tmp.getString("description"));
+					JSONObject attendees = getAttendees(rs.getString("name"), user);
+					try{
+						event.put("attendees", attendees.get("attendees"));
+					} catch (JSONException e){
+						//do nothing
+						event.put("attendees", new ArrayList<String>());
+					}
+					event.put("attending", attendees.getBoolean("attending"));
+					event.put("host", getHost(rs_tmp.getString("name")));
+					event.put("category", getEventCategory(rs_tmp.getString("name")));
+					eventslist.add(event);
+				}
 			}
 		}
 		result.put("events", eventslist);
@@ -605,7 +675,8 @@ public class DB_Access {
 		String[] event_category = {"food"};
 		String[] interests = {"food", "sports"};
 		try {
-			db.getEventsUserAttending("tszutu@ucsd.edu");
+			JSONObject json = db.getEventsInCategory("food", "marieli530@gmail.com");
+			JSONArray arr= json.getJSONArray("events");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
