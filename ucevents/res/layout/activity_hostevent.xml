@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/blue_solid" >
+
+    <TextView
+        android:id="@+id/hostText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor ="@color/WHITE"
+        android:text="Click on Event to Edit " />
+      
+	<ListView
+        android:id="@+id/lvallHost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hostText"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
