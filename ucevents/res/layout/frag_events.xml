@@ -28,6 +28,13 @@
         android:textColor ="@color/WHITE"
         android:text="@string/byUserInterest" />
     
+       <Button
+        android:id="@+id/bEventsHost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor ="@color/WHITE"
+        android:text="Events Created" />
+    
     <FrameLayout
         android:id="@+id/eventsViewer"
         android:name="com.ucevents.events.innerEventsFrag"

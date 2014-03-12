@@ -20,6 +20,8 @@ public class EventsActivity extends MenuActivity{
 	Button ballEvents;
 	Button bbyCategory;
 	Button bUserInterest;
+	Button bHost; 
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.frag_events);
@@ -54,6 +56,17 @@ public class EventsActivity extends MenuActivity{
 				//view= inflater.inflate(R.layout.activity_allevents, container, false);
 				Intent intent = new Intent(EventsActivity.this, com.ucevents.events.EventsListActivity.class);
 				intent.putExtra("key", "interest");
+				startActivity(intent);
+			}
+		});	
+		
+		bHost = (Button) findViewById(R.id.bEventsHost);
+		bHost.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				//view= inflater.inflate(R.layout.activity_allevents, container, false);
+				Intent intent = new Intent(EventsActivity.this, com.ucevents.events.EventsHostActivity.class);
+				//intent.putExtra("key", "interest");
 				startActivity(intent);
 			}
 		});	

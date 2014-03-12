@@ -44,17 +44,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EventsListActivity extends MenuActivity{
+public class EventsHostActivity extends MenuActivity{
+	
 	String value;
 	String userid;
 	private List<Events> eventList = new ArrayList<Events>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//   Log.d("woathereboy", "EventsListActivity"); 
-
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_allevents);
+		setContentView(R.layout.activity_hostevent);
 		Bundle bundle = getIntent().getExtras();
 		value = bundle.getString("key");
 		Log.d("VALUE IS :", value.toString());
@@ -66,7 +66,10 @@ public class EventsListActivity extends MenuActivity{
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		userid = appState.getUserId();
 		
-		Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
+		
+		
+		
+		/*Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
 		if(value.toString().equals("food") || value.toString().equals("study") || value.toString().equals("career") || value.toString().equals("sports") || value.toString().equals("organization") || value.toString().equals("social") || value.toString().equals("other")){
 			populateEventList(value);
 		}
@@ -76,7 +79,10 @@ public class EventsListActivity extends MenuActivity{
 		}
 		else{
 			populateEventList();
-		}
+		} */
+		
+		sendPostRequest("allEvents");
+		
 		populateListView();
 		registerClickCallback();
 
@@ -92,39 +98,15 @@ public class EventsListActivity extends MenuActivity{
 		Log.d("SIZEOF eventList", "" + eventList.size());
 	}
 
-	// populateEventList for category sorting
-	private void populateEventList(String category){
-		Log.d("category is: ", category);
-		Log.d("category is: ", category);
-		Log.d("category is: ", category);
-
-		sendPostRequest(category);
-		Log.d("SIZEOF eventList", "" + eventList.size());
-
-	}
-	private void populateEventList(String interest, boolean nothingElse){
-		Log.d("this is:", interest);
-		sendPostRequest(interest);
-	}
 	private void sendPostRequest(final String key) {
 		class scheduleTask extends AsyncTask<String, Void, String>{
 			protected String doInBackground(String[] args){
 				JSONObject json = null;
 				HttpClient client = new DefaultHttpClient();
 				HttpGet get;
-				if(key.equals("allEvents")){
-					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getAllEvents&param="+encodeHTML(userid));
-				}
-				else if(key.equals("interest")){
-					Log.d("definitely got", " here");
-					Log.d("definitely got", " here");
-					Log.d("definitely got", " here");
-
-					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsFromUserInterests&param="+encodeHTML(userid));
-				}
-				else{
-					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsInCategory&param="+encodeHTML(key)+"&user="+encodeHTML(userid));
-				}
+				
+				get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsUserHosting&param="+encodeHTML(userid));
+				
 				List<NameValuePair> pairs = new ArrayList<NameValuePair>(); // to store what we get
 
 				HttpResponse response;
@@ -250,7 +232,7 @@ public class EventsListActivity extends MenuActivity{
 
 	private class MyListAdapter extends ArrayAdapter<Events> {
 		public MyListAdapter() {
-			super(EventsListActivity.this, R.layout.eventslistview, eventList);
+			super(EventsHostActivity.this, R.layout.eventslistview, eventList);
 		}
 
 		@Override
@@ -305,7 +287,7 @@ public class EventsListActivity extends MenuActivity{
 
 				Events clickedEvent = eventList.get(position);
 				//Toast.makeText(getApplicationContext(), clickedEvent.getDescription(), Toast.LENGTH_SHORT).show();
-				Intent i = new Intent(EventsListActivity.this, com.ucevents.events.IndividualEventsActivity.class);
+				Intent i = new Intent(EventsHostActivity.this, com.ucevents.events.IndividualEventsActivity.class);
 				Bundle b = new Bundle();
 				b.putParcelable("chosenEvent", clickedEvent);
 				i.putExtras(b);
