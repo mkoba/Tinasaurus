@@ -4,24 +4,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+         android:background="@drawable/blue_solid"
         tools:context=".DeviceFragment" >
 
     <Button
         android:id="@+id/ballEvents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor ="@color/WHITE"
         android:text="@string/allEvents" />
 
     <Button
         android:id="@+id/bbyCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor ="@color/WHITE"
         android:text="@string/byCategory" />
     
     <Button
         android:id="@+id/bUserInterest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor ="@color/WHITE"
         android:text="@string/byUserInterest" />
     
     <FrameLayout

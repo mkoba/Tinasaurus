@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,7 +155,7 @@ public class ScheduleActivity extends MenuActivity {
 				JSONObject json = null;
 				HttpClient client = new DefaultHttpClient();
 				//********** HOW TO GET USER ID?? TINAAAAA ****************//
-				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsUserAttending&param="+args[0]);
+				HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsUserAttending&param="+encodeHTML(args[0]));
 				List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 
 				HttpResponse response;
@@ -197,25 +199,35 @@ public class ScheduleActivity extends MenuActivity {
 					for (int i = 0; i < listOfEvents.length(); i++){
 						JSONObject event = listOfEvents.getJSONObject(i);
 						int iconid = 0;
-						JSONArray categories = event.getJSONArray("category");
-						String category = categories.getString(0);
-						if (category.equals("study")){
-							iconid = R.drawable.study_icon;
-						}
-						else if (category.equals("food")){
-							iconid = R.drawable.play_icon;
-						}
-						else if (category.equals("career")){
-							iconid = R.drawable.play_icon;
-						}
-						else if (category.equals("organization")){
-							iconid = R.drawable.play_icon;
-						}
-						else if (category.equals("sports")){
-							iconid = R.drawable.play_icon;
-						}
-						else{
-							iconid = 1;
+						JSONArray categories = new JSONArray();
+						try{
+							categories = event.getJSONArray("category");
+							String category = categories.getString(0);
+							if (category.equals("study")){
+								iconid = R.drawable.study_icon;
+							}
+							else if (category.equals("food")){
+								iconid = R.drawable.food_icon;
+							}
+							else if (category.equals("career")){
+								iconid = R.drawable.career_icon;
+							}
+							else if (category.equals("organization")){
+								iconid = R.drawable.club_icon;
+							}
+							else if (category.equals("sports")){
+								iconid = R.drawable.sport_icon;
+							}
+							else if (category.equals("social")){
+								iconid = R.drawable.social_icon;
+							}
+							else{
+								Log.d("IN ELSE STATEMENT", category);
+								iconid = R.drawable.other_icon;
+							}
+						} catch (JSONException e){
+							Log.d("CAUGHT JSONEXCEPTION", "GETTING CATEGORY CAUSED JSONEXCEPTION");
+							iconid = R.drawable.other_icon;
 						}
 						JSONArray json_attendees = event.getJSONArray("attendees");
 						String[] attendees = new String[json_attendees.length()];
@@ -237,6 +249,7 @@ public class ScheduleActivity extends MenuActivity {
 			protected void onPostExecute(String result){
 				if(result != null){
 					Log.d("Result of Query", result);
+					Collections.sort(schList);
 					populateListView();
 					Log.d("LOCATION****", "POST-POPULATELISTVIEW");
 					registerClickCallback();
@@ -250,10 +263,30 @@ public class ScheduleActivity extends MenuActivity {
 			}
 		}
 		scheduleTask sendPostReqAsyncTask = new scheduleTask();
-	    sendPostReqAsyncTask.execute(user);
-	    Log.d("HERE", "AFTER CALL TO EXECUTE");
-	    return;
+		sendPostReqAsyncTask.execute(user);
+		Log.d("HERE", "AFTER CALL TO EXECUTE");
+		return;
 	}
 
+	public String encodeHTML(String s)
+	{
+		//s = s.replaceAll("%", "%25");
+		s = s.replaceAll(" ", "%20");
+		s = s.replaceAll("!", "%21");
+		//s = s.replaceAll("\"", "%22");
+		//s = s.replaceAll("#", "%23");
+		//s = s.replaceAll("$", "%24");
+		//s = s.replaceAll("&", "%26");
+		s = s.replaceAll("'", "%27");
+		//s = s.replaceAll("(", "%28");
+		//s = s.replaceAll(")", "%29");
+		//s = s.replaceAll("*", "%2A");
+		//s = s.replaceAll("+", "%2B");
+		//s = s.replaceAll(",", "%2C");
+		//s = s.replaceAll("-", "%2D");
+		//s = s.replaceAll(".", "%2E");
+		//s = s.replaceAll("/", "%2F");
+		return s;
+	}
 
 }

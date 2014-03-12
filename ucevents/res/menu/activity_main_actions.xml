@@ -4,17 +4,23 @@
     <item android:id="@+id/action_event"
           android:icon="@drawable/ic_action_computer"
           android:title="@string/events"
-          android:showAsAction="ifRoom"/>
+          android:showAsAction="always"/>
      
     <!-- Location Found -->
     <item android:id="@+id/action_schedule"
           android:icon="@drawable/ic_action_computer"
           android:title="@string/schedule"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="always" />
      
     <!-- Refresh -->
     <item android:id="@+id/action_profile"
           android:icon="@drawable/ic_action_computer"
           android:title="@string/profile"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="always" />
+    
+    <!-- Logout -->
+    <item android:id="@+id/action_logout"
+        android:icon="@drawable/ic_action_computer"
+        android:title="@string/logout"
+        android:showAsAction="always"/>
 </menu>

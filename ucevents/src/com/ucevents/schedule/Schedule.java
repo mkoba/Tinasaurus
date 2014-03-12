@@ -8,7 +8,7 @@ import com.ucevents.events.Events;
 import android.os.Parcelable;
 import android.os.Parcel;
 
-public class Schedule implements Parcelable {
+public class Schedule implements Comparable<Schedule>, Parcelable{
 	private String eventid;
 	private String name;
 	private int time;
@@ -115,5 +115,35 @@ public class Schedule implements Parcelable {
 
 		}
 	};
+
+	@Override
+	public int compareTo(Schedule another) {
+		// TODO Auto-generated method stub
+		if (((Schedule) another).getYear() > this.getYear()){
+			return -1;
+		}
+		if (((Schedule) another).getYear() < this.getYear()){
+			return 1;
+		}
+		if (((Schedule) another).getMonth() > this.getMonth()){
+			return -1;
+		}
+		if (((Schedule) another).getMonth() < this.getMonth()){
+			return 1;
+		}
+		if (((Schedule) another).getDate() > this.getDate()){
+			return -1;
+		}
+		if (((Schedule) another).getDate() < this.getDate()){
+			return 1;
+		}
+		if (((Schedule) another).getTime() > this.getTime()){
+			return -1;
+		}
+		if (((Schedule) another).getTime() < this.getTime()){
+			return 1;
+		}
+		return 0;
+	}
 
 }
