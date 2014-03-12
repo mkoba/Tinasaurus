@@ -40,7 +40,7 @@ public class CategoryEventsActivity extends MenuActivity{
 		ibSport.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0){
 				Intent i2 = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class);
-				i2.putExtra("key", "sport");
+				i2.putExtra("key", "sports");
 				startActivity(i2);
 			}
 			
@@ -85,7 +85,7 @@ public class CategoryEventsActivity extends MenuActivity{
 		ibClub.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0){
 				Intent i = new Intent(CategoryEventsActivity.this, com.ucevents.events.EventsListActivity.class );
-				i.putExtra("key", "club");
+				i.putExtra("key", "organization");
 				startActivity(i);
 			}
 			
