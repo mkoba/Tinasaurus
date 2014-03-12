@@ -18,11 +18,11 @@
         android:layout_weight="1.04"
         android:src="@drawable/ic_launcher" />
 
-    <RadioButton
+   <!-- <RadioButton
         android:id="@+id/pubic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="publicOption" />
+        android:text="publicOption" /> -->
 
     <EditText
         android:id="@+id/event_name"
@@ -55,6 +55,33 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Insert Event description" />
+    
+    <CheckBox
+        android:id="@+id/career_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Career" />
+    <CheckBox
+        android:id="@+id/food_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food" />
+   <CheckBox
+        android:id="@+id/organization_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Organization" />
+
+    <CheckBox
+        android:id="@+id/sport_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sport" />
+    <CheckBox
+        android:id="@+id/study_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Study" />
 
     <Button
         android:id="@+id/Done"
