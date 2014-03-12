@@ -50,47 +50,59 @@ public class ProfileEditActivity extends MenuActivity {
 	   	for(int i = 0; i < 7; i++) {
 	   		 interests.add("false");
 	   	}
+	   	// grab user info from db
 		updateUserInfo();
 		
-		
+		// grab new/modified interests
 		grabInterests();
+		
+		// done button
 		addListenerOnButton();
 	}
 	
 	public void updateUserInfo() {
 		/* DB: populate interest list here 
-		 * 
+		 *  to dbInterests
 		 */
+		
+		// temp values  (hard-coded)
 		dbInterests.add("other");
 		dbInterests.add("social");
 		for( int i = 0; i < dbInterests.size(); i++) {
 			if(dbInterests.get(i).equals("career")) {
 				cbCareer = (CheckBox) findViewById(R.id.career);
 				cbCareer.setChecked(true);
+				interests.set(0, "career");
 			}
 			else if(dbInterests.get(i).equals("food")) {
 				cbFood = (CheckBox) findViewById(R.id.food);
 				cbFood.setChecked(true);
+				interests.set(1,"food");
 			}
 			else if(dbInterests.get(i).equals("organization")) {
 				cbOrganization = (CheckBox)findViewById(R.id.organization);
 				cbOrganization.setChecked(true);
+				interests.set(2,"organization");
 			}
 			else if(dbInterests.get(i).equals("social")) {
 				cbSocial = (CheckBox)findViewById(R.id.social);
 				cbSocial.setChecked(true);
+				interests.set(3,"social");
 			}
 			else if(dbInterests.get(i).equals("sport")) {
 				cbSport = (CheckBox)findViewById(R.id.sport);
 				cbSport.setChecked(true);
+				interests.set(4,"sport");
 			}
 			else if(dbInterests.get(i).equals("study")) {
 				cbStudy = (CheckBox) findViewById(R.id.study);
 				cbStudy.setChecked(true);
+				interests.set(5,"study");
 			}
 			else { //if(dbInterests.get(i).equals("other")) {
 				cbOther = (CheckBox) findViewById(R.id.other);
 				cbOther.setChecked(true);
+				interests.set(6,"other");
 			}
 		}
 		
@@ -209,7 +221,7 @@ public class ProfileEditActivity extends MenuActivity {
 			   	/****
 			   	  * DB: grab the data you need here and insert into db
 			   	  * to update profile info
-			   	  * firstname, lastname, email, interestsFinal  
+			   	  *  email, interestsFinal  
 			   	  */
 			   	 
 				Intent i= new Intent(ProfileEditActivity.this, ProfileActivity.class);
