@@ -19,6 +19,10 @@
 			<%=db.getUserInformation(param)%>
 		<%
 		}
+		else if(method.equals("getIfUserExists")){%>
+			<%=db.getIfUserExists(param) %>
+		<%
+		}
 		else if(method.equals("getUserInterests")){%>
 			<%=db.getUserInterests(param)%>
 		<%
@@ -44,7 +48,7 @@
 		<%
 		}
 		else if (method.equals("getAttendees")){%>
-			<!--  db.getAttendees(param)-->
+			<%=db.getAttendees(param, user) %>
 		<%
 		}
 		else if (method.equals("getEventInformation")){%>

@@ -10,13 +10,11 @@
 <body>
 	<%
 		String method = request.getParameter("method");
-			database.DB_Access db = new database.DB_Access();
-			JSONObject result;
-			if(method.equals("deleteUserInterests")){
-				String user = request.getParameter("user"); 
-				String interest = request.getParameter("interest");				
-			
-			
+		database.DB_Access db = new database.DB_Access();
+		JSONObject result;
+		if(method.equals("deleteUserInterests")){
+			String user = request.getParameter("user"); 
+			String interest = request.getParameter("interest");				
 			try{
 				db.deleteUserInterests(user, interest);
 				%>
@@ -28,38 +26,37 @@
 				<% e.printStackTrace();
 			}
 		}
-			
-			else if (method.equals("deleteEvent")){
-				String event = request.getParameter("event");
-				try{
-					db.deleteEvent(event);
-					%>
-					Success
-					<% 
-				}catch(Exception e){
-					%>
-					Failed
-					<% e.printStackTrace(); 
-				}
+		else if (method.equals("deleteEvent")){
+			String event = request.getParameter("event");
+			try{
+				db.deleteEvent(event);
+				%>
+				Success
+				<% 
+			}catch(Exception e){
+				%>
+				Failed
+				<% e.printStackTrace(); 
 			}
+		}
+		
+		else if(method.equals("deleteAttendee")){
+			String event = request.getParameter("event");
+			String attendee = request.getParameter("attendee");
 			
-			else if(method.equals("deleteAttendee")){
-				String event = request.getParameter("event");
-				String attendee = request.getParameter("attendee");
-				
-				try{
-					db.deleteAttendee(event, attendee);
-					%>
-					Success
-					<% 
-				}catch(Exception e){
-					%> 
-					Failed
-					<% e.printStackTrace();
-				}
+			try{
+				db.deleteAttendee(event, attendee);
+				%>
+				Success
+				<% 
+			}catch(Exception e){
+				%> 
+				Failed
+				<% e.printStackTrace();
 			}
-			
-			%>
+		}
+		
+		%>
 	
 </body>
 </html>
