@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS user_interests (
 user VARCHAR(100) NOT NULL,
 interest VARCHAR(100) NOT NULL,
 PRIMARY KEY (user, interest),
-FOREIGN KEY (user) REFERENCES user_information(ucsd_email),
-FOREIGN KEY (interest) REFERENCES interests(name)
+FOREIGN KEY (user) REFERENCES user_information(ucsd_email) ON DELETE CASCADE,
+FOREIGN KEY (interest) REFERENCES interests(name) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS events (
@@ -34,21 +34,21 @@ year INT NOT NULL,
 description VARCHAR(100),
 host VARCHAR(100) NOT NULL,
 public BOOL NOT NULL,
-FOREIGN KEY (host) REFERENCES user_information(ucsd_email)
+FOREIGN KEY (host) REFERENCES user_information(ucsd_email) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS event_category (
 event VARCHAR(100) NOT NULL,
 interest VARCHAR(100) NOT NULL,
 PRIMARY KEY (event, interest),
-FOREIGN KEY (event) REFERENCES events(name),
-FOREIGN KEY (interest) REFERENCES interests(name)
+FOREIGN KEY (event) REFERENCES events(name) ON DELETE CASCADE,
+FOREIGN KEY (interest) REFERENCES interests(name) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS attendees (
 event VARCHAR (100) NOT NULL,
 attendee VARCHAR(100) NOT NULL,
 PRIMARY KEY (event, attendee),
-FOREIGN KEY (event) REFERENCES events(name),
-FOREIGN KEY (attendee) REFERENCES user_information(ucsd_email)
+FOREIGN KEY (event) REFERENCES events(name) ON DELETE CASCADE,
+FOREIGN KEY (attendee) REFERENCES user_information(ucsd_email) ON DELETE CASCADE
 );

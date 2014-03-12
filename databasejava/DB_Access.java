@@ -262,6 +262,15 @@ public class DB_Access {
 
 	///////////////////////////////// SELECT /////////////////////////////////
 
+	public String getIfUserExists(String user){
+		try{
+			JSONObject json = getUserInformation(user);
+			json.getString("fname");
+			return "True";
+		} catch(Exception e){
+			return "False";
+		}
+	}
 	// Get user's information -- fname, lname, email, interests
 	public JSONObject getUserInformation(String user) throws SQLException, JSONException{
 		JSONObject result = new JSONObject();
@@ -339,7 +348,12 @@ public class DB_Access {
 			event.put("year", rs.getInt("year"));
 			event.put("description", rs.getString("description"));
 			JSONObject attendees = getAttendees(rs.getString("name"), user);
-			event.put("attendees", attendees.get("attendees"));
+			try{
+				event.put("attendees", attendees.get("attendees"));
+			} catch (JSONException e){
+				event.put("attendees", new ArrayList<String>());
+				//do nothing
+			}
 			event.put("attending", attendees.getBoolean("attending"));
 			event.put("host", getHost(rs.getString("name")));
 			event.put("category", getEventCategory(rs.getString("name")));
@@ -370,7 +384,12 @@ public class DB_Access {
 			event.put("year", rs.getInt("year"));
 			event.put("description", rs.getString("description"));
 			JSONObject attendees = getAttendees(rs.getString("name"), user);
-			event.put("attendees", attendees.get("attendees"));
+			try{
+				event.put("attendees", attendees.get("attendees"));
+			} catch (JSONException e){
+				//do nothing
+				event.put("attendees", new ArrayList<String>());
+			}
 			event.put("attending", attendees.getBoolean("attending"));
 			event.put("host", getHost(rs.getString("name")));
 			event.put("category", getEventCategory(rs.getString("name")));
@@ -427,7 +446,12 @@ public class DB_Access {
 				event.put("year", rs_tmp.getInt("year"));
 				event.put("description", rs_tmp.getString("description"));
 				JSONObject attendees = getAttendees(rs_tmp.getString("name"), user);
-				event.put("attendees", attendees.get("attendees"));
+				try{
+					event.put("attendees", attendees.get("attendees"));
+				} catch (JSONException e){
+					//do nothing
+					event.put("attendees", new ArrayList<String>());
+				}
 				event.put("attending", attendees.getBoolean("attending"));
 				event.put("host", getHost(rs_tmp.getString("name")));
 				event.put("category", getEventCategory(rs_tmp.getString("name")));
@@ -469,7 +493,12 @@ public class DB_Access {
 				event.put("year", rs_tmp.getInt("year"));
 				event.put("description", rs_tmp.getString("description"));
 				JSONObject attendees = getAttendees(rs.getString("name"), user);
-				event.put("attendees", attendees.get("attendees"));
+				try{
+					event.put("attendees", attendees.get("attendees"));
+				} catch (JSONException e){
+					//do nothing
+					event.put("attendees", new ArrayList<String>());
+				}
 				event.put("attending", attendees.getBoolean("attending"));
 				event.put("host", getHost(rs_tmp.getString("name")));
 				event.put("category", getEventCategory(rs_tmp.getString("name")));
