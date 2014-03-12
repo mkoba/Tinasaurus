@@ -23,10 +23,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +52,9 @@ public class IndividualScheduleActivity extends MenuActivity {
 	String userid;
 
 	Button bDecline;
+	
+	//List<String> allList;
+	ListView attList; 
 
 
 	@Override
@@ -85,9 +90,32 @@ public class IndividualScheduleActivity extends MenuActivity {
 		tvDescription.setText(chosenEvent.getDescription());
 
 		userid = ((UCEvents_App)getApplicationContext()).getUserId();
+		
+		tvRSVPCount = (TextView) findViewById(R.id.textRSVPCount);
+		tvRSVPCount.setText("Number of Attendees: "+String.valueOf(chosenEvent.getAttendees().size())); 
+		
+		//List population 
+		attList = (ListView) findViewById(R.id.allAttend);
+		
+		ArrayList<String> listAttend = new ArrayList<String>();//chosenEvent.getAttendees();
+		
+		listAttend.addAll(chosenEvent.getAttendees());
+		
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this, 
+                android.R.layout.simple_list_item_1,
+                listAttend );
+
+		attList.setAdapter(arrayAdapter); 
+		
+		//list stops here
 
 		cbRSVP = (CheckBox) findViewById(R.id.checkBoxRSVP);
 		cbRSVP.setChecked(true);
+		
+		bDecline = (Button) findViewById(R.id.decline);
+		
+		
 		cbRSVP.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -98,7 +126,9 @@ public class IndividualScheduleActivity extends MenuActivity {
 				else {
 					deleteAttendee(userid, eventid);
 				}
-				//Toast.makeText(getApplicationContext(), "RSVP", Toast.LENGTH_SHORT).show();
+				//deleteAttendee(userid, eventid);
+				//Intent i= new Intent(IndividualScheduleActivity.this, com.ucevents.schedule.ScheduleActivity.class);
+				//startActivity(i);
 			}
 		});
 
