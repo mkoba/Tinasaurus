@@ -52,6 +52,7 @@ public class MainActivity extends FragmentActivity {
 	private String firstname;
 	private String lastname;
 	private String email;
+	private String userid;
 	private boolean ucsdNetwork = false;
 
 
@@ -92,6 +93,7 @@ public class MainActivity extends FragmentActivity {
 						// System.out.println("email: " + email);
 						firstname = user.getFirstName();
 						lastname = user.getLastName();
+						userid = user.getId();
 
 
 						// checking if fb user is part of UCSD network
@@ -311,6 +313,9 @@ public class MainActivity extends FragmentActivity {
 					appState.setUserId(email);
 					appState.setFirstName(firstname);
 					appState.setLastName(lastname);
+					appState.setFbId(userid);
+					
+				
 					i.putExtras(b);
 					//Intent i = new Intent(MainActivity.this, LogoutActivity.class);
 					startActivity(i);
