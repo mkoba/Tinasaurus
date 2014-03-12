@@ -143,13 +143,13 @@ public class AddEvent extends MenuActivity{
 				Log.d("DESCRIPTIONinSendPost", "" + args[9]);
 				Log.d("HOSTinSendPost", "" + args[10]);
 				Log.d("URLinSendPost", "http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertEvent&title="
-						+args[0]+"&location="+args[1]+"&hour="+args[2]+"&minute="+args[3]+"&pm="+args[4]+interestUrl
-						+"&month="+args[6]+"&day="+args[7]+"&year="+args[8]+"&description="+args[9]+"&host="+args[10]);
+						+encodeHTML(args[0])+"&location="+encodeHTML(args[1])+"&hour="+encodeHTML(args[2])+"&minute="+encodeHTML(args[3])+"&pm="+encodeHTML(args[4])+interestUrl
+						+"&month="+encodeHTML(args[6])+"&day="+encodeHTML(args[7])+"&year="+encodeHTML(args[8])+"&description="+encodeHTML(args[9])+"&host="+encodeHTML(args[10]));
 				
 				HttpClient client = new DefaultHttpClient();
 				HttpPost post = new HttpPost("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertEvent&title="
-				+args[0]+"&location="+args[1]+"&hour="+args[2]+"&minute="+args[3]+"&pm="+args[4]+interestUrl
-				+"&month="+args[6]+"&day="+args[7]+"&year="+args[8]+"&description="+args[9]+"&host="+args[10]);
+				+encodeHTML(args[0])+"&location="+encodeHTML(args[1])+"&hour="+encodeHTML(args[2])+"&minute="+encodeHTML(args[3])+"&pm="+encodeHTML(args[4])+interestUrl
+				+"&month="+encodeHTML(args[6])+"&day="+encodeHTML(args[7])+"&year="+encodeHTML(args[8])+"&description="+encodeHTML(args[9])+"&host="+encodeHTML(args[10]));
 				//List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 				Log.d("I'm here**********", "" + args[10]);
 				HttpResponse response;
@@ -186,7 +186,7 @@ public class AddEvent extends MenuActivity{
 			protected void onPostExecute(String result){
 				if(result != null){
 					Log.d("RESULT*************", "" + result);
-					Intent i= new Intent(AddEvent.this, com.ucevents.tab.Tabs.class);
+					Intent i= new Intent(AddEvent.this, com.ucevents.schedule.ScheduleActivity.class);
 					startActivity(i);
 					return;
 				}
@@ -200,6 +200,27 @@ public class AddEvent extends MenuActivity{
 	    sendPostReqAsyncTask.execute(title, location, hour, minute, "false", interest, month, day, year, description, host);
 	    Log.d("HERE", "AFTER CALL TO EXECUTE");
 	    return;
+	}
+	
+	public String encodeHTML(String s)
+	{
+		//s = s.replaceAll("%", "%25");
+		s = s.replaceAll(" ", "%20");
+		s = s.replaceAll("!", "%21");
+		//s = s.replaceAll("\"", "%22");
+		//s = s.replaceAll("#", "%23");
+		//s = s.replaceAll("$", "%24");
+		//s = s.replaceAll("&", "%26");
+		s = s.replaceAll("'", "%27");
+		//s = s.replaceAll("(", "%28");
+		//s = s.replaceAll(")", "%29");
+		//s = s.replaceAll("*", "%2A");
+		//s = s.replaceAll("+", "%2B");
+		//s = s.replaceAll(",", "%2C");
+		//s = s.replaceAll("-", "%2D");
+		//s = s.replaceAll(".", "%2E");
+		//s = s.replaceAll("/", "%2F");
+		return s;
 	}
 	
 	/**
