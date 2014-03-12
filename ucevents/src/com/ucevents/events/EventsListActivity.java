@@ -25,29 +25,6 @@ import com.ucevents.menu.MenuActivity;
 import com.ucevents.schedule.Schedule;
 import com.google.analytics.tracking.android.EasyTracker;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -88,9 +65,14 @@ public class EventsListActivity extends MenuActivity{
 
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		userid = appState.getUserId();
+		
 		Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
 		if(value.toString().equals("food") || value.toString().equals("study") || value.toString().equals("career") || value.toString().equals("sport") || value.toString().equals("club") || value.toString().equals("social") || value.toString().equals("other")){
 			populateEventList(value);
+		}
+		else if(value.toString().equals("interest")){
+			Log.d("interest is ", value);
+			populateEventList(value, false);
 		}
 		else{
 			populateEventList();
@@ -120,15 +102,25 @@ public class EventsListActivity extends MenuActivity{
 		Log.d("SIZEOF eventList", "" + eventList.size());
 
 	}
-
+	private void populateEventList(String interest, boolean nothingElse){
+		Log.d("this is:", interest);
+		sendPostRequest(interest);
+	}
 	private void sendPostRequest(final String key) {
 		class scheduleTask extends AsyncTask<String, Void, String>{
 			protected String doInBackground(String[] args){
 				JSONObject json = null;
 				HttpClient client = new DefaultHttpClient();
 				HttpGet get;
-				if(key == "allEvents"){
+				if(key.equals("allEvents")){
 					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getAllEvents&param="+encodeHTML(userid));
+				}
+				else if(key.equals("interest")){
+					Log.d("definitely got", " here");
+					Log.d("definitely got", " here");
+					Log.d("definitely got", " here");
+
+					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsFromUserInterests&param="+encodeHTML(userid));
 				}
 				else{
 					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsInCategory&param="+encodeHTML(key)+"&user="+encodeHTML(userid));
@@ -204,6 +196,7 @@ public class EventsListActivity extends MenuActivity{
 								iconid = R.drawable.other_icon;
 							}
 						} catch(JSONException e){
+							
 							iconid = R.drawable.other_icon;
 						}
 						JSONArray json_attendees = event.getJSONArray("attendees");
@@ -361,4 +354,5 @@ public class EventsListActivity extends MenuActivity{
 	}
 
 }
+
 
