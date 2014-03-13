@@ -10,5 +10,14 @@
     <style name="AppBaseThemeDark" parent="android:Theme.Holo">
         
     </style>
+    
+     <!--  make text for date picker white -->
+    <style name="Theme.SelectDate" parent="@android:style/Theme.Holo">
+        <item name="android:editTextStyle">@style/Widget.EditText.White</item>
+    </style>    
+    
+    <style name="Widget.EditText.White" parent="@android:style/Widget.EditText">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 
 </resources>
