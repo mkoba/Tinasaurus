@@ -45,43 +45,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class EventsHostActivity extends MenuActivity{
-	
 	String value;
 	String userid;
 	private List<Events> eventList = new ArrayList<Events>();
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		//   Log.d("woathereboy", "EventsListActivity"); 
+
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_hostevent);
+		setContentView(R.layout.activity_allevents);
 		Bundle bundle = getIntent().getExtras();
 		value = bundle.getString("key");
-		Log.d("VALUE IS :", value.toString());
-		Log.d("VALUE IS :", value.toString());
-		Log.d("VALUE IS :", value.toString());
-		Log.d("VALUE IS :", value.toString());
-		Log.d("VALUE IS :", value.toString());
+
 
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		userid = appState.getUserId();
 		
-		
-		
-		
-		/*Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
-		if(value.toString().equals("food") || value.toString().equals("study") || value.toString().equals("career") || value.toString().equals("sports") || value.toString().equals("organization") || value.toString().equals("social") || value.toString().equals("other")){
-			populateEventList(value);
-		}
-		else if(value.toString().equals("interest")){
-			Log.d("interest is ", value);
-			populateEventList(value, false);
-		}
-		else{
-			populateEventList();
-		} */
-		
-		sendPostRequest("allEvents");
+
+		populateEventList();
 		
 		populateListView();
 		registerClickCallback();
@@ -98,15 +80,28 @@ public class EventsHostActivity extends MenuActivity{
 		Log.d("SIZEOF eventList", "" + eventList.size());
 	}
 
+	// populateEventList for category sorting
+	private void populateEventList(String category){
+		Log.d("category is: ", category);
+		Log.d("category is: ", category);
+		Log.d("category is: ", category);
+
+		sendPostRequest(category);
+		Log.d("SIZEOF eventList", "" + eventList.size());
+
+	}
+	private void populateEventList(String interest, boolean nothingElse){
+		Log.d("this is:", interest);
+		sendPostRequest(interest);
+	}
 	private void sendPostRequest(final String key) {
 		class scheduleTask extends AsyncTask<String, Void, String>{
 			protected String doInBackground(String[] args){
 				JSONObject json = null;
 				HttpClient client = new DefaultHttpClient();
 				HttpGet get;
-				
-				get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsUserHosting&param="+encodeHTML(userid));
-				
+					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsUserHosting&param="+encodeHTML(userid));
+			
 				List<NameValuePair> pairs = new ArrayList<NameValuePair>(); // to store what we get
 
 				HttpResponse response;

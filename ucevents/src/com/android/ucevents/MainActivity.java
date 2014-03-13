@@ -42,6 +42,8 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphObject;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import com.crashlytics.android.Crashlytics;
+
 
 import android.widget.TextView;
 
@@ -61,7 +63,7 @@ public class MainActivity extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activityfb_login);
-
+		Crashlytics.start(this);
 		LoginButton authButton = (LoginButton) findViewById(R.id.authButton);
 		authButton.setReadPermissions(Arrays.asList("email", "basic_info"));
 
