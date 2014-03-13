@@ -66,7 +66,7 @@ public class EventsActivity extends MenuActivity{
 			public void onClick(View v) {
 				//view= inflater.inflate(R.layout.activity_allevents, container, false);
 				Intent intent = new Intent(EventsActivity.this, com.ucevents.events.EventsHostActivity.class);
-				//intent.putExtra("key", "interest");
+				intent.putExtra("key", "host");
 				startActivity(intent);
 			}
 		});	
