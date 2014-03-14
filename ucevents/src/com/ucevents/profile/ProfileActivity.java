@@ -76,8 +76,8 @@ public class ProfileActivity extends MenuActivity {
 	    /*TextView firstName = (TextView)findViewById(R.id.f_name);
 	    firstName.setText("Leon" + " is");*/
 	    
-	    //TextView lastName = (TextView)findViewById(R.id.l_name);
-	    //lastName.setText("is");
+	    /*TextView lastName = (TextView)findViewById(R.id.l_name);
+	    lastName.setText("is");*/
 		getUserName();
 	    TextView email = (TextView)findViewById(R.id.email);
 	    email.setText(useremail);
