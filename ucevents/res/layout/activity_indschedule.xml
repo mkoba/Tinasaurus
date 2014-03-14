@@ -146,6 +146,7 @@
         android:textColor ="@color/WHITE"
         android:layout_below="@id/textRSVPCount"
         android:text="Attending: " />
+
       
 	<ListView
         android:id="@+id/allAttend"
@@ -153,7 +154,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/attendText"
         android:layout_marginLeft="20dp"
-         />
+    />
 
     <Button
         android:id="@+id/attendes"
