@@ -64,7 +64,7 @@ public class ProfileActivity extends MenuActivity {
 
 	
 	public void addListenerOnButton() {
-		bEdit = (Button) findViewById(R.id.edit);
+	/*	bEdit = (Button) findViewById(R.id.edit);
 		bEdit.setOnClickListener(new OnClickListener() {
 			 
 			//@Override
@@ -75,7 +75,7 @@ public class ProfileActivity extends MenuActivity {
 				startActivity(i);
 				}
 			});
-
+*/
 	}    
     
 	/**

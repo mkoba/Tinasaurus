@@ -170,7 +170,8 @@ public class AddEvent extends MenuActivity{
 					}
 					result = sb.toString();
 					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-					if (result.contains("SUCCESS")){
+					Log.d("RESULT IN HTML", "RESULT");
+					if (result.contains("Success")){
 						return "SUCCESS";
 					}
 				} catch (ClientProtocolException e1) {
