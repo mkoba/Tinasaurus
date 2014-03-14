@@ -5,18 +5,12 @@
     android:orientation="vertical"
     android:background="@drawable/blue_solid" >
  
-    <Button
-        android:id="@+id/addEvent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Event"
-        android:textColor ="@color/WHITE" />
+
           
     <ListView
         android:id="@+id/lvallEvents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/addEvent"
         android:layout_centerHorizontal="true" >
 
     </ListView>

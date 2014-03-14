@@ -4,32 +4,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+         android:background="@drawable/blue_solid"
         tools:context=".DeviceFragment" >
-
 
     <Button
         android:id="@+id/addEvent"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Event" />
-        
-    <TextView
-        android:layout_width="wrap_content"
+        android:textColor ="@color/WHITE"
+        android:text="Add an Event" />
+
+    <Button
+        android:id="@+id/schedule"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Schedule" />
+        android:textColor ="@color/WHITE"
+        android:text="My Schedule" />
     
-    <ImageButton
-        android:id="@+id/firstEvent"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/logo" />
-            
-    <ImageButton
-        android:id="@+id/secondEvent"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/logo" />
+    <Button
+        android:id="@+id/hostEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor ="@color/WHITE"
+        android:text="Events Hosted" />
+    
+
+    <FrameLayout
+        android:id="@+id/eventsViewer"
+        android:name="com.ucevents.events.innerEventsFrag"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0"    
+        />
 
 </LinearLayout>

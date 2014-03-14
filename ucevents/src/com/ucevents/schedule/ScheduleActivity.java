@@ -51,7 +51,7 @@ public class ScheduleActivity extends MenuActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
-		addOnClickListener();
+		//addOnClickListener();
 		//Bundle bundle = getIntent().getExtras();
 		//value = bundle.getString("key");
 		//Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
@@ -137,7 +137,7 @@ public class ScheduleActivity extends MenuActivity {
 
 
 
-	private void addOnClickListener() {
+	/*private void addOnClickListener() {
 		createBut = (Button) findViewById(R.id.addEvent);
 		createBut.setOnClickListener(new View.OnClickListener(){
 			@Override
@@ -147,7 +147,7 @@ public class ScheduleActivity extends MenuActivity {
 			}
 		});
 
-	}
+	}*/
 
 	private void sendPostRequest(String user){
 		class scheduleTask extends AsyncTask<String, Void, String> {

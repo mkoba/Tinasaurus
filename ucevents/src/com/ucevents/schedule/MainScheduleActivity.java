@@ -1,4 +1,4 @@
-package com.ucevents.events;
+package com.ucevents.schedule;
 import com.android.ucevents.R;
 
 import android.os.Bundle;
@@ -15,51 +15,51 @@ import android.app.Activity;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.ucevents.menu.MenuActivity;
 
-public class EventsActivity extends MenuActivity{
+public class MainScheduleActivity extends MenuActivity{
 
-	Button ballEvents;
-	Button bbyCategory;
-	Button bUserInterest;
+	Button bAddEvent;
+	Button bSchedule;
 	Button bHost; 
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.frag_events);
+		setContentView(R.layout.frag_schedule);
 		addOnClickListener();
 	}
 	private void addOnClickListener() {
-		ballEvents = (Button) findViewById(R.id.ballEvents);
-		ballEvents.setOnClickListener(new View.OnClickListener(){
+		bAddEvent = (Button) findViewById(R.id.addEvent);
+		bAddEvent.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				//view= inflater.inflate(R.layout.activity_allevents, container, false);
-				Intent intent = new Intent(EventsActivity.this, com.ucevents.events.EventsListActivity.class);
+				Intent intent = new Intent(MainScheduleActivity.this, com.ucevents.schedule.AddEvent.class);
+				//intent.putExtra("key", "all");
+				startActivity(intent);
+			}
+		});
+
+		bSchedule = (Button)findViewById(R.id.schedule);
+		bSchedule.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				//view= inflater.inflate(R.layout.activity_allevents, container, false);
+				Intent intent = new Intent(MainScheduleActivity.this, com.ucevents.schedule.ScheduleActivity.class);
 				intent.putExtra("key", "all");
 				startActivity(intent);
 			}
 		});
 
-		bbyCategory  = (Button)findViewById(R.id.bbyCategory);
-		bbyCategory.setOnClickListener(new View.OnClickListener(){
+	
+		bHost = (Button) findViewById(R.id.hostEvent);
+		bHost.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				//view= inflater.inflate(R.layout.activity_allevents, container, false);
-				Intent intent = new Intent(EventsActivity.this, com.ucevents.events.CategoryEventsActivity.class);
-				startActivity(intent);
-			}
-		});
-
-		bUserInterest = (Button) findViewById(R.id.bUserInterest);
-		bUserInterest.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				//view= inflater.inflate(R.layout.activity_allevents, container, false);
-				Intent intent = new Intent(EventsActivity.this, com.ucevents.events.EventsListActivity.class);
-				intent.putExtra("key", "interest");
+				Intent intent = new Intent(MainScheduleActivity.this, com.ucevents.schedule.EventsHostActivity.class);
+				intent.putExtra("key", "host");
 				startActivity(intent);
 			}
 		});	
-
 
 	}
 	/**

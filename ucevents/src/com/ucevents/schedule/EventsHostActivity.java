@@ -1,4 +1,4 @@
-package com.ucevents.events;
+package com.ucevents.schedule;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,8 +21,8 @@ import org.json.JSONObject;
 
 import com.android.ucevents.R;
 import com.android.ucevents.UCEvents_App;
+import com.ucevents.events.Events;
 import com.ucevents.menu.MenuActivity;
-import com.ucevents.schedule.Schedule;
 import com.google.analytics.tracking.android.EasyTracker;
 
 import android.os.AsyncTask;
@@ -63,7 +63,7 @@ public class EventsHostActivity extends MenuActivity{
 		userid = appState.getUserId();
 		
 
-		populateEventList();
+		populateEventList(value.toString());
 		
 		populateListView();
 		registerClickCallback();
@@ -71,36 +71,20 @@ public class EventsHostActivity extends MenuActivity{
 	}
 
 	// this will be later populated from db
-	private void populateEventList() {
-		Log.d("category is: ", "allEvents");
-		Log.d("category is: ", "allEvents");
-		Log.d("category is: ", "allEvents");
-
-		sendPostRequest("allEvents");
+	private void populateEventList(String value) {
+		sendPostRequest(value);
 		Log.d("SIZEOF eventList", "" + eventList.size());
 	}
 
-	// populateEventList for category sorting
-	private void populateEventList(String category){
-		Log.d("category is: ", category);
-		Log.d("category is: ", category);
-		Log.d("category is: ", category);
 
-		sendPostRequest(category);
-		Log.d("SIZEOF eventList", "" + eventList.size());
-
-	}
-	private void populateEventList(String interest, boolean nothingElse){
-		Log.d("this is:", interest);
-		sendPostRequest(interest);
-	}
+	
 	private void sendPostRequest(final String key) {
 		class scheduleTask extends AsyncTask<String, Void, String>{
 			protected String doInBackground(String[] args){
 				JSONObject json = null;
 				HttpClient client = new DefaultHttpClient();
 				HttpGet get;
-					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsUserHosting&param="+encodeHTML(userid));
+				get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsUserHosting&param="+encodeHTML(userid));
 			
 				List<NameValuePair> pairs = new ArrayList<NameValuePair>(); // to store what we get
 
@@ -282,7 +266,7 @@ public class EventsHostActivity extends MenuActivity{
 
 				Events clickedEvent = eventList.get(position);
 				//Toast.makeText(getApplicationContext(), clickedEvent.getDescription(), Toast.LENGTH_SHORT).show();
-				Intent i = new Intent(EventsHostActivity.this, com.ucevents.events.EditHostActivity.class);
+				Intent i = new Intent(EventsHostActivity.this, com.ucevents.schedule.EditHostActivity.class);
 				Bundle b = new Bundle();
 				b.putParcelable("chosenEvent", clickedEvent);
 				i.putExtras(b);

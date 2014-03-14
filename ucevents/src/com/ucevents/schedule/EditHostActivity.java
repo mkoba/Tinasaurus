@@ -1,4 +1,4 @@
-package com.ucevents.events;
+package com.ucevents.schedule;
 
 import java.util.ArrayList;
 
