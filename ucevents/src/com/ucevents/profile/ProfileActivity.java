@@ -55,7 +55,7 @@ public class ProfileActivity extends MenuActivity {
 	private CheckBox cbStudy;
 	private CheckBox cbOther;
 	private String[] dbInterests = new String[0];
-	private String email;
+	private String useremail;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,24 +67,24 @@ public class ProfileActivity extends MenuActivity {
 		
 		addListenerOnButton();
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());	
-		email = appState.getUserId();
+		useremail = appState.getUserId();
 		
 		String id= appState.getUserFbId();
 		System.out.println("user id: " + id);
 		 profilePictureView.setProfileId(appState.getUserFbId());
 		 
-	    TextView firstName = (TextView)findViewById(R.id.f_name);
-	    firstName.setText("Leon" + " is");
+	    /*TextView firstName = (TextView)findViewById(R.id.f_name);
+	    firstName.setText("Leon" + " is");*/
 	    
-	    //TextView lastName = (TextView)findViewById(R.id.l_name);
-	    //lastName.setText("is");
-	    
+	    /*TextView lastName = (TextView)findViewById(R.id.l_name);
+	    lastName.setText("is");*/
+		getUserName();
 	    TextView email = (TextView)findViewById(R.id.email);
-	    email.setText("a");
+	    email.setText(useremail);
 
 	    
-	    TextView interest = (TextView)findViewById(R.id.interest);
-	    interest.setText("Simba");
+	    //TextView interest = (TextView)findViewById(R.id.interest);
+	    //interest.setText("Simba");
 	    
 	    grabInterests();
 	}
@@ -128,7 +128,7 @@ public class ProfileActivity extends MenuActivity {
 			class profileTask extends AsyncTask<String, Void, String> {
 				protected String doInBackground(String[] args){
 					HttpClient client = new DefaultHttpClient();
-					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/delete_query.jsp?method=deleteUserInterests&user="+encodeHTML(email)+"&interest="+encodeHTML(args[0]));
+					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/delete_query.jsp?method=deleteUserInterests&user="+encodeHTML(useremail)+"&interest="+encodeHTML(args[0]));
 					HttpResponse response;
 					try {
 						response = client.execute(get);
@@ -185,7 +185,7 @@ public class ProfileActivity extends MenuActivity {
 			class profileTask extends AsyncTask<String, Void, String> {
 				protected String doInBackground(String[] args){
 					HttpClient client = new DefaultHttpClient();
-					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertUserInterest&user="+encodeHTML(email)+"&interest="+encodeHTML(args[0]));
+					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertUserInterest&user="+encodeHTML(useremail)+"&interest="+encodeHTML(args[0]));
 					HttpResponse response;
 					try {
 						response = client.execute(get);
@@ -237,6 +237,81 @@ public class ProfileActivity extends MenuActivity {
 			Log.d("HERE", "AFTER CALL TO EXECUTE");
 			return;
 		}
+		
+		// Get RSVP value from DB
+		private void getUserName(){
+			class profileTask extends AsyncTask<String, Void, String> {
+				protected String doInBackground(String[] args){
+					JSONObject json = null;
+					HttpClient client = new DefaultHttpClient();
+					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getUserInformation&param="+encodeHTML(useremail));
+					Log.d("URL ACCESSING", get.getURI().getPath());
+					HttpResponse response;
+					try {
+						response = client.execute(get);
+						HttpEntity entity = response.getEntity();
+						InputStream is = entity.getContent();
+						String result = null;
+						BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+						StringBuilder sb = new StringBuilder();
+						String line = null;
+						while((line = reader.readLine()) != null){
+							sb.append(line);
+						}
+						result = sb.toString();
+						result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
+						Log.d("RESULT: ", result);
+						try {
+							json = new JSONObject(result);
+							String fName=json.getString("fname");
+							String lName=json.getString("lname");
+							TextView firstName = (TextView)findViewById(R.id.f_name);
+						    firstName.setText(fName + " " + lName);
+							/*JSONArray interests = json.getJSONArray("interests");
+							result = "";
+							for (int i = 0; i < interests.length(); i++){
+								result += interests.getString(i)+"_";
+							}*/
+							return result;
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							Log.d("JSONEXCEPTION@87", e.toString());
+							return null;
+						}
+					} catch (ClientProtocolException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						Log.d("CLIENTPROTOCAL", e1.toString());
+						return null;
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						Log.d("IOEXCEPTION", e1.toString());
+						return null;
+					}
+				}
+				protected void onPostExecute(String result){
+					if(result != null){
+						Log.d("SUCCESS", result);
+						/*if (result.length() > 0){
+							dbInterests = result.split("_");
+							updateUserInfo();
+						}*/
+						return;
+					}
+					else{
+						Log.d("FAILURE", "FAILURE");
+						return;
+					}
+				}
+			}
+			profileTask sendPostReqAsyncTask = new profileTask();
+			sendPostReqAsyncTask.execute();
+			Log.d("HERE", "AFTER CALL TO EXECUTE GETRSVPDB");
+			return;
+		}
+
 
 		// Get RSVP value from DB
 		private void getUserInterests(){
@@ -244,7 +319,7 @@ public class ProfileActivity extends MenuActivity {
 				protected String doInBackground(String[] args){
 					JSONObject json = null;
 					HttpClient client = new DefaultHttpClient();
-					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getUserInterests&param="+encodeHTML(email));
+					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getUserInterests&param="+encodeHTML(useremail));
 					Log.d("URL ACCESSING", get.getURI().getPath());
 					HttpResponse response;
 					try {
