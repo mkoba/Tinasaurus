@@ -106,12 +106,12 @@
             	  android:label="login"></activity>
        <activity
             android:name="com.ucevents.schedule.AttendList"
-            android:label="attendList">
+            android:label="List of Attendees">
        </activity>
        
        <activity
             android:name="com.ucevents.schedule.MainScheduleActivity"
-            android:label="ScheduleList">
+            android:label="My Schedule">
        </activity>
         
         <meta-data android:value="@string/app_id" android:name="com.facebook.sdk.ApplicationId"/>
