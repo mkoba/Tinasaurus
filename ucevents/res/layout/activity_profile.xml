@@ -1,69 +1,139 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:facebook="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/blue_solid"
-    android:gravity="center"
     android:orientation="vertical" >
+    
 	<com.facebook.widget.ProfilePictureView
             android:id="@+id/selection_profile_pic"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
+            android:paddingTop="20dp"
             facebook:preset_size="large" />
-
-   <!--  <EditText
-        android:id="@+id/f_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Insert First Name" />
-    <EditText
-        android:id="@+id/l_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Insert last Name" />
-
-    <EditText
-        android:id="@+id/interest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Insert Interest" />
- -->
-
+	<TextView
+	    android:id="@+id/nameText"
+	    android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="20dp"
+        android:layout_toRightOf="@id/selection_profile_pic"
+        android:text="Name: "
+        android:textColor="#ADA9A6"/>
     <TextView
         android:id="@+id/f_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
+        android:paddingLeft="30dp"
+        android:layout_toRightOf="@id/selection_profile_pic"
+        android:layout_below="@id/nameText"
         android:text="Name" 
         android:textColor ="@color/WHITE"/>
+    
+   	<TextView
+	    android:id="@+id/emailText"
+	    android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+		android:layout_below="@id/f_name"
+        android:layout_toRightOf="@id/selection_profile_pic"
+        android:text="Email:  "
+        android:textColor="#ADA9A6"/> 
     
    <TextView
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
+        android:paddingLeft="30dp"
+        android:layout_below="@id/emailText"
+        android:layout_toRightOf="@id/selection_profile_pic"
         android:text="Email" 
         android:textColor ="@color/WHITE"/>
+   
     <TextView
         android:id="@+id/interest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="20dp"
         android:paddingLeft="10dp"
+        android:layout_below="@id/selection_profile_pic"
         android:text="Interest" 
-        android:textColor ="@color/WHITE"/>
+        android:textColor ="#ADA9A6"/>
 
-
-    <Button
-        android:id="@+id/edit"
+    <RelativeLayout
         android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/interest"
+    android:orientation="vertical"
+    android:id='@+id/box' >
+ 	<CheckBox
+        android:id="@+id/career"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit" 
+        
+        android:text="Career"
+        android:textColor ="@color/WHITE"  />
+    <CheckBox
+        android:id="@+id/food"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/career"
+        android:text="Food" 
+        android:textColor ="@color/WHITE" />
+   <CheckBox
+        android:id="@+id/organization"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/food"
+        android:text="Organization"
+        android:textColor ="@color/WHITE"  />
+   
+	<CheckBox
+        android:id="@+id/social"
+        android:layout_marginLeft="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/career"
+        android:layout_alignTop="@id/career"
+        android:text="Social" 
         android:textColor ="@color/WHITE"/>
 
-</LinearLayout>
+    <CheckBox
+        android:id="@+id/sport"
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/food"
+        android:layout_alignTop="@id/food"
+        android:layout_alignLeft="@id/social"
+        android:text="Sport"
+        android:textColor ="@color/WHITE"  />
+    
+    <CheckBox
+        android:id="@+id/study"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/organization"
+        android:layout_alignTop="@id/organization"
+        android:layout_alignLeft="@id/social"
+        android:text="Study" 
+        android:textColor ="@color/WHITE" />
+    
+     <CheckBox
+        android:id="@+id/other"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/organization"
+        android:text="Other" 
+        android:textColor ="@color/WHITE"/>
+    
+    </RelativeLayout>
+   
+
+</RelativeLayout>
