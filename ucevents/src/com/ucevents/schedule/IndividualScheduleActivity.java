@@ -52,6 +52,7 @@ public class IndividualScheduleActivity extends MenuActivity {
 	String userid;
 
 	Button bDecline;
+	Button bList; 
 	
 	//List<String> allList;
 	ListView attList; 
@@ -103,14 +104,16 @@ public class IndividualScheduleActivity extends MenuActivity {
 		listAttend.addAll(chosenEvent.getAttendees());
 		
 		//check for if less than 5 attendees
-		int totalSize =5; 
+		/*int totalSize = 2;  
 		if(totalSize > listAttend.size()){
 			totalSize = listAttend.size();
 		}
 		
 		for(int i = 0; i < totalSize; i++ ){
 			listView.add(listAttend.get(i));
-		}
+		}*/
+		
+		listView.addAll(chosenEvent.getAttendees()); 
 		
 		
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
@@ -126,8 +129,7 @@ public class IndividualScheduleActivity extends MenuActivity {
 		cbRSVP.setChecked(true);
 		
 		//bDecline = (Button) findViewById(R.id.decline);
-		
-		
+			
 		cbRSVP.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -140,7 +142,38 @@ public class IndividualScheduleActivity extends MenuActivity {
 				}
 			}
 		});
+		
+		addListenerOnButton();
 
+	}
+	
+	
+	private void addListenerOnButton() {
+		bList = (Button) findViewById(R.id.attendes);
+		
+		Bundle b = this.getIntent().getExtras();
+
+		// grab event clicked from bundle
+		final Schedule clickedEvent = b.getParcelable("chosenEvent");
+		
+		bList.setOnClickListener(new OnClickListener() {
+			 
+			//@Override
+			public void onClick(View arg0) {
+				
+				
+				UCEvents_App app = ((UCEvents_App)getApplicationContext());
+				app.setUserId(userid);
+				//Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
+				Intent i= new Intent(IndividualScheduleActivity.this, com.ucevents.schedule.AttendList.class);
+						
+				Bundle b = new Bundle();
+				b.putParcelable("chosenEvent", clickedEvent);
+				i.putExtras(b);
+				startActivity(i);
+				
+				}
+			});
 	}
 
 	/**

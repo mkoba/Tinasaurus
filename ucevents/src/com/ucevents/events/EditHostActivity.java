@@ -44,7 +44,7 @@ public class EditHostActivity extends MenuActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hostedit);
-		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
+		/*UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		email = appState.getUserId();
 	   	//initialize interests array
 	   	for(int i = 0; i < 7; i++) {
@@ -54,10 +54,10 @@ public class EditHostActivity extends MenuActivity {
 		updateUserInfo();
 		
 		// grab new/modified interests
-		grabInterests();
+		grabInterests();*/
 		
 		// done button
-		addListenerOnButton();
+		//addListenerOnButton();
 	}
 	
 	public void updateUserInfo() {

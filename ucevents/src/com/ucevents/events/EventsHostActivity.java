@@ -282,7 +282,7 @@ public class EventsHostActivity extends MenuActivity{
 
 				Events clickedEvent = eventList.get(position);
 				//Toast.makeText(getApplicationContext(), clickedEvent.getDescription(), Toast.LENGTH_SHORT).show();
-				Intent i = new Intent(EventsHostActivity.this, com.ucevents.events.IndividualEventsActivity.class);
+				Intent i = new Intent(EventsHostActivity.this, com.ucevents.events.EditHostActivity.class);
 				Bundle b = new Bundle();
 				b.putParcelable("chosenEvent", clickedEvent);
 				i.putExtras(b);
