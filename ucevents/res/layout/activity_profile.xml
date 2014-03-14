@@ -10,6 +10,7 @@
             android:id="@+id/selection_profile_pic"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:paddingLeft="50dp"
             android:paddingTop="20dp"
             facebook:preset_size="large" />
 	<TextView
@@ -57,7 +58,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
-        android:paddingLeft="10dp"
+        android:paddingLeft="50dp"
+        android:paddingBottom="10dp"
         android:layout_below="@id/selection_profile_pic"
         android:text="Interest" 
         android:textColor ="#ADA9A6"/>
@@ -66,11 +68,12 @@
         android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/interest"
+    android:background="@drawable/border2"
     android:orientation="vertical"
     android:id='@+id/box' >
  	<CheckBox
         android:id="@+id/career"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         
@@ -78,7 +81,7 @@
         android:textColor ="@color/WHITE"  />
     <CheckBox
         android:id="@+id/food"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/career"
@@ -86,7 +89,7 @@
         android:textColor ="@color/WHITE" />
    <CheckBox
         android:id="@+id/organization"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/food"
@@ -126,7 +129,7 @@
     
      <CheckBox
         android:id="@+id/other"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/organization"
