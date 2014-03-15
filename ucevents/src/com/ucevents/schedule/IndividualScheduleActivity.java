@@ -80,12 +80,10 @@ public class IndividualScheduleActivity extends MenuActivity {
 		tvLocation.setText("Location: " + chosenEvent.getLocation());
 
 		tvDate = (TextView) findViewById(R.id.tvDate);
-		tvDate.setText(String.valueOf(chosenEvent.getMonth()) + " " + 
-				String.valueOf(chosenEvent.getDate()) + " " +
-				String.valueOf(chosenEvent.getYear()) );
+		tvDate.setText(chosenEvent.getEventDate());
 
 		tvTime = (TextView) findViewById(R.id.tvTime);
-		tvTime.setText("Time:" + String.valueOf(chosenEvent.getTime()));
+		tvTime.setText(chosenEvent.getTimeDisplay());
 
 		tvDescription = (TextView) findViewById(R.id.tvDescription);
 		tvDescription.setText("Description: \n\t\t\t" + chosenEvent.getDescription());
