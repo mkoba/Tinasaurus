@@ -12,6 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor ="@color/WHITE"
+        android:background="@drawable/light2"
+        android:layout_weight="1"
+        android:textSize="40dp"
         android:text="My Schedule" />
      
     <Button
@@ -19,22 +22,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor ="@color/WHITE"
+        android:background="@drawable/medium2"
+        android:layout_weight="1"
+        android:textSize="40dp"
         android:text="Add an Event" />
     
     <Button
         android:id="@+id/hostEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/dark"
         android:textColor ="@color/WHITE"
+        android:textSize="40dp"
+        android:layout_weight="1"
         android:text="Events Hosted" />
-    
-
-    <FrameLayout
-        android:id="@+id/eventsViewer"
-        android:name="com.ucevents.events.innerEventsFrag"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0"    
-        />
 
 </LinearLayout>
