@@ -56,6 +56,9 @@ public class ProfileActivity extends MenuActivity {
 	private CheckBox cbOther;
 	private String[] dbInterests = new String[0];
 	private String useremail;
+	private String fName;
+	private String lName;
+	TextView firstName;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -242,6 +245,7 @@ public class ProfileActivity extends MenuActivity {
 		private void getUserName(){
 			class profileTask extends AsyncTask<String, Void, String> {
 				protected String doInBackground(String[] args){
+					
 					JSONObject json = null;
 					HttpClient client = new DefaultHttpClient();
 					HttpGet get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getUserInformation&param="+encodeHTML(useremail));
@@ -263,15 +267,15 @@ public class ProfileActivity extends MenuActivity {
 						Log.d("RESULT: ", result);
 						try {
 							json = new JSONObject(result);
-							String fName=json.getString("fname");
-							String lName=json.getString("lname");
-							TextView firstName = (TextView)findViewById(R.id.f_name);
-						    firstName.setText(fName + " " + lName);
-							/*JSONArray interests = json.getJSONArray("interests");
-							result = "";
-							for (int i = 0; i < interests.length(); i++){
-								result += interests.getString(i)+"_";
-							}*/
+							fName=json.getString("fname");
+							lName=json.getString("lname");
+							
+							/*runOnUiThread(new Runnable() {
+								@Override
+								public void run() {*/
+							
+/*								}
+							});*/
 							return result;
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
@@ -290,10 +294,12 @@ public class ProfileActivity extends MenuActivity {
 						Log.d("IOEXCEPTION", e1.toString());
 						return null;
 					}
+
 				}
 				protected void onPostExecute(String result){
 					if(result != null){
 						Log.d("SUCCESS", result);
+						updateUserName();
 						/*if (result.length() > 0){
 							dbInterests = result.split("_");
 							updateUserInfo();
@@ -402,6 +408,11 @@ public class ProfileActivity extends MenuActivity {
 			//s = s.replaceAll(".", "%2E");
 			//s = s.replaceAll("/", "%2F");
 			return s;
+		}
+		
+		public void updateUserName() {
+			firstName = (TextView)findViewById(R.id.f_name);
+			firstName.setText(fName + " " + lName);
 		}
 		
 		public void updateUserInfo() {
