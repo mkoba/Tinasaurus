@@ -74,10 +74,10 @@ public class IndividualScheduleActivity extends MenuActivity {
 		ivIconID.setImageResource(chosenEvent.getIconid());
 
 		tvName = (TextView) findViewById(R.id.tvName);
-		tvName.setText(chosenEvent.getName());
+		tvName.setText("Title: " +  chosenEvent.getName());
 
 		tvLocation = (TextView) findViewById(R.id.tvLocation);
-		tvLocation.setText(chosenEvent.getLocation());
+		tvLocation.setText("Location: " + chosenEvent.getLocation());
 
 		tvDate = (TextView) findViewById(R.id.tvDate);
 		tvDate.setText(String.valueOf(chosenEvent.getMonth()) + " " + 
@@ -85,15 +85,15 @@ public class IndividualScheduleActivity extends MenuActivity {
 				String.valueOf(chosenEvent.getYear()) );
 
 		tvTime = (TextView) findViewById(R.id.tvTime);
-		tvTime.setText(String.valueOf(chosenEvent.getTime()));
+		tvTime.setText("Time:" + String.valueOf(chosenEvent.getTime()));
 
 		tvDescription = (TextView) findViewById(R.id.tvDescription);
-		tvDescription.setText(chosenEvent.getDescription());
+		tvDescription.setText("Description: \n\t\t\t" + chosenEvent.getDescription());
 
 		userid = ((UCEvents_App)getApplicationContext()).getUserId();
 		
 		tvRSVPCount = (TextView) findViewById(R.id.textRSVPCount);
-		tvRSVPCount.setText("People attending( "+String.valueOf(chosenEvent.getAttendees().size()) +"): " ); 
+		tvRSVPCount.setText("People attending("+String.valueOf(chosenEvent.getAttendees().size()) +"): " ); 
 		
 		//List population 
 		attList = (ListView) findViewById(R.id.allAttend);
