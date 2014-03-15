@@ -7,18 +7,18 @@
 <LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@drawable/blue_solid"
     android:gravity="center"
     android:orientation="vertical" >
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/event_pic"
         android:layout_width="66dp"
         android:layout_height="66dp"
         android:layout_weight="1.04"
         android:src="@drawable/ic_launcher" />
 
-   <!-- <RadioButton
+    <RadioButton
         android:id="@+id/pubic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,28 +30,15 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:textColor ="@color/WHITE"
-        android:hint="Insert Event Name" />
-
-    <TimePicker
-        android:id="@+id/eventTime"
-        android:textColor ="@color/WHITE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <DatePicker
-        android:id="@+id/datePicker1"
-        android:textColor ="@color/WHITE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.04" />
-
-    <EditText
+        android:hint="Event Name" />
+    
+     <EditText
         android:id="@+id/location"
         android:textColor ="@color/WHITE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Insert Event Location" />
+        android:hint="Event Location" />
 
     <EditText
         android:id="@+id/description"
@@ -59,58 +46,157 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:textColor ="@color/WHITE"
-        android:hint="Insert Event description" />
+        android:hint="Event description" />
+
+ <LinearLayout
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:background="@drawable/border2"
+     	>
+      <TextView
+        android:id="@+id/select_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor ="@color/WHITE"
+        android:paddingTop="10dp"
+        android:paddingLeft="30dp"
+        android:text="Select Categories"></TextView>
+    
+     <LinearLayout
+        android:layout_width="match_parent"
+   		android:layout_height="0dip"
+    	android:orientation="horizontal"
+    	android:layout_marginLeft="20dp"
+
+    	android:layout_weight="1.0"
+        >
     <LinearLayout
         android:layout_width="match_parent"
-   		android:layout_height="300dp"
-    	android:orientation="vertical"
-    	android:layout_marginLeft="20dp"
-        >
-    <CheckBox
-        android:id="@+id/career_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
-        android:text="Career" />
-    <CheckBox
-        android:id="@+id/food_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
-        android:text="Food" />
-   <CheckBox
-        android:id="@+id/organization_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
-        android:text="Organization" />
+    	android:layout_height="wrap_content"
+    	android:layout_weight="0.5"
+    	android:orientation="vertical" >
+        
+	    <CheckBox
+	        android:id="@+id/career_event"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor ="@color/WHITE"
+	        android:layout_weight="0.3"
+	        android:text="Career" />
+	    <CheckBox
+	        android:id="@+id/food_event"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor ="@color/WHITE"
+	        android:text="Food" />
+	   <CheckBox
+	        android:id="@+id/organization_event"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor ="@color/WHITE"
+	        android:text="Organization" />
+	   <CheckBox
+	        android:id="@+id/other_event"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor ="@color/WHITE"
+	        android:text="Other" />
+   
+		</LinearLayout>
+		<LinearLayout 
+        	android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_weight="0.5"
+    		
+    		android:orientation="vertical" >
+		<CheckBox
+	        android:id="@+id/social_event"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor ="@color/WHITE"
+	        android:text="Social" />    
+	    <CheckBox
+	        android:id="@+id/sport_event"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor ="@color/WHITE"
+	        android:text="Sport" />
+	    <CheckBox
+	        android:id="@+id/study_event"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor ="@color/WHITE"
+	        android:text="Study" />
 
-    <CheckBox
-        android:id="@+id/sport_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
-        android:text="Sport" />
-    <CheckBox
-        android:id="@+id/study_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
-        android:text="Study" />
-    <CheckBox
-        android:id="@+id/other_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
-        android:text="Other" />
-
-
+		</LinearLayout>
 	</LinearLayout>
+	</LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+   		android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:paddingTop="10dp"
+    	android:layout_weight="1.0"
+        >
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	   		android:layout_height="wrap_content"
+	    	android:orientation="vertical"
+	    	android:layout_weight="0.5"
+	    	android:background="@drawable/border2"
+	    	android:paddingTop="10dp"
+	    	>
+			    <TextView
+			        android:id="@+id/select_time"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:textColor ="@color/WHITE"
+			        android:paddingLeft="30dp"
+			        android:text="Select Time: ">
+			    </TextView>    
+			    <TimePicker
+			        android:id="@+id/eventTime"
+			        android:textColor ="@color/WHITE"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			
+			        android:paddingTop="20dp" />
+		</LinearLayout>
+		
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	   		android:layout_height="wrap_content"
+	    	android:orientation="vertical"
+	    	android:layout_weight="0.5"
+	    	android:background="@drawable/border2"
+	    	android:paddingTop="10dp"
+	    	>
+			    <TextView
+			        android:id="@+id/select_date"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:textColor ="@color/WHITE"
+			        android:paddingTop="20dp"
+			        android:paddingLeft="30dp"
+			        android:text="Select Date: ">
+			    </TextView>   
+			        
+			    <DatePicker
+			        android:id="@+id/datePicker1"
+			        android:textColor ="@color/WHITE"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" />
+		</LinearLayout>
+		</LinearLayout>
+   
 	    <Button
         android:id="@+id/Done"
+        android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor ="@color/WHITE"
-        android:text="Done" />
+        android:text="Add Event" />
 </LinearLayout>
 </ScrollView>
