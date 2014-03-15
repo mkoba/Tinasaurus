@@ -22,7 +22,7 @@ public class Events implements Comparable<Events>, Parcelable {
 	private int iconid;
 	private List<String> attendees;
 	private boolean attending;
-	private String[] months = {"Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Oct", "Nov", "Dec"};
+	private String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Oct", "Nov", "Dec"};
 
 	public Events(String eventid, String name, int time, String location,
 			int month, int date, int year, String description, String host,
