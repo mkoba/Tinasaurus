@@ -93,7 +93,7 @@ public class IndividualScheduleActivity extends MenuActivity {
 		userid = ((UCEvents_App)getApplicationContext()).getUserId();
 		
 		tvRSVPCount = (TextView) findViewById(R.id.textRSVPCount);
-		tvRSVPCount.setText("Number of Attendees: "+String.valueOf(chosenEvent.getAttendees().size())); 
+		tvRSVPCount.setText("People attending( "+String.valueOf(chosenEvent.getAttendees().size()) +"): " ); 
 		
 		//List population 
 		attList = (ListView) findViewById(R.id.allAttend);
@@ -114,7 +114,6 @@ public class IndividualScheduleActivity extends MenuActivity {
 		}*/
 		
 		listView.addAll(chosenEvent.getAttendees()); 
-		
 		
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this, 
@@ -143,12 +142,12 @@ public class IndividualScheduleActivity extends MenuActivity {
 			}
 		});
 		
-		addListenerOnButton();
+	//	addListenerOnButton();
 
 	}
 	
 	
-	private void addListenerOnButton() {
+/*	private void addListenerOnButton() {
 		bList = (Button) findViewById(R.id.attendes);
 		
 		Bundle b = this.getIntent().getExtras();
@@ -174,7 +173,7 @@ public class IndividualScheduleActivity extends MenuActivity {
 				
 				}
 			});
-	}
+	}*/
 
 	/**
 	 * An example Activity using Google Analytics and EasyTracker.
