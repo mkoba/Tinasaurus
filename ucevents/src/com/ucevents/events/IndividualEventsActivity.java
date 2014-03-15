@@ -69,12 +69,10 @@ public class IndividualEventsActivity extends MenuActivity {
 		tvLocation.setText(chosenEvent.getLocation());
 
 		tvDate = (TextView) findViewById(R.id.tvDate);
-		tvDate.setText(String.valueOf(chosenEvent.getMonth()) + " " + 
-				String.valueOf(chosenEvent.getDate()) + " " +
-				String.valueOf(chosenEvent.getYear()) );
+		tvDate.setText(chosenEvent.getEventDate());
 
 		tvTime = (TextView) findViewById(R.id.tvTime);
-		tvTime.setText(String.valueOf(chosenEvent.getTime()));
+		tvTime.setText(chosenEvent.getTimeDisplay());
 
 		tvDescription = (TextView) findViewById(R.id.tvDescription);
 		tvDescription.setText(chosenEvent.getDescription());

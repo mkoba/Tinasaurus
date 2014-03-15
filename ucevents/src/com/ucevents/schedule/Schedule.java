@@ -21,6 +21,7 @@ public class Schedule implements Comparable<Schedule>, Parcelable{
 	private int iconid;
 	private List<String> attendees;
 	private boolean attending;
+	private String[] months = {"Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Oct", "Nov", "Dec"};
 
 	public Schedule(String eventid, String name, int time, String location,
 			int month, int date, int year, String description, String host,
@@ -48,6 +49,40 @@ public class Schedule implements Comparable<Schedule>, Parcelable{
 	public int getTime() {
 		return time;
 	}
+	public String getTimeDisplay(){
+		int hour = time/100;
+		int min = time%100;
+		boolean pm = false;
+		if (hour > 12){
+			hour -= 12;
+			pm = true;
+		}
+		String timeDisp = null;
+		if (hour == 0){
+			timeDisp = "00:";
+		}
+		else{
+			if (hour % 10 > 0){
+				timeDisp = hour + ":";
+			}
+			else{
+				timeDisp = " " + hour + ":";
+			}
+		}
+		if (min == 0){
+			timeDisp += "00 ";
+		}
+		else{
+			timeDisp += min + " ";
+		}
+		if (pm){
+			timeDisp += "pm";
+		}
+		else{
+			timeDisp += "am";
+		}
+		return timeDisp;
+	}
 	public String getLocation() {
 		return location;
 	}
@@ -59,6 +94,9 @@ public class Schedule implements Comparable<Schedule>, Parcelable{
 	}
 	public int getYear() {
 		return year;
+	}
+	public String getEventDate(){
+		return months[getMonth()] + " " + getDate() + ", " + getYear();
 	}
 	public String getDescription() {
 		return description;

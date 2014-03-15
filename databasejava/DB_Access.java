@@ -58,17 +58,19 @@ public class DB_Access {
 		}
 	}
 
-	private String escapeAp(String s){
-		int i = -1;
+	public String escapeAp(String s){
+		/*int i = -1;
 		i = s.indexOf("'", i+1);
 
 		while (i != -1){
-			s = s.substring(0, i) + "\\" + s.substring(i);
+			if(s.charAt(i - 1) != '\\'){
+				s = s.substring(0, i) + "\\" + s.substring(i);
+			}
 			i+=2;
 			i = s.indexOf("'", i);
-		}
+		}*/
 
-		return s;
+		return s.replaceAll("'", "\\'");
 	}
 	
 	public String[] parseArray(String s){
@@ -120,12 +122,12 @@ public class DB_Access {
 	// host --> given
 	public void insertEvent(String title, String location, int hour, int minute, boolean pm, 
 			String[] interests, int month, int day, int year, String description, 
-			boolean public_flag, String host) throws SQLException{
+			boolean public_flag, String host) throws SQLException {
 
 		if (pm){
 			hour += 12;
 		}
-
+		System.out.println("title");
 		title = escapeAp(title);
 		description = escapeAp(description);
 		host = escapeAp(host);
@@ -149,6 +151,8 @@ public class DB_Access {
 			p_stmt.setString(2, interests[i]);
 			p_stmt.executeUpdate();
 		}
+		
+		insertAttendee(host, title);
 	}
 
 	public void insertAttendee(String user, String event) throws SQLException{
@@ -267,16 +271,30 @@ public class DB_Access {
 	
 	public boolean deleteIfPastTime(Calendar c, String event) throws SQLException{
 		Calendar current = Calendar.getInstance();
-		System.out.println(event + " c before current? " + current.after(c));
-		if (current.after(c)){
-			try{
-				System.out.println("DELETING EVENT, PAST TIME BY 2 HOURS");
-				deleteEvent(event);
-				return true;
-			}catch (Exception e){
-				System.out.println("CAUGHT EXCEPTION");
+		current.set(Calendar.HOUR_OF_DAY, 0);
+		current.set(Calendar.MINUTE, 0);
+		current.set(Calendar.SECOND, 0);
+		current.set(Calendar.MILLISECOND, 0);
+		System.out.println(current.get(Calendar.YEAR) + " " + current.get(Calendar.MONTH) + " " + current.get(Calendar.DATE) );
+		System.out.println(event + " c before current? " + (current.get(Calendar.YEAR) > c.get(Calendar.YEAR) ||
+				(current.get(Calendar.YEAR) == c.get(Calendar.YEAR) &&
+				 current.get(Calendar.MONTH) > c.get(Calendar.MONTH)) ||
+				 (current.get(Calendar.YEAR) == c.get(Calendar.YEAR) && 
+				 current.get(Calendar.MONTH) == c.get(Calendar.MONTH) &&
+				 current.get(Calendar.DATE) > c.get(Calendar.DATE))));
+		if (current.get(Calendar.YEAR) > c.get(Calendar.YEAR) ||
+			(current.get(Calendar.YEAR) == c.get(Calendar.YEAR) &&
+			 current.get(Calendar.MONTH) > c.get(Calendar.MONTH)) ||
+			 (current.get(Calendar.YEAR) == c.get(Calendar.YEAR) && 
+			 current.get(Calendar.MONTH) == c.get(Calendar.MONTH) &&
+			 current.get(Calendar.DATE) > c.get(Calendar.DATE))){
+				System.out.println("DELETING EVENT, PAST DATE");
+				System.out.println(current.toString());
+				System.out.println(escapeAp(event));
+				PreparedStatement ps = connection.prepareStatement("DELETE FROM events WHERE name = ?");
+				ps.setString(1,  escapeAp(event));
+				ps.executeUpdate();
 				return false;
-			}
 		}
 		return false;
 	}
@@ -343,7 +361,8 @@ public class DB_Access {
 	}
 	
 	public JSONArray getEventCategory(String event) throws SQLException{
-		PreparedStatement ps = connection.prepareStatement("SELECT * FROM event_category WHERE event = '" + event + "'");
+		PreparedStatement ps = connection.prepareStatement("SELECT * FROM event_category WHERE event = ?");
+		ps.setString(1, escapeAp(event));
 		ResultSet rs = ps.executeQuery();
 		JSONArray categories = new JSONArray();
 		while(rs.next()){
@@ -353,7 +372,7 @@ public class DB_Access {
 	}
 
 	// Get all events
-	public JSONObject getAllEvents(String user) throws SQLException, JSONException{
+	public JSONObject getAllEvents(String user) throws SQLException, JSONException, ParseException{
 		JSONObject result = new JSONObject();
 		List<JSONObject> eventslist = new ArrayList<JSONObject>();
 		p_stmt = connection.prepareStatement("SELECT * FROM events");
@@ -361,12 +380,13 @@ public class DB_Access {
 		while(rs.next()){
 			//int year, int month, int date, int hrs, int min
 			Calendar cal = Calendar.getInstance();
-			try {
-				cal.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(rs.getInt("year")+"/"+rs.getInt("month")+"/"+ rs.getInt("date")+ " " + (rs.getInt("hour")+9) + ":" + rs.getInt("min") + ":00"));
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			cal.set(Calendar.DATE, rs.getInt("date"));
+			cal.set(Calendar.MONTH, rs.getInt("month"));
+			cal.set(Calendar.YEAR, rs.getInt("year"));
+			cal.set(Calendar.HOUR, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
 			if(deleteIfPastTime(cal, rs.getString("name"))){
 				continue;
 			}
@@ -409,12 +429,13 @@ public class DB_Access {
 		rs = p_stmt.executeQuery();
 		while(rs.next()){
 			Calendar cal = Calendar.getInstance();
-			try {
-				cal.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(rs.getInt("year")+"/"+rs.getInt("month")+"/"+ rs.getInt("date")+ " " + (rs.getInt("hour")+9) + ":" + rs.getInt("min") + ":00"));
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			cal.set(Calendar.DATE, rs.getInt("date"));
+			cal.set(Calendar.MONTH, rs.getInt("month"));
+			cal.set(Calendar.YEAR, rs.getInt("year"));
+			cal.set(Calendar.HOUR, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
 			if(deleteIfPastTime(cal, rs.getString("name"))){
 				continue;
 			}
@@ -453,12 +474,49 @@ public class DB_Access {
 		p_stmt.setString(1, user);
 		ResultSet rs = p_stmt.executeQuery();
 		List<JSONObject> eventslist = new ArrayList<JSONObject>();
+		String query = "SELECT DISTINCT(name), location, hour, min, month, date, year, description " +
+				"FROM events, event_category " + 
+				"WHERE events.name = event_category.event AND (";
 		while(rs.next()){
-			String interest = rs.getString("interest");
-			JSONObject eventsincategory = getEventsInCategory(interest, user);
-			JSONArray events = eventsincategory.getJSONArray("events");
-			for(int i = 0; i < events.length(); i++){
-				eventslist.add(events.getJSONObject(i));
+			query += "event_category.interest = '" + rs.getString("interest") + "' OR ";
+		}
+		query = query.substring(0, query.lastIndexOf("OR")) + ")";
+		System.out.println(query);
+		p_stmt = connection.prepareStatement(query);
+		rs = p_stmt.executeQuery();
+		while(rs.next()){
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DATE, rs.getInt("date"));
+			cal.set(Calendar.MONTH, rs.getInt("month"));
+			cal.set(Calendar.YEAR, rs.getInt("year"));
+			cal.set(Calendar.HOUR, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			if(deleteIfPastTime(cal, rs.getString("name"))){
+				continue;
+			}
+			else{
+				JSONObject event = new JSONObject();
+				event.put("name", rs.getString("name"));
+				event.put("location", rs.getString("location"));
+				event.put("hour", rs.getInt("hour"));
+				event.put("min", rs.getInt("min"));
+				event.put("month", rs.getInt("month"));
+				event.put("date", rs.getInt("date"));
+				event.put("year", rs.getInt("year"));
+				event.put("description", rs.getString("description"));
+				JSONObject attendees = getAttendees(rs.getString("name"), user);
+				try{
+					event.put("attendees", attendees.get("attendees"));
+				} catch (JSONException e){
+					//do nothing
+					event.put("attendees", new ArrayList<String>());
+				}
+				event.put("attending", attendees.getBoolean("attending"));
+				event.put("host", getHost(rs.getString("name")));
+				event.put("category", getEventCategory(rs.getString("name")));
+				eventslist.add(event);
 			}
 		}
 
@@ -484,13 +542,14 @@ public class DB_Access {
 			ResultSet rs_tmp = p_stmt.executeQuery();
 			while(rs_tmp.next()){
 				Calendar cal = Calendar.getInstance();
-				try {
-					cal.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(rs.getInt("year")+"/"+rs.getInt("month")+"/"+ rs.getInt("date")+ " " + (rs.getInt("hour")+9) + ":" + rs.getInt("min") + ":00"));
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				if(deleteIfPastTime(cal, rs.getString("name"))){
+				cal.set(Calendar.DATE, rs_tmp.getInt("date"));
+				cal.set(Calendar.MONTH, rs_tmp.getInt("month"));
+				cal.set(Calendar.YEAR, rs_tmp.getInt("year"));
+				cal.set(Calendar.HOUR, 0);
+				cal.set(Calendar.MINUTE, 0);
+				cal.set(Calendar.SECOND, 0);
+				cal.set(Calendar.MILLISECOND, 0);
+				if(deleteIfPastTime(cal, rs_tmp.getString("name"))){
 					break;
 				}
 				else{
@@ -543,13 +602,14 @@ public class DB_Access {
 			ResultSet rs_tmp = p_stmt.executeQuery();
 			while(rs_tmp.next()){
 				Calendar cal = Calendar.getInstance();
-				try {
-					cal.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(rs.getInt("year")+"/"+rs.getInt("month")+"/"+ rs.getInt("date")+ " " + (rs.getInt("hour")+9) + ":" + rs.getInt("min") + ":00"));
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				if(deleteIfPastTime(cal, rs.getString("name"))){
+				cal.set(Calendar.DATE, rs_tmp.getInt("date"));
+				cal.set(Calendar.MONTH, rs_tmp.getInt("month"));
+				cal.set(Calendar.YEAR, rs_tmp.getInt("year"));
+				cal.set(Calendar.HOUR, 0);
+				cal.set(Calendar.MINUTE, 0);
+				cal.set(Calendar.SECOND, 0);
+				cal.set(Calendar.MILLISECOND, 0);
+				if(deleteIfPastTime(cal, rs_tmp.getString("name"))){
 					continue;
 				}
 				else{
@@ -675,9 +735,8 @@ public class DB_Access {
 		String[] event_category = {"food"};
 		String[] interests = {"food", "sports"};
 		try {
-			JSONObject json = db.getEventsInCategory("food", "marieli530@gmail.com");
-			JSONArray arr= json.getJSONArray("events");
-		} catch (SQLException e) {
+			db.getAllEvents("marieli530@gmail.com");
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

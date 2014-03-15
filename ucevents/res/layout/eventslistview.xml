@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="5dp" >
 
     <ImageView
         android:id="@+id/item_ivevent_icon"
@@ -9,62 +12,71 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:maxHeight="100dp"
-        android:maxWidth="100dp"
-        android:textColor ="@color/WHITE"
-        android:src="@drawable/ic_launcher" />
+        android:maxHeight="200dp"
+        android:maxWidth="200dp"
+        android:src="@drawable/ic_launcher"
+        android:textColor="@color/WHITE" />
 
-    <TextView
-        android:id="@+id/item_tvName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/item_ivevent_icon"
-        android:text="Make Shown Here"
-        android:textColor ="@color/WHITE"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:orientation="vertical"
+        android:paddingLeft="10dp" >
 
-    <TextView
-        android:id="@+id/item_txtDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/item_txtDescription"
-        android:layout_alignLeft="@+id/item_txtDescription"
-        android:text="Date"
-        android:textColor ="@color/WHITE"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-    
-     <TextView
-        android:id="@+id/item_txtTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-		android:layout_below="@+id/item_txtDescription"
-        android:layout_toRightOf="@+id/item_txtDate"
-        android:paddingLeft="10dp"
-        android:text="Time"
-        android:textColor ="@color/WHITE"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-     
-     <TextView
-        android:id="@+id/item_txtLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/item_ivevent_icon"
-        android:layout_alignLeft="@+id/item_txtDescription"
-        android:layout_below="@+id/item_txtTime"
-        android:text="Time"
-        android:textColor ="@color/WHITE"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/item_tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Make Shown Here"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/WHITE" />
 
-    <TextView
-        android:id="@+id/item_txtDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/item_tvName"
-        android:layout_below="@+id/item_tvName"
-        android:text="Description"
-        android:textColor ="@color/WHITE"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/item_txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/WHITE" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/item_txtTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time"
+                    android:layout_gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/WHITE" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_txtLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/WHITE" />
+    </LinearLayout>
 
 </RelativeLayout>
-

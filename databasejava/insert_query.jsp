@@ -50,7 +50,7 @@
 				<%
 			} catch(Exception e){
 				%>
-				Failed
+				Failed 
 				<%
 				e.printStackTrace();
 			}
