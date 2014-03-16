@@ -64,7 +64,14 @@ public class Events implements Comparable<Events>, Parcelable {
 		int hour = time/100;
 		int min = time%100;
 		boolean pm = false;
-		if (hour > 12){
+		if (hour == 12){
+			hour = 12;
+			pm = true;
+		}
+		else if (hour == 24 || hour == 0){
+			hour = 12;
+		}
+		else if (hour > 12){
 			hour -= 12;
 			pm = true;
 		}
