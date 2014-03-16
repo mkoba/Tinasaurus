@@ -44,6 +44,7 @@ import com.ucevents.signup.signupActivity;
 
 public class AddEvent extends MenuActivity{
 	Button createBut;
+	String pretitle;
 	String title;
 	String location;
 	int hour;
@@ -66,7 +67,8 @@ public class AddEvent extends MenuActivity{
 	private void getInput(){
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		host = appState.getUserId();
-		title = host + "_" + ((EditText)findViewById(R.id.event_name)).getText().toString();
+		pretitle = ((EditText)findViewById(R.id.event_name)).getText().toString();
+		title = host + "_" + pretitle;
 		location = ((EditText)findViewById(R.id.location)).getText().toString();
 		description = ((EditText)findViewById(R.id.description)).getText().toString();
 		minute = ((TimePicker)findViewById(R.id.eventTime)).getCurrentMinute();
@@ -102,7 +104,13 @@ public class AddEvent extends MenuActivity{
 			categories.add("social");
 		}
 		
-		if(categories.size() == 0) {
+		//Event title limited to 25 characters
+		if(pretitle.length() > 25) {
+			Toast.makeText(getApplicationContext(), "Event title is limited to 25 characters" ,
+					Toast.LENGTH_LONG).show();
+		}
+		//Forcing hosts to select a category
+		else if(categories.size() == 0) {
 			Toast.makeText(getApplicationContext(), "Please select at least one interest" ,
 					Toast.LENGTH_LONG).show();
 		}

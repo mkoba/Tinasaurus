@@ -55,6 +55,7 @@ public class signupActivity extends LogoutMenuActivity{
 	private ProfilePictureView profilePictureView;
 	private String useremail;
 	private TextView tvEmail;
+	private boolean interestExist = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,7 +84,6 @@ public class signupActivity extends LogoutMenuActivity{
 		//grab interests and add to db
 		grabInterests();
 		addListenerOnButton();
-
 	}
 
 
@@ -95,6 +95,7 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "Career", Toast.LENGTH_SHORT).show();
 					interests.set(0,"career");
+					//interestExist = true;
 				}
 				else {
 					interests.set(0, "false");
@@ -108,6 +109,7 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "Food", Toast.LENGTH_SHORT).show();
 					interests.set(1,"food");
+					//interestExist = true;
 				}
 				else {
 					interests.set(1, "false");
@@ -121,6 +123,7 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "organization", Toast.LENGTH_SHORT).show();
 					interests.set(2,"organization");
+					//interestExist = true;
 				}
 				else {
 					interests.set(2, "false");
@@ -134,6 +137,7 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "social", Toast.LENGTH_SHORT).show();
 					interests.set(3,"social");
+					//interestExist = true;
 				}
 				else {
 					interests.set(3, "false");
@@ -147,6 +151,7 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "Sport", Toast.LENGTH_SHORT).show();
 					interests.set(4,"sport");
+					//interestExist = true;
 				}
 				else {
 					interests.set(4, "false");
@@ -160,6 +165,7 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "study", Toast.LENGTH_SHORT).show();
 					interests.set(5,"study");
+					//interestExist = true;
 				}
 				else {
 					interests.set(5, "false");
@@ -173,13 +179,14 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "other", Toast.LENGTH_SHORT).show();
 					interests.set(6,"other");
+					//interestExist = true;
 				}
 				else {
 					interests.set(6, "false");
 				}
 			}
 		});
-
+		
 
 	}
 
@@ -190,26 +197,33 @@ public class signupActivity extends LogoutMenuActivity{
 
 			//@Override
 			public void onClick(View arg0) {
-
 				//grab list of interest to add to db
 				for(int i = 0; i < interests.size(); i++) {
 					if(!interests.get(i).equals("false")) {
+						interestExist = true;
 						System.out.println("interests: " + interests.get(i));
 						interestsFinal.add(interests.get(i));
 					}
 				}
-
-				/*for(int i=0; i < interestsFinal.size(); i++) {
-
-					System.out.print(interestsFinal.get(i));
-				}*/
-				//Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
-
-				/****
-				 * DB: grab the data you need here and insert into db
-				 * firstname, lastname, email, interestsFinal  
-				 */
-				insertUser(firstname, lastname, email);
+				Log.d("interestExist", "" + interestExist);
+				//Forcing users to pick at least 1 interest when signing up
+				if(!interestExist) {
+					Toast.makeText(getApplicationContext(), "Please select at least one interest" ,
+							Toast.LENGTH_LONG).show();
+				}
+				else {
+					/*for(int i=0; i < interestsFinal.size(); i++) {
+	
+						System.out.print(interestsFinal.get(i));
+					}*/
+					//Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
+	
+					/****
+					 * DB: grab the data you need here and insert into db
+					 * firstname, lastname, email, interestsFinal  
+					 */
+					insertUser(firstname, lastname, email);
+				}
 			}
 		});
 
