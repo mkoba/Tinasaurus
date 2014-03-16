@@ -24,7 +24,7 @@ public class EventsActivity extends MenuActivity{
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.frag_events);
+		setContentView(R.layout.activity_mainevents);
 		addOnClickListener();
 	}
 	private void addOnClickListener() {

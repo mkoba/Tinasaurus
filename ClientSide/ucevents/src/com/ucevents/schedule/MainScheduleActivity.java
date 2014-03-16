@@ -23,7 +23,7 @@ public class MainScheduleActivity extends MenuActivity{
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.frag_schedule);
+		setContentView(R.layout.activity_mainschedule);
 		addOnClickListener();
 	}
 	private void addOnClickListener() {

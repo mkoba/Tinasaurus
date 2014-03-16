@@ -19,7 +19,7 @@ public class LogoutActivity extends MenuActivity {
 	@Override 
 	public void onCreate(Bundle savedIntanceState) {
 		super.onCreate(savedIntanceState);
-		setContentView(R.layout.logout_popup);
+		setContentView(R.layout.activity_logout);
 		
 		logout = (Button)findViewById(R.id.logout);
 		cancel = (Button)findViewById(R.id.cancel);
