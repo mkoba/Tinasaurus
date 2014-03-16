@@ -29,7 +29,6 @@ public class CategoryEventsActivity extends MenuActivity{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_events_category);
 		addListenerOnButton();
@@ -122,14 +121,12 @@ public class CategoryEventsActivity extends MenuActivity{
 	  @Override
 	  public void onStart() {
 	    super.onStart();
-	    // The rest of your onStart() code.
-	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStart(this);
 	  }
 
 	  @Override
 	  public void onStop() {
 	    super.onStop();
-	    // The rest of your onStop() code.
-	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStop(this);
 	}
 }

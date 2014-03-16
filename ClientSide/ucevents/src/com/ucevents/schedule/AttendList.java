@@ -45,8 +45,6 @@ public class AttendList extends MenuActivity{
                 listAttend );
 
 		attList.setAdapter(arrayAdapter); 
-		
-		//addListenerOnButton();
 	}
 
 	/**
@@ -55,14 +53,12 @@ public class AttendList extends MenuActivity{
 	  @Override
 	  public void onStart() {
 	    super.onStart();
-	    // The rest of your onStart() code.
-	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStart(this);
 	  }
 
 	  @Override
 	  public void onStop() {
 	    super.onStop();
-	    // The rest of your onStop() code.
-	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStop(this);
 	}
 }

@@ -32,7 +32,6 @@ public class EventsActivity extends MenuActivity{
 		ballEvents.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				//view= inflater.inflate(R.layout.activity_allevents, container, false);
 				Intent intent = new Intent(EventsActivity.this, com.ucevents.events.EventsListActivity.class);
 				intent.putExtra("key", "all");
 				startActivity(intent);
@@ -43,7 +42,6 @@ public class EventsActivity extends MenuActivity{
 		bbyCategory.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				//view= inflater.inflate(R.layout.activity_allevents, container, false);
 				Intent intent = new Intent(EventsActivity.this, com.ucevents.events.CategoryEventsActivity.class);
 				startActivity(intent);
 			}
@@ -53,7 +51,6 @@ public class EventsActivity extends MenuActivity{
 		bUserInterest.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				//view= inflater.inflate(R.layout.activity_allevents, container, false);
 				Intent intent = new Intent(EventsActivity.this, com.ucevents.events.EventsListActivity.class);
 				intent.putExtra("key", "interest");
 				startActivity(intent);
@@ -68,16 +65,14 @@ public class EventsActivity extends MenuActivity{
 	  @Override
 	  public void onStart() {
 	    super.onStart();
-	    // The rest of your onStart() code.
-	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStart(this);
 
 	  }
 
 	  @Override
 	  public void onStop() {
 	    super.onStop();
-	    // The rest of your onStop() code.
-	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStop(this);
 	}
 
 }

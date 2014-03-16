@@ -73,8 +73,6 @@ public class AddEvent extends MenuActivity{
 		description = ((EditText)findViewById(R.id.description)).getText().toString();
 		minute = ((TimePicker)findViewById(R.id.eventTime)).getCurrentMinute();
 		hour = ((TimePicker)findViewById(R.id.eventTime)).getCurrentHour();
-		Log.d("HOUR", "" + hour);
-		//TODO: remove pm as parameter for DB_Access methods. Apparently hour is in 24hr format
 		pm = false;
 		month = ((DatePicker)findViewById(R.id.datePicker1)).getMonth();
 		day = ((DatePicker)findViewById(R.id.datePicker1)).getDayOfMonth();
@@ -122,7 +120,6 @@ public class AddEvent extends MenuActivity{
 			String tempStr = "+" + categories.get(i);
 				concatString += tempStr;
 			}
-			Log.d("concatString", "" + concatString);
 			sendPostRequest(title, location, Integer.toString(hour), Integer.toString(minute), "false", concatString, Integer.toString(month), Integer.toString(day), Integer.toString(year), description, host);
 		}
 	}
@@ -154,30 +151,12 @@ public class AddEvent extends MenuActivity{
 					String tempStr = "&interest=" + tokens[i];
 					interestUrl += tempStr;
 				}
-				Log.d("TITLEinSendPost", "" + args[0]);
-				Log.d("LOCATIONinSendPost", "" + args[1]);
-				Log.d("HOURinSendPost", "" + args[2]);
-				Log.d("MINUTEinSendPost", "" + args[3]);
-				Log.d("PMinSendPost", "" + args[4]);
-				Log.d("INTERESTinSendPost", "" + interestUrl);
-				Log.d("MONTHinSendPost", "" + args[6]);
-				Log.d("DAYinSendPost", "" + args[7]);
-				Log.d("YEARinSendPost", "" + args[8]);
-				Log.d("DESCRIPTIONinSendPost", "" + args[9]);
-				Log.d("HOSTinSendPost", "" + args[10]);
-				Log.d("URLinSendPost", "http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertEvent&title="
-						+encodeHTML(args[0])+"&location="+encodeHTML(args[1])+"&hour="+encodeHTML(args[2])+"&minute="+encodeHTML(args[3])+"&pm="+encodeHTML(args[4])+interestUrl
-						+"&month="+encodeHTML(args[6])+"&day="+encodeHTML(args[7])+"&year="+encodeHTML(args[8])+"&description="+encodeHTML(args[9])+"&host="+encodeHTML(args[10]));
-				
 				HttpClient client = new DefaultHttpClient();
 				HttpPost post = new HttpPost("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/insert_query.jsp?method=insertEvent&title="
 				+encodeHTML(args[0])+"&location="+encodeHTML(args[1])+"&hour="+encodeHTML(args[2])+"&minute="+encodeHTML(args[3])+"&pm="+encodeHTML(args[4])+interestUrl
 				+"&month="+encodeHTML(args[6])+"&day="+encodeHTML(args[7])+"&year="+encodeHTML(args[8])+"&description="+encodeHTML(args[9])+"&host="+encodeHTML(args[10]));
-				//List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-				Log.d("I'm here**********", "" + args[10]);
 				HttpResponse response;
 				try {
-					Log.d("INSIDE TRY BLOCK**********", "" + args[10]);
 					response = client.execute(post);
 					HttpEntity entity = response.getEntity();
 					InputStream is = entity.getContent();
@@ -190,60 +169,43 @@ public class AddEvent extends MenuActivity{
 					}
 					result = sb.toString();
 					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-					Log.d("RESULT IN HTML", "RESULT");
 					if (result.contains("Success")){
 						return "SUCCESS";
 					}
 				} catch (ClientProtocolException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("CLIENTPROTOCAL", e1.toString());
 					return null;
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("IOEXCEPTION", e1.toString());
 					return null;
 				}
 				return "FAILED";
 			}
 			protected void onPostExecute(String result){
 				if(result != null){
-					Log.d("RESULT*************", "" + result);
+					Toast.makeText(getApplicationContext(), "Event Created!",
+							Toast.LENGTH_LONG).show();
 					Intent i= new Intent(AddEvent.this, com.ucevents.schedule.ScheduleActivity.class);
 					startActivity(i);
 					return;
 				}
 				else{
-					Log.d("FAILURE", "FAILURE");
+					Toast.makeText(getApplicationContext(), "Unable to create event. Please try again later.",
+							Toast.LENGTH_LONG).show();
 					return;
 				}
 			}
 		}
 		scheduleTask sendPostReqAsyncTask = new scheduleTask();
 	    sendPostReqAsyncTask.execute(title, location, hour, minute, "false", interest, month, day, year, description, host);
-	    Log.d("HERE", "AFTER CALL TO EXECUTE");
 	    return;
 	}
 	
 	public String encodeHTML(String s)
 	{
-		//s = s.replaceAll("%", "%25");
 		s = s.replaceAll(" ", "%20");
 		s = s.replaceAll("!", "%21");
-		//s = s.replaceAll("\"", "%22");
-		//s = s.replaceAll("#", "%23");
-		//s = s.replaceAll("$", "%24");
-		//s = s.replaceAll("&", "%26");
 		s = s.replaceAll("'", "%27");
-		//s = s.replaceAll("(", "%28");
-		//s = s.replaceAll(")", "%29");
-		//s = s.replaceAll("*", "%2A");
-		//s = s.replaceAll("+", "%2B");
-		//s = s.replaceAll(",", "%2C");
-		//s = s.replaceAll("-", "%2D");
-		//s = s.replaceAll(".", "%2E");
-		//s = s.replaceAll("/", "%2F");
 		return s;
 	}
 	
@@ -253,15 +215,13 @@ public class AddEvent extends MenuActivity{
 	  @Override
 	  public void onStart() {
 	    super.onStart();
-	    // The rest of your onStart() code.
-	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStart(this);
 	  }
 
 	  @Override
 	  public void onStop() {
 	    super.onStop();
-	    // The rest of your onStop() code.
-	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStop(this);
 	}
 		
 }

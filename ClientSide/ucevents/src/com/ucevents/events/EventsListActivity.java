@@ -50,28 +50,23 @@ public class EventsListActivity extends MenuActivity{
 	private List<Events> eventList = new ArrayList<Events>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//   Log.d("woathereboy", "EventsListActivity"); 
-
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_allevents);
 		Bundle bundle = getIntent().getExtras();
 		value = bundle.getString("key");
-		Log.d("VALUE IS :", value.toString());
-		Log.d("VALUE IS :", value.toString());
-		Log.d("VALUE IS :", value.toString());
-		Log.d("VALUE IS :", value.toString());
-		Log.d("VALUE IS :", value.toString());
 
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		userid = appState.getUserId();
 		
-		Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
-		if(value.toString().equals("food") || value.toString().equals("study") || value.toString().equals("career") || value.toString().equals("sports") || value.toString().equals("organization") || value.toString().equals("social") || value.toString().equals("other")){
-			populateEventList(value);
+		if(value.toString().equals("food") || value.toString().equals("study") || value.toString().equals("career") || value.toString().equals("sport") || value.toString().equals("sports") || value.toString().equals("organization") || value.toString().equals("social") || value.toString().equals("other")){
+			if (value.toString().equals("sport")){
+				populateEventList("sports");
+			}
+			else{
+				populateEventList(value);
+			}
 		}
 		else if(value.toString().equals("interest")){
-			Log.d("interest is ", value);
 			populateEventList(value, false);
 		}
 		else{
@@ -84,26 +79,14 @@ public class EventsListActivity extends MenuActivity{
 
 	// this will be later populated from db
 	private void populateEventList() {
-		Log.d("category is: ", "allEvents");
-		Log.d("category is: ", "allEvents");
-		Log.d("category is: ", "allEvents");
-
 		sendPostRequest("allEvents");
-		Log.d("SIZEOF eventList", "" + eventList.size());
 	}
 
 	// populateEventList for category sorting
 	private void populateEventList(String category){
-		Log.d("category is: ", category);
-		Log.d("category is: ", category);
-		Log.d("category is: ", category);
-
 		sendPostRequest(category);
-		Log.d("SIZEOF eventList", "" + eventList.size());
-
 	}
 	private void populateEventList(String interest, boolean nothingElse){
-		Log.d("this is:", interest);
 		sendPostRequest(interest);
 	}
 	private void sendPostRequest(final String key) {
@@ -221,22 +204,17 @@ public class EventsListActivity extends MenuActivity{
 			}
 			protected void onPostExecute(String result){
 				if(result != null){
-					Log.d("Result of Query", result);
 					populateListView();
-					Log.d("LOCATION****", "POST-POPULATELISTVIEW");
 					registerClickCallback();
-					Log.d("LOCATION****", "CLICKCALLBACK");
 					return;
 				}
 				else{
-					Log.d("FAILURE", "FAILURE");
 					return;
 				}
 			}
 		}
 		scheduleTask sendPostReqAsyncTask = new scheduleTask();
 		sendPostReqAsyncTask.execute();
-		Log.d("HERE", "AFTER CALL TO EXECUTE");
 		return;
 	}
 
@@ -319,35 +297,20 @@ public class EventsListActivity extends MenuActivity{
 	@Override
 	public void onStart() {
 		super.onStart();
-		// The rest of your onStart() code.
-		EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+		EasyTracker.getInstance(this).activityStart(this);
 	}
 
 	@Override
 	public void onStop() {
 		super.onStop();
-		// The rest of your onStop() code.
-		EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+		EasyTracker.getInstance(this).activityStop(this);
 	}
 
 	public String encodeHTML(String s)
 	{
-		//s = s.replaceAll("%", "%25");
 		s = s.replaceAll(" ", "%20");
 		s = s.replaceAll("!", "%21");
-		//s = s.replaceAll("\"", "%22");
-		//s = s.replaceAll("#", "%23");
-		//s = s.replaceAll("$", "%24");
-		//s = s.replaceAll("&", "%26");
 		s = s.replaceAll("'", "%27");
-		//s = s.replaceAll("(", "%28");
-		//s = s.replaceAll(")", "%29");
-		//s = s.replaceAll("*", "%2A");
-		//s = s.replaceAll("+", "%2B");
-		//s = s.replaceAll(",", "%2C");
-		//s = s.replaceAll("-", "%2D");
-		//s = s.replaceAll(".", "%2E");
-		//s = s.replaceAll("/", "%2F");
 		return s;
 	}
 

@@ -51,10 +51,6 @@ public class ScheduleActivity extends MenuActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
-		//addOnClickListener();
-		//Bundle bundle = getIntent().getExtras();
-		//value = bundle.getString("key");
-		//Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
 		populateEventList();
 	}
 
@@ -133,20 +129,6 @@ public class ScheduleActivity extends MenuActivity {
 
 	}
 
-
-
-	/*private void addOnClickListener() {
-		createBut = (Button) findViewById(R.id.addEvent);
-		createBut.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(ScheduleActivity.this, com.ucevents.schedule.AddEvent.class);
-				startActivity(intent);
-			}
-		});
-
-	}*/
-
 	private void sendPostRequest(String user){
 		class scheduleTask extends AsyncTask<String, Void, String> {
 			protected String doInBackground(String[] args){
@@ -170,27 +152,22 @@ public class ScheduleActivity extends MenuActivity {
 					}
 					result = sb.toString();
 					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-					Log.d("RESULT: ", result);
 					try {
 						json = new JSONObject(result);
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						Log.d("JSONEXCEPTION@87", e.toString());
 						return null;
 					}
 				} catch (ClientProtocolException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("CLIENTPROTOCAL", e1.toString());
 					return null;
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("IOEXCEPTION", e1.toString());
 					return null;
 				}
-				Log.d("JSON RESULT", "JSON NOT NULL");
 				JSONArray listOfEvents = null;
 				try {
 					listOfEvents = json.getJSONArray("events");
@@ -220,11 +197,9 @@ public class ScheduleActivity extends MenuActivity {
 								iconid = R.drawable.social_icon;
 							}
 							else{
-								Log.d("IN ELSE STATEMENT", category);
 								iconid = R.drawable.other_icon;
 							}
 						} catch (JSONException e){
-							Log.d("CAUGHT JSONEXCEPTION", "GETTING CATEGORY CAUSED JSONEXCEPTION");
 							iconid = R.drawable.other_icon;
 						}
 						JSONArray json_attendees = event.getJSONArray("attendees");
@@ -239,86 +214,33 @@ public class ScheduleActivity extends MenuActivity {
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					Log.d("EXCEPTION", e.toString());
 					return null;
 				}
 				return "SUCCESS";
 			}
 			protected void onPostExecute(String result){
 				if(result != null){
-					Log.d("Result of Query", result);
 					Collections.sort(schList);
 					populateListView();
-					Log.d("LOCATION****", "POST-POPULATELISTVIEW");
 					registerClickCallback();
-					Log.d("LOCATION****", "CLICKCALLBACK");
 					return;
 				}
 				else{
-					Log.d("FAILURE", "FAILURE");
 					return;
 				}
 			}
 		}
 		scheduleTask sendPostReqAsyncTask = new scheduleTask();
 		sendPostReqAsyncTask.execute(user);
-		Log.d("HERE", "AFTER CALL TO EXECUTE");
 		return;
 	}
 
 	public String encodeHTML(String s)
 	{
-		//s = s.replaceAll("%", "%25");
 		s = s.replaceAll(" ", "%20");
 		s = s.replaceAll("!", "%21");
-		//s = s.replaceAll("\"", "%22");
-		//s = s.replaceAll("#", "%23");
-		//s = s.replaceAll("$", "%24");
-		//s = s.replaceAll("&", "%26");
 		s = s.replaceAll("'", "%27");
-		//s = s.replaceAll("(", "%28");
-		//s = s.replaceAll(")", "%29");
-		//s = s.replaceAll("*", "%2A");
-		//s = s.replaceAll("+", "%2B");
-		//s = s.replaceAll(",", "%2C");
-		//s = s.replaceAll("-", "%2D");
-		//s = s.replaceAll(".", "%2E");
-		//s = s.replaceAll("/", "%2F");
 		return s;
-	}
-	
-	public String monthString(int month){
-		String ret; 
-		   switch (month) {
-           case 1:  ret = "Jan";
-                    break;
-           case 2:  ret = "Feb";
-                    break;
-           case 3:  ret = "Mar";
-                    break;
-           case 4:  ret = "Apr";
-                    break;
-           case 5:  ret = "May";
-                    break;
-           case 6:  ret = "Jun";
-                    break;
-           case 7: 	ret = "Jul";
-                    break;
-           case 8:  ret = "Aug";
-                    break;
-           case 9:  ret = "Sep";
-                    break;
-           case 10: ret = "Oct";
-                    break;
-           case 11: ret = "Nov";
-                    break;
-           case 12: ret = "Dec";
-                    break;
-           default: ret = "Invalid month";
-                    break;
-       }
-			
-		return ret; 
 	}
 
 }
