@@ -12,29 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor ="@color/WHITE"
-        android:background="@drawable/light2"
+        android:background="@drawable/dark"
         android:layout_weight="1"
         android:textSize="40dp"
         android:text="My Schedule" />
      
-    <Button
-        android:id="@+id/addEvent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
-        android:background="@drawable/medium2"
-        android:layout_weight="1"
-        android:textSize="40dp"
-        android:text="Add an Event" />
+
     
     <Button
         android:id="@+id/hostEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/dark"
+        android:background="@drawable/medium2"
         android:textColor ="@color/WHITE"
         android:textSize="40dp"
         android:layout_weight="1"
         android:text="Events Hosted" />
+    
+        <Button
+        android:id="@+id/addEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor ="@color/WHITE"
+        android:background="@drawable/light2"
+        android:layout_weight="1"
+        android:textSize="40dp"
+        android:text="Add an Event" />
 
 </LinearLayout>

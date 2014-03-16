@@ -11,24 +11,25 @@
             android:id="@+id/selection_profile_pic"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:paddingLeft="50dp"
+            android:paddingLeft="30dp"
             android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             facebook:preset_size="large" />
 	<TextView
 	    android:id="@+id/nameText"
 	    android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginTop="30dp"
-        android:paddingLeft="20dp"
+        android:paddingLeft="10dp"
          android:textSize="20dp"
         android:layout_toRightOf="@id/selection_profile_pic"
         android:text="Name: "
-        android:textColor="#454647"/>
+        android:textColor="@color/yellow2"/>
     <TextView
         android:id="@+id/f_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
+        android:paddingLeft="20dp"
          android:textSize="20dp"
         android:layout_toRightOf="@id/selection_profile_pic"
         android:layout_below="@id/nameText"
@@ -40,32 +41,36 @@
 	    android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:paddingTop="20dp"
-        android:paddingLeft="20dp"
+        android:paddingLeft="10dp"
          android:textSize="20dp"
 		android:layout_below="@id/f_name"
         android:layout_toRightOf="@id/selection_profile_pic"
         android:text="Email:  "
-        android:textColor="#454647"/> 
-    
-
-   
+        android:textColor="@color/yellow2"/> 
 
       <TextView
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
+        android:paddingLeft="20dp"
         android:layout_below="@id/emailText"
         android:layout_toRightOf="@id/selection_profile_pic"
          android:textSize="20dp"
         android:text="Email" 
         android:textColor ="@color/WHITE"/>  
+
+<View
+    android:id="@+id/views"
+	android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#cccccc"
+    android:layout_below="@id/selection_profile_pic"
+    android:paddingRight="10dp" />
         
     <RelativeLayout
         android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/selection_profile_pic"
-    android:background="@drawable/border2"
+    android:layout_below="@id/views"
     android:orientation="vertical"
     android:id='@+id/box' >
     
@@ -74,15 +79,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
-        android:paddingLeft="50dp"
+        android:paddingLeft="30dp"
         android:paddingBottom="10dp"
         android:text="Interest" 
         android:textSize="20dp"
-        android:textColor ="#454647"/>
+        android:textColor ="@color/yellow2"/>
         
  	<CheckBox
         android:id="@+id/career"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/interest"
@@ -91,7 +96,7 @@
         android:textColor ="@color/WHITE"  />
     <CheckBox
         android:id="@+id/food"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/career"
@@ -100,7 +105,7 @@
         android:textColor ="@color/WHITE" />
    <CheckBox
         android:id="@+id/organization"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/food"
@@ -110,7 +115,7 @@
    
 	<CheckBox
         android:id="@+id/social"
-        android:layout_marginLeft="70dp"
+        android:layout_marginLeft="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/career"
@@ -144,13 +149,13 @@
     
      <CheckBox
         android:id="@+id/other"
-        android:layout_marginLeft="50dp"
+        android:layout_alignLeft="@id/organization"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/organization"
         android:text="Other" 
          android:textSize="20dp"
-        android:padding="20dp"
+        android:paddingBottom="20dp"
         android:textColor ="@color/WHITE"/>
     
     </RelativeLayout>
