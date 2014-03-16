@@ -10,27 +10,32 @@
         android:gravity="center"
         android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/ivIconID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/food" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/ivIconID"
-            android:paddingBottom="20dp"
-            android:paddingLeft="25dp"
-            android:paddingTop="25dp"
-            android:text="Name: "
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/WHITE"
-            android:textSize="25dp" />
+            <ImageView
+                android:id="@+id/ivIconID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/food" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ivIconID"
+                android:paddingBottom="20dp"
+                android:paddingLeft="25dp"
+                android:paddingTop="25dp"
+                android:text="Name: "
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/WHITE"
+                android:textSize="25dp" />
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/location"
@@ -111,8 +116,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Organization"
-                        android:textSize="20dp"
-                        android:textColor="@color/WHITE" />
+                        android:textColor="@color/WHITE"
+                        android:textSize="20dp" />
 
                     <CheckBox
                         android:id="@+id/other_event"

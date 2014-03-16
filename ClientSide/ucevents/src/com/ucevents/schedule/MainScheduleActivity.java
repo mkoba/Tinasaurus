@@ -31,9 +31,7 @@ public class MainScheduleActivity extends MenuActivity{
 		bAddEvent.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				//view= inflater.inflate(R.layout.activity_allevents, container, false);
 				Intent intent = new Intent(MainScheduleActivity.this, com.ucevents.schedule.AddEvent.class);
-				//intent.putExtra("key", "all");
 				startActivity(intent);
 			}
 		});
@@ -42,7 +40,6 @@ public class MainScheduleActivity extends MenuActivity{
 		bSchedule.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				//view= inflater.inflate(R.layout.activity_allevents, container, false);
 				Intent intent = new Intent(MainScheduleActivity.this, com.ucevents.schedule.ScheduleActivity.class);
 				intent.putExtra("key", "all");
 				startActivity(intent);
@@ -54,7 +51,6 @@ public class MainScheduleActivity extends MenuActivity{
 		bHost.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				//view= inflater.inflate(R.layout.activity_allevents, container, false);
 				Intent intent = new Intent(MainScheduleActivity.this, com.ucevents.schedule.EventsHostActivity.class);
 				intent.putExtra("key", "host");
 				startActivity(intent);
@@ -68,16 +64,14 @@ public class MainScheduleActivity extends MenuActivity{
 	  @Override
 	  public void onStart() {
 	    super.onStart();
-	    // The rest of your onStart() code.
-	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStart(this);
 
 	  }
 
 	  @Override
 	  public void onStop() {
 	    super.onStop();
-	    // The rest of your onStop() code.
-	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	    EasyTracker.getInstance(this).activityStop(this);
 	}
 
 }

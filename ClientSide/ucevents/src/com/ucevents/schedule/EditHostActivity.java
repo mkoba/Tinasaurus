@@ -73,8 +73,6 @@ public class EditHostActivity extends MenuActivity {
 	private DatePicker eventDate;
 	private EditText eventDescription;
 
-	//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
-   // int month, int day, int year, String description, String name, String ucsd_email)
 	String location;
 	int hour;
 	int minute;
@@ -102,24 +100,15 @@ public class EditHostActivity extends MenuActivity {
 		
 		Bundle b = this.getIntent().getExtras();
 		Events e = b.getParcelable("chosenEvent");
-
-		
-
 		
 		try{
-			Log.d("name is...", e.getName());
 			eventName.setText(e.getName());
-			
-			Log.d("display", e.getTimeDisplay());
-			
-			Log.d("get hours is", ""+e.getHour());
-			Log.d("get minutes is", ""+e.getMinutes());
 			eventTime.setCurrentHour(e.getHour());
 			eventTime.setCurrentMinute(e.getMinutes());
-			
+			ivIconID = (ImageView) findViewById(R.id.ivIconID);
+			ivIconID.setImageResource(e.getIconid());
+
 			eventDate.updateDate(e.getYear(), e.getMonth(), e.getDate());
-			//Log.d("location is", (e.getLocation()));
-			//Log.d("description is", (e.getDescription()));
 			eventLocation.setText(e.getLocation());
 			eventDescription.setText(e.getDescription());
 			dbInterests = e.getCategories();	
@@ -132,12 +121,9 @@ public class EditHostActivity extends MenuActivity {
 		addListenerOnButton();
 	}
 
-	//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
-    //int month, int day, int year, String description, String name, String ucsd_email)
 	private void sendPostRequest(String location, String hour, String minute, String interests, String pm, String month, String day, String year, String description, String name, String ucsd_email) {
 		class scheduleTask extends AsyncTask<String, Void, String>{
 			protected String doInBackground(String[] args){
-				Log.d("HOUR3", "" + args[2]);
 				//Parsing the continuous string of interests
 				String delims = "[+]";
 				String[] tokens = args[5].split(delims);
@@ -148,23 +134,6 @@ public class EditHostActivity extends MenuActivity {
 					String tempStr = "&interests=" + tokens[i];
 					interestUrl += tempStr;
 				}
-				Log.d("TITLEinSendPost", "" + args[0]);
-				Log.d("LOCATIONinSendPost", "" + args[1]);
-				Log.d("HOURinSendPost", "" + args[2]);
-				Log.d("MINUTEinSendPost", "" + args[3]);
-				Log.d("PMinSendPost", "" + args[4]);
-				Log.d("INTERESTinSendPost", "" + interestUrl);
-				Log.d("MONTHinSendPost", "" + args[6]);
-				Log.d("DAYinSendPost", "" + args[7]);
-				Log.d("YEARinSendPost", "" + args[8]);
-				Log.d("DESCRIPTIONinSendPost", "" + args[9]);
-				Log.d("HOSTinSendPost", "" + args[10]);
-				//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
-			    //int month, int day, int year, String description, String name, String ucsd_email)
-				Log.d("URLinSendPost", "http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/updateQuery.jsp?method=updateEvents&location="
-						+encodeHTML(args[1])+"&hour="+encodeHTML(args[2])+"&min="+encodeHTML(args[3])+interestUrl+"&pm="+encodeHTML(args[4])+						
-						"&month="+encodeHTML(args[6])+"&day="+encodeHTML(args[7])+"&year="+encodeHTML(args[8])+"&description="+encodeHTML(args[9])+
-						"&name="+encodeHTML(args[0])+"&ucsd_email="+encodeHTML(args[10]));
 				String postURL = "http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/updateQuery.jsp?method=updateEvents&location="
 						+encodeHTML(args[1])+"&hour="+encodeHTML(args[2])+"&min="+encodeHTML(args[3])+interestUrl+"&pm="+encodeHTML(args[4])+						
 						"&month="+encodeHTML(args[6])+"&day="+encodeHTML(args[7])+"&year="+encodeHTML(args[8])+"&description="+encodeHTML(args[9])+
@@ -185,69 +154,47 @@ public class EditHostActivity extends MenuActivity {
 					}
 					result = sb.toString();
 					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-					Log.d("RESULT IN HTML", "RESULT");
 					if (result.contains("Success")){
 						return "SUCCESS";
 					}
 				} catch (ClientProtocolException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("CLIENTPROTOCAL", e1.toString());
 					return null;
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("IOEXCEPTION", e1.toString());
 					return null;
 				}
-				Log.d("da...","moooo");
 				return "FAILED";
 				
 			}
 			protected void onPostExecute(String result){
 				if(result != null){
-					Log.d("RESULT*************", "" + result);
+					Toast.makeText(getApplicationContext(), "Event Updated!",
+							Toast.LENGTH_LONG).show();
 					Intent i= new Intent(EditHostActivity.this, com.ucevents.schedule.EventsHostActivity.class);
 					startActivity(i);
 					return;
 				}
 				else{
-					Log.d("FAILURE", "FAILURE");
+					Toast.makeText(getApplicationContext(), "Unable to Update Event. Please try again Later.",
+							Toast.LENGTH_LONG).show();
 					return;
 				}
 			}
 		}
 		scheduleTask sendPostReqAsyncTask = new scheduleTask();
 	    sendPostReqAsyncTask.execute(name, location, hour, minute, "false", interests, month, day, year, description, host);
-	    Log.d("HERE", "AFTER CALL TO EXECUTE");
 	    return;
 	}
 	public String encodeHTML(String s)
 	{
-		//s = s.replaceAll("%", "%25");
 		s = s.replaceAll(" ", "%20");
 		s = s.replaceAll("!", "%21");
-		//s = s.replaceAll("\"", "%22");
-		//s = s.replaceAll("#", "%23");
-		//s = s.replaceAll("$", "%24");
-		//s = s.replaceAll("&", "%26");
 		s = s.replaceAll("'", "%27");
-		//s = s.replaceAll("(", "%28");
-		//s = s.replaceAll(")", "%29");
-		//s = s.replaceAll("*", "%2A");
-		//s = s.replaceAll("+", "%2B");
-		//s = s.replaceAll(",", "%2C");
-		//s = s.replaceAll("-", "%2D");
-		//s = s.replaceAll(".", "%2E");
-		//s = s.replaceAll("/", "%2F");
 		return s;
 	}
 
 	public void updateEventInfo() {
-		/* DB: populate interest list here 
-		 *  to dbInterests
-		 */
-		// temp values  (hard-coded)
 		for( int i = 0; i < dbInterests.size(); i++) {
 			if(dbInterests.get(i).equals("career")) {
 				cbCareer = (CheckBox) findViewById(R.id.career_event);
@@ -282,60 +229,37 @@ public class EditHostActivity extends MenuActivity {
 	}
 	
 	private void getInput(){
-		System.out.println("SUP DOG");
-		System.out.println("SUP DOG");
-		System.out.println("SUP DOG");
-		System.out.println("SUP DOG");
-		System.out.println("SUP DOG");
-
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		host = appState.getUserId();
 		name = host + "_" + (eventName.getText().toString());
-		Log.d("eventName",eventName.getText().toString());
 		location = ((EditText)findViewById(R.id.location)).getText().toString();
 		description = ((EditText)findViewById(R.id.description)).getText().toString();
 		minute = ((TimePicker)findViewById(R.id.eventTime)).getCurrentMinute();
 		hour = ((TimePicker)findViewById(R.id.eventTime)).getCurrentHour();
-		Log.d("HOUR", "" + hour);
 		month = ((DatePicker)findViewById(R.id.datePicker1)).getMonth();
 		day = ((DatePicker)findViewById(R.id.datePicker1)).getDayOfMonth();
 		year = ((DatePicker)findViewById(R.id.datePicker1)).getYear();
 		categories = new ArrayList<String>();
 
-
 		if (((CheckBox)findViewById(R.id.career_event)).isChecked()){
-			System.out.println("career");
-
 			categories.add("career");
 		}
 		if (((CheckBox)findViewById(R.id.food_event)).isChecked()){
-			System.out.println("food");
-
 			categories.add("food");
 		}
 		if (((CheckBox)findViewById(R.id.organization_event)).isChecked()){
-			System.out.println("org");
-
 			categories.add("organization");
 		}
 		if (((CheckBox)findViewById(R.id.sport_event)).isChecked()){
-			System.out.println("sport");
-
 			categories.add("sports");
 		}	
 		if (((CheckBox)findViewById(R.id.study_event)).isChecked()){
-			System.out.println("study");
-
 			categories.add("study");
 		}
 		if (((CheckBox)findViewById(R.id.other_event)).isChecked()){
-			System.out.println("other");
-
 			categories.add("other");
 		}
 		if (((CheckBox)findViewById(R.id.social_event)).isChecked()){
-			System.out.println("social");
-
 			categories.add("social");
 		}
 
@@ -343,11 +267,8 @@ public class EditHostActivity extends MenuActivity {
 
 		//Combining each category into a single string
 		if(categories.size() == 0) {
-			Log.d("yo dog", "it went to the right place");
 			Toast.makeText(getApplicationContext(), "Please select at least one interest" ,
 					Toast.LENGTH_LONG).show();
-			Log.d("yo dog", "it went to the right place");
-
 		}
 		else{
 			//Combining each category into a single string
@@ -356,14 +277,10 @@ public class EditHostActivity extends MenuActivity {
 			String tempStr = "+" + categories.get(i);
 				concatString += tempStr;
 			}
-			Log.d("concatString", "" + concatString);
 		}
-		//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
-		//int month, int day, int year, String description, String name, String ucsd_email)
 		Boolean pm = false;
 		pm = false;
 
-		
 		sendPostRequest(location, Integer.toString(hour), Integer.toString(minute), concatString, pm.toString(), Integer.toString(month), Integer.toString(day), Integer.toString(year), description, name, host);
 	}
 
@@ -374,33 +291,20 @@ public class EditHostActivity extends MenuActivity {
 			 
 			//@Override
 			public void onClick(View arg0) {
-					Log.d("get", "in here");
 				try{
 					getInput();
 				}
 				catch(NullPointerException e){
 					e.printStackTrace();
 				}
-				System.out.println("prob here?");
 				//grab list of interest to add to db
 			   	 for(int i = 0; i < interests.size(); i++) {
 					 if(!interests.get(i).equals("false")) {
-						 System.out.println("interests: " + interests.get(i));
 						 interestsFinal.add(interests.get(i));
 					 }
 				 }
-					System.out.println("hope not");
-
-			   	/****
-			   	  * DB: grab the data you need here and insert into db
-			   	  * to update profile info
-			   	  *  email, interestsFinal  
-			   	  */
-			   	System.out.println("sup sup sup");
 				Intent i= new Intent(EditHostActivity.this, EventsHostActivity.class);
-				System.out.print("plz no go");
 				Bundle b = new Bundle();
-				System.out.println("here??? perhaps");
 				//startActivity(i);
 				}
 			});

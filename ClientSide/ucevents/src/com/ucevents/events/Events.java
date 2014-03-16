@@ -179,7 +179,6 @@ public class Events implements Comparable<Events>, Parcelable {
 	
 	@Override
 	public int compareTo(Events another) {
-		// TODO Auto-generated method stub
 		if (((Events) another).getYear() > this.getYear()){
 			return -1;
 		}

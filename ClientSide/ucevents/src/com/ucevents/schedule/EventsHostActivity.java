@@ -51,9 +51,6 @@ public class EventsHostActivity extends MenuActivity{
 	private List<Events> eventList = new ArrayList<Events>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//   Log.d("woathereboy", "EventsListActivity"); 
-
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_allevents);
 		Bundle bundle = getIntent().getExtras();
@@ -66,7 +63,6 @@ public class EventsHostActivity extends MenuActivity{
 
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		userid = appState.getUserId();
-		
 
 		populateEventList();
 		
@@ -78,7 +74,6 @@ public class EventsHostActivity extends MenuActivity{
 	// this will be later populated from db
 	private void populateEventList() {
 		sendPostRequest();
-		Log.d("SIZEOF eventList", "" + eventList.size());
 	}
 
 
@@ -108,27 +103,22 @@ public class EventsHostActivity extends MenuActivity{
 
 					result = sb.toString();
 					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-					Log.d("RESULT: ", result);
 
 					try{
 						json = new JSONObject(result);
 					}catch(JSONException e){
 						e.printStackTrace();
-						Log.d("JSONEXCEPTION line 113", e.toString());
 						return null;
 					}
 				}catch (ClientProtocolException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("CLIENTPROTOCOL", e1.toString());
 					return null;
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("IOEXCEPTION", e1.toString());
 					return null;
 				}
-				Log.d("JSON RESULT", "JSON NOT NULL");
 
 				JSONArray listOfEvents = null;
 				try{
@@ -184,29 +174,23 @@ public class EventsHostActivity extends MenuActivity{
 				}catch(JSONException e){
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					Log.d("EXCEPTION", e.toString());
 					return null;
 				}
 				return "SUCCESS";
 			}
 			protected void onPostExecute(String result){
 				if(result != null){
-					Log.d("Result of Query", result);
 					populateListView();
-					Log.d("LOCATION****", "POST-POPULATELISTVIEW");
 					registerClickCallback();
-					Log.d("LOCATION****", "CLICKCALLBACK");
 					return;
 				}
 				else{
-					Log.d("FAILURE", "FAILURE");
 					return;
 				}
 			}
 		}
 		scheduleTask sendPostReqAsyncTask = new scheduleTask();
 		sendPostReqAsyncTask.execute();
-		Log.d("HERE", "AFTER CALL TO EXECUTE");
 		return;
 	}
 
@@ -303,22 +287,9 @@ public class EventsHostActivity extends MenuActivity{
 
 	public String encodeHTML(String s)
 	{
-		//s = s.replaceAll("%", "%25");
 		s = s.replaceAll(" ", "%20");
 		s = s.replaceAll("!", "%21");
-		//s = s.replaceAll("\"", "%22");
-		//s = s.replaceAll("#", "%23");
-		//s = s.replaceAll("$", "%24");
-		//s = s.replaceAll("&", "%26");
 		s = s.replaceAll("'", "%27");
-		//s = s.replaceAll("(", "%28");
-		//s = s.replaceAll(")", "%29");
-		//s = s.replaceAll("*", "%2A");
-		//s = s.replaceAll("+", "%2B");
-		//s = s.replaceAll(",", "%2C");
-		//s = s.replaceAll("-", "%2D");
-		//s = s.replaceAll(".", "%2E");
-		//s = s.replaceAll("/", "%2F");
 		return s;
 	}
 
