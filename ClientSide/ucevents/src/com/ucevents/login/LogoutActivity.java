@@ -1,5 +1,6 @@
-package com.android.ucevents;
+package com.ucevents.login;
 
+import com.android.ucevents.R;
 import com.facebook.Session;
 import com.ucevents.events.CategoryEventsActivity;
 import com.ucevents.menu.MenuActivity;

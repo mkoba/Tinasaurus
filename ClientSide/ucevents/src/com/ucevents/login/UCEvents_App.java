@@ -1,4 +1,4 @@
-package com.android.ucevents;
+package com.ucevents.login;
 
 import android.app.Application;
 

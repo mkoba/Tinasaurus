@@ -1,4 +1,4 @@
-package com.android.ucevents;
+package com.ucevents.login;
 
 import com.google.analytics.tracking.android.*;
 import com.ucevents.signup.signupActivity;
@@ -42,7 +42,9 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphObject;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import com.android.ucevents.R;
 import com.crashlytics.android.Crashlytics;
+
 
 
 import android.widget.TextView;
