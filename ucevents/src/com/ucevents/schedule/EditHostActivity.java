@@ -1,9 +1,28 @@
 package com.ucevents.schedule;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,12 +35,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.ucevents.R;
 import com.android.ucevents.UCEvents_App;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.ucevents.events.Events;
 import com.ucevents.menu.MenuActivity;
 import com.ucevents.signup.signupActivity;
 
@@ -40,25 +63,195 @@ public class EditHostActivity extends MenuActivity {
 	private CheckBox cbStudy;
 	private CheckBox cbOther;
 	
+	private TextView eventName;
+	private TimePicker eventTime;
+	private TextView eventLocation;
+	private DatePicker eventDate;
+	private TextView eventDescription;
+
+	//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
+   // int month, int day, int year, String description, String name, String ucsd_email)
+	String location;
+	int hour;
+	int minute;
+	boolean pm;
+	int month;
+	int day;
+	int year;
+	String description;
+	String name;
+	String ucsd_email;
+	String host;
+	
+	List<String> categories;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hostedit);
-		/*UCEvents_App appState = ((UCEvents_App)getApplicationContext());
-		email = appState.getUserId();
-	   	//initialize interests array
-	   	for(int i = 0; i < 7; i++) {
-	   		 interests.add("false");
-	   	}
-	   	// grab user info from db
-		updateUserInfo();
+
+		eventName = (EditText) findViewById(R.id.event_name);	
+		eventTime = (TimePicker) findViewById(R.id.eventTime);
+		eventDate = (DatePicker) findViewById(R.id.datePicker1);
+		eventLocation = (EditText) findViewById(R.id.location);
+		eventDescription = (EditText) findViewById(R.id.description);
 		
-		// grab new/modified interests
-		grabInterests();*/
+		Bundle b = this.getIntent().getExtras();
+		Events e = b.getParcelable("chosenEvent");
 		
-		// done button
-		//addListenerOnButton();
+		
+
+		
+		try{
+			Log.d("name is...", e.getName());
+			eventName.setText(e.getName());
+			
+			Log.d("display", e.getTimeDisplay());
+			
+			Log.d("get hours is", ""+e.getHour());
+			Log.d("get minutes is", ""+e.getMinutes());
+			eventTime.setCurrentHour(e.getHour());
+			eventTime.setCurrentMinute(e.getMinutes());
+			
+			eventDate.updateDate(e.getYear(), e.getMonth(), e.getDate());
+			//Log.d("location is", (e.getLocation()));
+			//Log.d("description is", (e.getDescription()));
+			eventLocation.setText(e.getLocation());
+			eventDescription.setText(e.getDescription());
+						
+		}
+		catch(NullPointerException e2){
+			e2.printStackTrace();
+		}
+				
 	}
+/*
+	//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
+    //int month, int day, int year, String description, String name, String ucsd_email)
+	private void sendPostRequest(String location, String hour, String minute, String interests, String pm, String month, String day, String year, String description, String name, String ucsd_email) {
+		class scheduleTask extends AsyncTask<String, Void, String>{
+			protected String doInBackground(String[] args){
+				JSONObject json = null;
+				HttpClient client = new DefaultHttpClient();
+				HttpGet get;
+					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/updateQuery.jsp?method=updateEvents&param="+encodeHTML(key)+"&user="+encodeHTML(userid));
+		
+				List<NameValuePair> pairs = new ArrayList<NameValuePair>(); // to store what we get
+
+				HttpResponse response;
+				try{
+					response = client.execute(get);
+					HttpEntity entity = response.getEntity();
+					InputStream is = entity.getContent();
+					String result = null;
+					BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+					StringBuilder sb = new StringBuilder();
+					String line = null;
+					while((line = reader.readLine()) != null){
+						sb.append(line);
+					}
+
+					result = sb.toString();
+					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
+					Log.d("RESULT: ", result);
+
+					try{
+						json = new JSONObject(result);
+					}catch(JSONException e){
+						e.printStackTrace();
+						Log.d("JSONEXCEPTION line 113", e.toString());
+						return null;
+					}
+				}catch (ClientProtocolException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("CLIENTPROTOCOL", e1.toString());
+					return null;
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					Log.d("IOEXCEPTION", e1.toString());
+					return null;
+				}
+				Log.d("JSON RESULT", "JSON NOT NULL");
+
+				JSONArray listOfEvents = null;
+				try{
+					listOfEvents = json.getJSONArray("events");
+					for(int i = 0; i < listOfEvents.length(); i++){
+						JSONObject event = listOfEvents.getJSONObject(i);
+						int iconid = 0;
+						JSONArray categories = new JSONArray();
+						try{
+							categories = event.getJSONArray("category");
+							String category = categories.getString(0);
+							if (category.equals("study")){
+								iconid = R.drawable.study_icon;
+							}
+							else if (category.equals("food")){
+								iconid = R.drawable.food_icon;
+							}
+							else if (category.equals("career")){
+								iconid = R.drawable.career_icon;
+							}
+							else if (category.equals("organization")){
+								iconid = R.drawable.club_icon;
+							}
+							else if (category.equals("sports")){
+								iconid = R.drawable.sport_icon;
+							}
+							else if (category.equals("social")){
+								iconid = R.drawable.social_icon;
+							}
+							else{
+								iconid = R.drawable.other_icon;
+							}
+						} catch(JSONException e){
+							
+							iconid = R.drawable.other_icon;
+						}
+						JSONArray json_attendees = event.getJSONArray("attendees");
+						String[] attendees = new String[json_attendees.length()];
+						for (int j = 0; j < json_attendees.length(); j++){
+							attendees[j] = json_attendees.getString(j);
+						}
+						eventList.add(new Events(event.getString("name"), event.getString("name").substring(event.getString("name").indexOf("_") + 1),
+								event.getInt("hour")*100+event.getInt("min"), event.getString("location"),event.getInt("month"),event.getInt("date"),
+								event.getInt("year"), event.getString("description"), event.getString("host"), iconid, attendees, event.getBoolean("attending")));
+					}
+					Collections.sort(eventList);
+				}catch(JSONException e){
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					Log.d("EXCEPTION", e.toString());
+					return null;
+				}
+				return "SUCCESS";
+			}
+			protected void onPostExecute(String result){
+				if(result != null){
+					Log.d("Result of Query", result);
+					populateListView();
+					Log.d("LOCATION****", "POST-POPULATELISTVIEW");
+					registerClickCallback();
+					Log.d("LOCATION****", "CLICKCALLBACK");
+					return;
+				}
+				else{
+					Log.d("FAILURE", "FAILURE");
+					return;
+				}
+			}
+		}
+		scheduleTask sendPostReqAsyncTask = new scheduleTask();
+		sendPostReqAsyncTask.execute();
+		Log.d("HERE", "AFTER CALL TO EXECUTE");
+		return;
+	}
+*/	
+	/* 		public void updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
+			                     int month, int day, int year, String description, String name, String ucsd_email) 
+			                     */
 	
 	public void updateUserInfo() {
 		/* DB: populate interest list here 
@@ -203,13 +396,75 @@ public class EditHostActivity extends MenuActivity {
 		
 		
 	}
-	
+	private void getInput(){
+		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
+		host = appState.getUserId();
+		name = host + "_" + ((EditText)findViewById(R.id.event_name)).getText().toString();
+		location = ((EditText)findViewById(R.id.location)).getText().toString();
+		description = ((EditText)findViewById(R.id.description)).getText().toString();
+		minute = ((TimePicker)findViewById(R.id.eventTime)).getCurrentMinute();
+		hour = ((TimePicker)findViewById(R.id.eventTime)).getCurrentHour();
+		Log.d("HOUR", "" + hour);
+		//TODO: remove pm as parameter for DB_Access methods. Apparently hour is in 24hr format
+		pm = false;
+		month = ((DatePicker)findViewById(R.id.datePicker1)).getMonth();
+		day = ((DatePicker)findViewById(R.id.datePicker1)).getDayOfMonth();
+		year = ((DatePicker)findViewById(R.id.datePicker1)).getYear();
+		categories = new ArrayList<String>();
+		if (((CheckBox)findViewById(R.id.career_event)).isChecked()){
+			categories.add("career");
+		}
+		if (((CheckBox)findViewById(R.id.food_event)).isChecked()){
+			categories.add("food");
+		}
+		if (((CheckBox)findViewById(R.id.organization_event)).isChecked()){
+			categories.add("organization");
+		}
+		if (((CheckBox)findViewById(R.id.sport_event)).isChecked()){
+			categories.add("sport");
+		}	
+		if (((CheckBox)findViewById(R.id.study_event)).isChecked()){
+			categories.add("study");
+		}
+		if (((CheckBox)findViewById(R.id.other_event)).isChecked()){
+			categories.add("other");
+		}
+		if (((CheckBox)findViewById(R.id.social_event)).isChecked()){
+			categories.add("social");
+		}
+		
+		//Combining each category into a single string
+		String concatString = "";
+		concatString += categories.get(0);
+		for(int i = 1; i < categories.size(); i++) {
+		String tempStr = "+" + categories.get(i);
+			concatString += tempStr;
+		}
+		Log.d("concatString", "" + concatString);
+		//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
+   //     int month, int day, int year, String description, String name, String ucsd_email)
+		Boolean pm = false;
+		Log.d("hour is...", ""+hour);
+		Log.d("hour is...", ""+hour);
+		Log.d("hour is...", ""+hour);
+		Log.d("hour is...", ""+hour);
+		Log.d("hour is...", ""+hour);
+
+		//sendPostRequest(location, Integer.toString(hour), Integer.toString(minute), "false", concatString, pm.toString(), Integer.toString(month), Integer.toString(day), Integer.toString(year), description, name, host);
+	}
 	public void addListenerOnButton() {
 		pDone = (Button) findViewById(R.id.done);
 		pDone.setOnClickListener(new OnClickListener() {
 			 
 			//@Override
 			public void onClick(View arg0) {
+				Log.d("umm", "this is a click");
+				Log.d("umm", "this is a click");
+				Log.d("umm", "this is a click");
+				Log.d("umm", "this is a click");
+				Log.d("umm", "this is a click");
+
+				getInput();
 				//grab list of interest to add to db
 			   	 for(int i = 0; i < interests.size(); i++) {
 					 if(!interests.get(i).equals("false")) {
@@ -248,6 +503,8 @@ public class EditHostActivity extends MenuActivity {
 	    // The rest of your onStop() code.
 	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	}
+	  
+	  
 
 
 }
