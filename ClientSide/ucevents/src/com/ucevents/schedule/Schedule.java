@@ -72,6 +72,9 @@ public class Schedule implements Comparable<Schedule>, Parcelable{
 		if (min == 0){
 			timeDisp += "00 ";
 		}
+		else if (min/10 == 0){
+			timeDisp += "0" + min;
+		}
 		else{
 			timeDisp += min + " ";
 		}

@@ -92,7 +92,7 @@ public class AddEvent extends MenuActivity{
 			categories.add("organization");
 		}
 		if (((CheckBox)findViewById(R.id.sport_event)).isChecked()){
-			categories.add("sport");
+			categories.add("sports");
 		}	
 		if (((CheckBox)findViewById(R.id.study_event)).isChecked()){
 			categories.add("study");

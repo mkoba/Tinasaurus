@@ -321,7 +321,7 @@ public class EditHostActivity extends MenuActivity {
 		if (((CheckBox)findViewById(R.id.sport_event)).isChecked()){
 			System.out.println("sport");
 
-			categories.add("sport");
+			categories.add("sports");
 		}	
 		if (((CheckBox)findViewById(R.id.study_event)).isChecked()){
 			System.out.println("study");
