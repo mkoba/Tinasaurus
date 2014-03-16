@@ -78,7 +78,7 @@ public class MenuActivity extends Activity{
 	}
 	
 	private void clickedLogout() {
-		Intent intent = new Intent(MenuActivity.this, com.android.ucevents.LogoutActivity.class);
+		Intent intent = new Intent(MenuActivity.this, com.ucevents.login.LogoutActivity.class);
 		startActivity(intent);
 	}
 	

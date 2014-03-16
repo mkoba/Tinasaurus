@@ -15,10 +15,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.android.ucevents.R;
-import com.android.ucevents.UCEvents_App;
 import com.android.ucevents.R.layout;
 import com.facebook.widget.ProfilePictureView;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.ucevents.login.UCEvents_App;
 import com.ucevents.menu.LogoutMenuActivity;
 
 import android.app.Activity;

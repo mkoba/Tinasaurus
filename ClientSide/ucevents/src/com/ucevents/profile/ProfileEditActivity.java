@@ -20,8 +20,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.ucevents.R;
-import com.android.ucevents.UCEvents_App;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.ucevents.login.UCEvents_App;
 import com.ucevents.menu.MenuActivity;
 import com.ucevents.signup.signupActivity;
 

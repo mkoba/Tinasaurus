@@ -20,8 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.ucevents.R;
-import com.android.ucevents.UCEvents_App;
 import com.ucevents.events.Events;
+import com.ucevents.login.UCEvents_App;
 import com.ucevents.menu.MenuActivity;
 import com.google.analytics.tracking.android.EasyTracker;
 
