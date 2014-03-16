@@ -12,6 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor ="@color/WHITE"
+        android:background="@drawable/light2"
+        android:textSize="40dp"
+        android:layout_weight="1"
         android:text="@string/allEvents" />
 
     <Button
@@ -19,6 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor ="@color/WHITE"
+        android:background="@drawable/medium2"
+        android:layout_weight="1"
+        android:textSize="40dp"
         android:text="@string/byCategory" />
     
     <Button
@@ -26,15 +32,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor ="@color/WHITE"
+        android:background="@drawable/dark"
+        android:layout_weight="1"
+        android:textSize="40dp"
         android:text="@string/byUserInterest" />
     
-    
-    <FrameLayout
-        android:id="@+id/eventsViewer"
-        android:name="com.ucevents.events.innerEventsFrag"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0"    
-        />
 
 </LinearLayout>
