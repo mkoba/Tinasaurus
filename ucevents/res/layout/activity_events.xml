@@ -1,144 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@drawable/blue_solid">
+    android:background="@drawable/blue_solid"
+    android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/ivIconID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
         android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
         android:src="@drawable/food" />
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/ivIconID"
-        android:layout_marginLeft="20dp"
-		android:text="Name: "
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/ivIconID"
         android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@id/tvTitle"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-    <TextView
-        android:id="@+id/tvLocationText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/tvName"
-        android:layout_marginLeft="20dp"
-        android:text="Locations:" />
-    
-     <TextView
-        android:id="@+id/tvLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_marginLeft="20dp"
-        android:layout_below="@id/tvName"
-        android:layout_toRightOf="@id/tvLocationText"
-        android:text="Locations:" />
-    
+        android:layout_toRightOf="@+id/ivIconID"
+        android:paddingBottom="20dp"
+        android:paddingTop="25dp"
+        android:text="Name: "
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/WHITE"
+        android:textSize="25dp" />
 
-    <TextView
-        android:id="@+id/tvDateText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/dateTimeRSVP"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:layout_below="@id/tvLocation"
-        android:layout_marginLeft="20dp"
-        android:textColor ="@color/WHITE"
-        android:text="Date:" />
-    
-   <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/tvLocation"
-        android:layout_toRightOf="@id/tvDateText"
-        android:layout_marginLeft="20dp"
-        android:text="Date:" />
+        android:layout_below="@+id/ivIconID"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tvTimeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/tvDate"
-        android:layout_marginLeft="20dp"
-        android:text="Time:" />
-    
-    <TextView
-        android:id="@+id/tvTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/tvDate"
-        android:layout_toRightOf="@id/tvTimeText"
-        android:layout_marginLeft="20dp"
-        android:text="Time:" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp" >
 
-    <TextView
-        android:id="@+id/tvDescriptionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/tvTime"
-        android:layout_marginLeft="20dp"
-        android:text="Info:" />
-    
-     <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/tvTime"
-        android:layout_toRightOf="@id/tvDescriptionText"
-        android:layout_marginLeft="20dp"
-        android:text="Info:" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textRSVPCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textColor="@color/WHITE"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="17dp"
+                    android:text="Time"
+                    android:textColor="@color/WHITE"
+                    android:textSize="17dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <CheckBox
+                    android:id="@+id/checkBoxRSVP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RSVP"
+                    android:textColor="@color/yellow2"
+                    android:textSize="17dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tvLocationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:text="Location:"
+                android:textColor="@color/yellow2"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvLocationLabel"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:text="Info:"
+                android:textColor="@color/WHITE"
+                android:textSize="20dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="Description:"
+            android:textColor="@color/yellow2"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:text="Info:"
+            android:textColor="@color/WHITE"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#cccccc"
+            android:paddingRight="10dp" />
+
+        <TextView
+            android:id="@+id/textRSVPCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="RSVP Count:"
+            android:textColor="@color/yellow2"
+            android:textSize="20dp" />
+
+        <ListView
+            android:id="@+id/allAttend"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:dividerHeight="0dp"
+            android:paddingLeft="20dp"
+            android:textSize="17dp" >
+        </ListView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ivIconID"
+        android:layout_centerHorizontal="true"
+        android:background="#cccccc"
         android:paddingLeft="10dp"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/tvDescription"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="RSVP Count:" />
-    
-    <CheckBox
-        android:id="@+id/checkBoxRSVP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
-        android:layout_below="@id/textRSVPCount"
-        android:layout_marginLeft="20dp"
-        android:text="RSVP" />
+        android:paddingRight="10dp" />
 
 </RelativeLayout>

@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textColor ="@color/WHITE"
-        android:text="@string/events"
-         />
+        android:text="@string/events"/>
 
     
 
@@ -24,153 +23,93 @@
         android:paddingTop="20dp"
         android:layout_alignParentTop="true" >
 
- 	    <LinearLayout
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:orientation="vertical" >
-                  
-                  
-    <RelativeLayout 
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" 
-        android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
-                  <ImageButton
+ <LinearLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    
+       
+          <RelativeLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+            android:layout_weight="1">
+      <ImageButton
+          
         android:id="@+id/ibFood"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"  
+        android:layout_marginBottom="10dp"
+ 		android:layout_centerHorizontal = "true"
+        android:src="@drawable/food_cat" />
+      
+      <ImageButton
+        android:id="@+id/ibStudy"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="5dp"
-        android:src="@drawable/food" />
-     
-     <ImageButton
+        android:layout_alignLeft="@+id/ibFood"
+        android:layout_below="@+id/ibFood"
+        android:layout_centerHorizontal = "true"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/study_cat" />
+      
+      <ImageButton
+        android:id="@+id/ibSport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ibStudy"
+        android:layout_below="@+id/ibStudy"
+        android:layout_centerHorizontal = "true"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/sport_cat" />
+      
+      <ImageButton
+        android:id="@+id/ibOther"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ibSport"
+        android:layout_below="@+id/ibSport"
+        android:layout_centerHorizontal = "true"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/other_cat" />
+	</RelativeLayout>
+      
+      
+          
+    <RelativeLayout android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_weight="1">
+      
+    <ImageButton
         android:id="@+id/ibSocial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       
-        android:layout_alignParentRight="true"
-        android:paddingRight="5dp"
-        android:src="@drawable/social" />
+        android:layout_marginBottom="10dp"
+ 		android:layout_centerHorizontal = "true"
+        android:src="@drawable/social_cat" />
+   
+    <ImageButton
+        android:id="@+id/ibCareer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ibSocial"
+        android:layout_below="@+id/ibSocial"
+        android:layout_centerHorizontal = "true"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/career_cat"/>
+    
+    <ImageButton
+        android:id="@+id/ibClub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ibCareer"
+        android:layout_alignRight="@+id/ibCareer"
+        android:layout_centerHorizontal = "true"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/club_cat" />
+   </RelativeLayout>
+</LinearLayout>
 
-         <TextView
-             android:id="@+id/food_txt"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignLeft="@+id/ibFood"
-             android:layout_below="@+id/ibFood"
-             android:paddingLeft="60dp"
-       		 android:textColor ="@color/WHITE"
-             android:text="@string/food" />
 
-         <TextView
-             android:id="@+id/social_txt"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignBaseline="@+id/food_txt"
-             android:layout_alignBottom="@+id/food_txt"
-             android:layout_alignRight="@+id/ibSocial"
-             android:paddingRight="60dp"
-             android:textColor ="@color/WHITE"
-             android:text="@string/social" />
-
-         <ImageButton
-             android:id="@+id/ibCareer"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignRight="@+id/social_txt"
-             android:layout_below="@+id/social_txt"
-             android:paddingRight="5dp"
-             android:src="@drawable/career" />
-
-         <TextView
-             android:id="@+id/career_txt"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignRight="@+id/ibCareer"
-             android:layout_below="@+id/ibCareer"
-             android:paddingRight="60dp"
-             android:textColor ="@color/WHITE"
-             android:text="@string/career" />
-
-         <ImageButton
-             android:id="@+id/ibStudy"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignLeft="@+id/food_txt"
-             android:layout_below="@+id/food_txt"
-             android:paddingLeft="5dp"
-             android:src="@drawable/studying" />
-         
-          <TextView
-             android:id="@+id/study_txt"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignLeft="@+id/ibStudy"
-             android:layout_below="@+id/ibStudy"
-             android:paddingLeft="60dp"
-             android:textColor ="@color/WHITE"
-             android:text="@string/study" />
-
-          <ImageButton
-              android:id="@+id/ibClub"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@+id/career_txt"
-              android:layout_alignRight="@+id/career_txt"
-              android:paddingRight="5dp"
-              android:src="@drawable/club" />
-          
-          <TextView
-             android:id="@+id/club_txt"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignRight="@+id/ibClub"
-             android:layout_below="@+id/ibClub"
-             android:paddingRight="60dp"
-             android:textColor ="@color/WHITE"
-             android:text="@string/club" />
-          
-          <ImageButton
-             android:id="@+id/ibSport"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignLeft="@+id/study_txt"
-             android:layout_below="@+id/study_txt"
-             android:paddingLeft="5dp"
-             android:src="@drawable/sport" />
-          
-          <TextView
-             android:id="@+id/sport_txt"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignLeft="@+id/ibSport"
-             android:layout_below="@+id/ibSport"
-             android:paddingLeft="60dp"
-             android:textColor ="@color/WHITE"
-             android:text="@string/sport" />
-          
-          <ImageButton
-             android:id="@+id/ibOther"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignLeft="@+id/sport_txt"
-             android:layout_below="@+id/sport_txt"
-             android:paddingLeft="5dp"
-             android:src="@drawable/other" />
-          
-          <TextView
-             android:id="@+id/other_txt"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignLeft="@+id/ibOther"
-             android:layout_below="@+id/ibOther"
-             android:paddingLeft="60dp"
-             android:textColor ="@color/WHITE"
-             android:text="@string/other" />
-                  
-          </RelativeLayout>
-         </LinearLayout>
        </ScrollView>
         
 </RelativeLayout>
