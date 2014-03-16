@@ -22,9 +22,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.EventLog.Event;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,16 +50,34 @@ public class IndividualEventsActivity extends MenuActivity {
 	TextView tvRSVPCount;
 	String eventid;
 	String userid;
-
+	Button edit;
+	Events chosenEvent;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_events);
-		Bundle b = this.getIntent().getExtras();
+		tvRSVPCount = (TextView) findViewById(R.id.textRSVPCount);
+		cbRSVP = (CheckBox) findViewById(R.id.checkBoxRSVP);
 
+		Bundle b = this.getIntent().getExtras();
+		edit = (Button) findViewById(R.id.editButton); 
+
+		try{
+			if(b.getString("FROM").equals("HOST")){
+				Log.d("hmm","plz");
+				edit.setVisibility(View.VISIBLE);			
+			}
+		}
+		catch(NullPointerException e){
+			tvRSVPCount.setVisibility(View.VISIBLE);
+			cbRSVP.setVisibility(View.VISIBLE);
+			Log.d("NO BUTTON", "not event toaster");
+			
+		}
 		// grab event clicked from bundle
-		Events chosenEvent = b.getParcelable("chosenEvent");
+		chosenEvent = b.getParcelable("chosenEvent");
 		//Toast.makeText(getApplicationContext(), chosenEvent.getDescription(), Toast.LENGTH_SHORT).show();
 		ivIconID = (ImageView) findViewById(R.id.ivIconID);
 		ivIconID.setImageResource(chosenEvent.getIconid());
@@ -83,10 +103,10 @@ public class IndividualEventsActivity extends MenuActivity {
 
 		userid = ((UCEvents_App)getApplicationContext()).getUserId();
 
-		cbRSVP = (CheckBox) findViewById(R.id.checkBoxRSVP);
 		//update rsvp count w value from db
 
 		//On state change
+		cbRSVP = (CheckBox) findViewById(R.id.checkBoxRSVP);
 		cbRSVP.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -102,10 +122,28 @@ public class IndividualEventsActivity extends MenuActivity {
 		});
 
 		getRSVPDB(userid, eventid);
-
+		addOnClickListener();
 		// add code: grab rsvp count from db
 	}
+	private void addOnClickListener() {
+		Button editButton;
+		editButton = (Button) findViewById(R.id.editButton);
+		editButton.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				//view= inflater.inflate(R.layout.activity_allevents, container, false);
+				Intent intent = new Intent(IndividualEventsActivity.this, com.ucevents.schedule.EditHostActivity.class);
+				intent.putExtra("key", "edit");
+				Bundle b = new Bundle();
+				b.putParcelable("chosenEvent", chosenEvent);
+				intent.putExtras(b);
+				startActivity(intent);
+			}
+		});
+		
 
+
+	}
 	/**
 	 * An example Activity using Google Analytics and EasyTracker.
 	 */
