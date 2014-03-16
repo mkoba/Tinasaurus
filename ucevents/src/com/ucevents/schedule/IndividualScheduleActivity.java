@@ -74,21 +74,19 @@ public class IndividualScheduleActivity extends MenuActivity {
 		ivIconID.setImageResource(chosenEvent.getIconid());
 
 		tvName = (TextView) findViewById(R.id.tvName);
-		tvName.setText("Title: " +  chosenEvent.getName());
+		tvName.setText(chosenEvent.getName());
 
 		tvLocation = (TextView) findViewById(R.id.tvLocation);
-		tvLocation.setText("Location: " + chosenEvent.getLocation());
+		tvLocation.setText(chosenEvent.getLocation());
 
 		tvDate = (TextView) findViewById(R.id.tvDate);
-		tvDate.setText(String.valueOf(chosenEvent.getMonth()) + " " + 
-				String.valueOf(chosenEvent.getDate()) + " " +
-				String.valueOf(chosenEvent.getYear()) );
+		tvDate.setText(chosenEvent.getEventDate());
 
 		tvTime = (TextView) findViewById(R.id.tvTime);
-		tvTime.setText("Time:" + String.valueOf(chosenEvent.getTime()));
+		tvTime.setText(chosenEvent.getTimeDisplay());
 
 		tvDescription = (TextView) findViewById(R.id.tvDescription);
-		tvDescription.setText("Description: \n\t\t\t" + chosenEvent.getDescription());
+		tvDescription.setText(chosenEvent.getDescription());
 
 		userid = ((UCEvents_App)getApplicationContext()).getUserId();
 		

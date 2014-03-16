@@ -268,17 +268,13 @@ public class EventsListActivity extends MenuActivity{
 			TextView nameText = (TextView) itemView.findViewById(R.id.item_tvName);
 			nameText.setText(currEvent.getName());
 
-			// Description:
-			TextView descriptionText = (TextView) itemView.findViewById(R.id.item_txtDescription);
-			descriptionText.setText(currEvent.getDescription());
-
 			// Time:
 			TextView timeText = (TextView) itemView.findViewById(R.id.item_txtTime);
-			timeText.setText(""+ currEvent.getTime());
+			timeText.setText(currEvent.getTimeDisplay());
 
 			// Date:
 			TextView dateText = (TextView) itemView.findViewById(R.id.item_txtDate);
-			dateText.setText(""+currEvent.getMonth() + " " + currEvent.getDate() + " " + currEvent.getYear());
+			dateText.setText(currEvent.getEventDate());
 
 			// Location:
 			TextView locationText = (TextView) itemView.findViewById(R.id.item_txtLocation);
