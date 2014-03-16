@@ -15,12 +15,7 @@ public class LogoutMenuActivity extends Activity{
 	Button bbyCategory;
 	Button bUserInterest;
 	Button logout;
-/*	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.frag_events);
-    }*/
-	
+
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,7 +43,6 @@ public class LogoutMenuActivity extends Activity{
   
 	// clicks logout
 	private void clickedLogout() {
-		//Toast.makeText(getApplicationContext(), "Logout", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(LogoutMenuActivity.this, com.android.ucevents.LogoutActivity.class);
 		startActivity(intent);
 	}

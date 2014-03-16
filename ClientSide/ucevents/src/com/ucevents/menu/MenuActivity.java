@@ -62,28 +62,22 @@ public class MenuActivity extends Activity{
     }
 
     private void clickedEvent() {
-    	//Toast.makeText(getApplicationContext(), "Event", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(MenuActivity.this, com.ucevents.events.EventsActivity.class);
 		startActivity(intent);
     }
     
 	private void clickedSchedule() {
-		//Toast.makeText(getApplicationContext(), "Schedule", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(MenuActivity.this, com.ucevents.schedule.MainScheduleActivity.class);
-		//intent.putExtra("key", "all");
 		startActivity(intent);
 	}
 	
 
 	private void clickedProfile() {
-		//Toast.makeText(getApplicationContext(), "Profile", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(MenuActivity.this, com.ucevents.profile.ProfileActivity.class);
 		startActivity(intent);
 	}
 	
-	// clicks logout
 	private void clickedLogout() {
-		//Toast.makeText(getApplicationContext(), "Logout", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(MenuActivity.this, com.android.ucevents.LogoutActivity.class);
 		startActivity(intent);
 	}

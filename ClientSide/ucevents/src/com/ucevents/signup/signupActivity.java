@@ -19,7 +19,6 @@ import com.android.ucevents.UCEvents_App;
 import com.android.ucevents.R.layout;
 import com.facebook.widget.ProfilePictureView;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.ucevents.login.loginActivity;
 import com.ucevents.menu.LogoutMenuActivity;
 
 import android.app.Activity;
@@ -37,7 +36,6 @@ import android.widget.Toast;
 
 public class signupActivity extends LogoutMenuActivity{
 	Button bsignUp;
-	//Button bBack;
 	private TextView userInfoTextView; 
 	private String firstname;
 	private String lastname;
@@ -95,7 +93,6 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "Career", Toast.LENGTH_SHORT).show();
 					interests.set(0,"career");
-					//interestExist = true;
 				}
 				else {
 					interests.set(0, "false");
@@ -109,7 +106,6 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "Food", Toast.LENGTH_SHORT).show();
 					interests.set(1,"food");
-					//interestExist = true;
 				}
 				else {
 					interests.set(1, "false");
@@ -123,7 +119,6 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "organization", Toast.LENGTH_SHORT).show();
 					interests.set(2,"organization");
-					//interestExist = true;
 				}
 				else {
 					interests.set(2, "false");
@@ -137,7 +132,6 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "social", Toast.LENGTH_SHORT).show();
 					interests.set(3,"social");
-					//interestExist = true;
 				}
 				else {
 					interests.set(3, "false");
@@ -151,7 +145,6 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "Sport", Toast.LENGTH_SHORT).show();
 					interests.set(4,"sport");
-					//interestExist = true;
 				}
 				else {
 					interests.set(4, "false");
@@ -165,7 +158,6 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "study", Toast.LENGTH_SHORT).show();
 					interests.set(5,"study");
-					//interestExist = true;
 				}
 				else {
 					interests.set(5, "false");
@@ -179,7 +171,6 @@ public class signupActivity extends LogoutMenuActivity{
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "other", Toast.LENGTH_SHORT).show();
 					interests.set(6,"other");
-					//interestExist = true;
 				}
 				else {
 					interests.set(6, "false");
@@ -201,23 +192,16 @@ public class signupActivity extends LogoutMenuActivity{
 				for(int i = 0; i < interests.size(); i++) {
 					if(!interests.get(i).equals("false")) {
 						interestExist = true;
-						System.out.println("interests: " + interests.get(i));
 						interestsFinal.add(interests.get(i));
 					}
 				}
-				Log.d("interestExist", "" + interestExist);
 				//Forcing users to pick at least 1 interest when signing up
 				if(!interestExist) {
 					Toast.makeText(getApplicationContext(), "Please select at least one interest" ,
 							Toast.LENGTH_LONG).show();
 				}
 				else {
-					/*for(int i=0; i < interestsFinal.size(); i++) {
-	
-						System.out.print(interestsFinal.get(i));
-					}*/
-					//Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
-	
+
 					/****
 					 * DB: grab the data you need here and insert into db
 					 * firstname, lastname, email, interestsFinal  
@@ -226,44 +210,9 @@ public class signupActivity extends LogoutMenuActivity{
 				}
 			}
 		});
-
-
-
-
-		/*bBack = (Button) findViewById(R.id.back);
-		bBack.setOnClickListener(new OnClickListener() {
-
-			//@Override
-			public void onClick(View arg0) {
-
-				//Intent i= new Intent(loginActivity.this, com.ucevents.tab.Tabs.class);
-				Intent i= new Intent(signupActivity.this, com.android.ucevents.MainActivity.class);
-				startActivity(i);
-				}
-			});*/
-
 	}
 
-	/*
-	 *  set user info to text view
-	 */
-	private String buildUserInfoDisplay() {
-		userInfo = new StringBuilder("");
-
-		// Example: typed access (name)
-		// - no special permissions required
-		userInfo.append(String.format("First Name: %s\n\n", 
-				firstname));
-
-		// Example: typed access (birthday)
-		// - requires user_birthday permission
-		userInfo.append(String.format("Last Name: %s\n\n", 
-				lastname));
-
-		userInfo.append(String.format("Email: %s\n\n", email));
-
-		return userInfo.toString();
-	}
+	
 
 	/**
 	 * An example Activity using Google Analytics and EasyTracker.
@@ -282,6 +231,7 @@ public class signupActivity extends LogoutMenuActivity{
 		EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	}
 
+	// insert user to db 
 	private void insertUser(String first, String last, String email){
 		class eventsTask extends AsyncTask<String, Void, String> {
 			protected String doInBackground(String[] args){
@@ -310,22 +260,16 @@ public class signupActivity extends LogoutMenuActivity{
 						return "SUCCESS";
 					}
 				} catch (ClientProtocolException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("CLIENTPROTOCAL", e1.toString());
 					return null;
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					Log.d("IOEXCEPTION", e1.toString());
 					return null;
 				}
-				Log.d("RETURN FAILURE", get.getURI().getPath());
 				return "FAILED";
 			}
 			protected void onPostExecute(String result){
 				if(result != null){
-					Log.d("SUCCESS", result);
 					Toast.makeText(getApplicationContext(), "Account created!",
 							Toast.LENGTH_LONG).show();
 					Intent i= new Intent(signupActivity.this, com.ucevents.events.EventsActivity.class);
@@ -333,7 +277,6 @@ public class signupActivity extends LogoutMenuActivity{
 					return;
 				}
 				else{
-					Log.d("FAILURE", "FAILURE");
 					Toast.makeText(getApplicationContext(), "Unable to create account. Please try again later.",
 							Toast.LENGTH_LONG).show();
 					return;
@@ -348,22 +291,9 @@ public class signupActivity extends LogoutMenuActivity{
 
 	public String encodeHTML(String s)
 	{
-		//s = s.replaceAll("%", "%25");
 		s = s.replaceAll(" ", "%20");
 		s = s.replaceAll("!", "%21");
-		//s = s.replaceAll("\"", "%22");
-		//s = s.replaceAll("#", "%23");
-		//s = s.replaceAll("$", "%24");
-		//s = s.replaceAll("&", "%26");
 		s = s.replaceAll("'", "%27");
-		//s = s.replaceAll("(", "%28");
-		//s = s.replaceAll(")", "%29");
-		//s = s.replaceAll("*", "%2A");
-		//s = s.replaceAll("+", "%2B");
-		//s = s.replaceAll(",", "%2C");
-		//s = s.replaceAll("-", "%2D");
-		//s = s.replaceAll(".", "%2E");
-		//s = s.replaceAll("/", "%2F");
 		return s;
 	}
 }
