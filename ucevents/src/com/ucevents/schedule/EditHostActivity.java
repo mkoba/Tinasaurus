@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -17,11 +16,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ucevents.R;
 import com.android.ucevents.UCEvents_App;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.ucevents.events.Events;
 import com.ucevents.menu.MenuActivity;
 import com.ucevents.signup.signupActivity;
 
@@ -39,25 +41,29 @@ public class EditHostActivity extends MenuActivity {
 	private CheckBox cbSport;
 	private CheckBox cbStudy;
 	private CheckBox cbOther;
+	TextView tvName;
+	ImageView ivIconID;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hostedit);
-		/*UCEvents_App appState = ((UCEvents_App)getApplicationContext());
+		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		email = appState.getUserId();
-	   	//initialize interests array
-	   	for(int i = 0; i < 7; i++) {
-	   		 interests.add("false");
-	   	}
-	   	// grab user info from db
-		updateUserInfo();
+
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_hostedit);
+		Bundle b = this.getIntent().getExtras();
+
+		// grab event clicked from bundle
+		Events chosenEvent = b.getParcelable("chosenEvent");
+		Log.d("NAME", "" + chosenEvent.getName());
+		tvName = (TextView) findViewById(R.id.tvName);
+		tvName.setText(chosenEvent.getName());
+		ivIconID = (ImageView) findViewById(R.id.ivIconID);
+		ivIconID.setImageResource(chosenEvent.getIconid());
+
 		
-		// grab new/modified interests
-		grabInterests();*/
-		
-		// done button
-		//addListenerOnButton();
 	}
 	
 	public void updateUserInfo() {
