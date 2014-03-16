@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -26,9 +27,11 @@ import android.util.EventLog.Event;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +55,7 @@ public class IndividualEventsActivity extends MenuActivity {
 	String userid;
 	Button edit;
 	Events chosenEvent;
+	ListView attList; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +71,13 @@ public class IndividualEventsActivity extends MenuActivity {
 		try{
 			if(b.getString("FROM").equals("HOST")){
 				Log.d("hmm","plz");
-				edit.setVisibility(View.VISIBLE);			
+				edit.setVisibility(View.VISIBLE);
+				cbRSVP.setEnabled(false);
 			}
 		}
 		catch(NullPointerException e){
-			tvRSVPCount.setVisibility(View.VISIBLE);
 			cbRSVP.setVisibility(View.VISIBLE);
+			edit.setEnabled(false);
 			Log.d("NO BUTTON", "not event toaster");
 			
 		}
@@ -100,7 +105,35 @@ public class IndividualEventsActivity extends MenuActivity {
 		eventid = chosenEvent.getEventid();
 
 		userid = ((UCEvents_App)getApplicationContext()).getUserId();
+		tvRSVPCount = (TextView) findViewById(R.id.textRSVPCount);
+		tvRSVPCount.setText("People attending("+String.valueOf(chosenEvent.getAttendees().size()) +"): " ); 
+		
+		attList = (ListView) findViewById(R.id.allAttend);
+		
+		ArrayList<String> listAttend = new ArrayList<String>();
+		ArrayList<String> listView= new ArrayList<String>();
+		
+		listAttend.addAll(chosenEvent.getAttendees());
+		
+		//check for if less than 5 attendees
+		/*int totalSize = 2;  
+		if(totalSize > listAttend.size()){
+			totalSize = listAttend.size();
+		}
+		
+		for(int i = 0; i < totalSize; i++ ){
+			listView.add(listAttend.get(i));
+		}*/
+		
+		listView.addAll(chosenEvent.getAttendees()); 
+		
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this, 
+                android.R.layout.simple_list_item_1,
+                listView );
 
+		attList.setAdapter(arrayAdapter); 
+		
 		//update rsvp count w value from db
 
 		//On state change

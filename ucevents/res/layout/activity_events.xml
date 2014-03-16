@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blue_solid"
+    android:background="@drawable/box"
     android:orientation="vertical" >
 
     <ImageView
@@ -76,24 +76,48 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <CheckBox
-                    android:id="@+id/checkBoxRSVP"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="RSVP"
-                    android:textColor="@color/yellow2"
-                    android:visibility="invisible"
-                    android:textSize="17dp" />
+                    android:paddingRight="10dp" >
+                    <LinearLayout
+                        android:id="@+id/cbRSVPLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp" >
+
+                        <CheckBox
+                            android:id="@+id/checkBoxRSVP"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RSVP"
+                            android:textColor="@color/yellow2"
+                            android:textSize="17dp"
+                            android:visibility="invisible" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/editButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/cbRSVPLayout"
+                        android:layout_alignLeft="@+id/cbRSVPLayout"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/darkbar"
+                        android:text="Edit"
+                        android:textColor="@color/WHITE"
+                        android:visibility="invisible" />
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            >
+            android:layout_height="wrap_content" >
 
             <TextView
                 android:id="@+id/tvLocationLabel"
@@ -149,7 +173,6 @@
             android:paddingTop="10dp"
             android:text="RSVP Count:"
             android:textColor="@color/yellow2"
-            android:visibility="invisible"
             android:textSize="20dp" />
 
         <ListView
@@ -163,25 +186,12 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/box"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/ivIconID"
         android:layout_centerHorizontal="true"
         android:background="#cccccc"
-        android:paddingLeft="10dp"/>
-
-    
-    <Button
-        android:id="@+id/editButton"
-        android:text="Edit"
-        android:layout_below="@id/dateTimeRSVP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
-        android:layout_marginLeft="20dp"
-        android:visibility="invisible" 
+        android:paddingLeft="10dp"
         android:paddingRight="10dp" />
+
 </RelativeLayout>
-
-
