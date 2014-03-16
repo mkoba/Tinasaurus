@@ -55,10 +55,10 @@ public class Events implements Comparable<Events>, Parcelable {
 		return time;
 	}
 	public int getHour(){
-		return hours;
+		return time/100;
 	}
 	public int getMinutes(){
-		return minutes;
+		return time%100;
 	}
 	public String getTimeDisplay(){
 		int hour = time/100;
@@ -102,8 +102,6 @@ public class Events implements Comparable<Events>, Parcelable {
 		else{
 			timeDisp += "am";
 		}
-		hours = hour;
-		minutes = min;
 
 		return timeDisp;
 	}
