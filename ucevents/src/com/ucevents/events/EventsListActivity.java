@@ -167,8 +167,10 @@ public class EventsListActivity extends MenuActivity{
 						JSONObject event = listOfEvents.getJSONObject(i);
 						int iconid = 0;
 						JSONArray categories = new JSONArray();
+						String[] categoryList = new String[categories.length()];
 						try{
 							categories = event.getJSONArray("category");
+							categoryList = new String[categories.length()];
 							String category = categories.getString(0);
 							if (category.equals("study")){
 								iconid = R.drawable.study_icon;
@@ -191,6 +193,10 @@ public class EventsListActivity extends MenuActivity{
 							else{
 								iconid = R.drawable.other_icon;
 							}
+
+							for(int j = 0; j < categories.length(); j++){
+								categoryList[j] = categories.getString(j);
+							}
 						} catch(JSONException e){
 							
 							iconid = R.drawable.other_icon;
@@ -202,7 +208,7 @@ public class EventsListActivity extends MenuActivity{
 						}
 						eventList.add(new Events(event.getString("name"), event.getString("name").substring(event.getString("name").indexOf("_") + 1),
 								event.getInt("hour")*100+event.getInt("min"), event.getString("location"),event.getInt("month"),event.getInt("date"),
-								event.getInt("year"), event.getString("description"), event.getString("host"), iconid, attendees, event.getBoolean("attending")));
+								event.getInt("year"), event.getString("description"), event.getString("host"), iconid, attendees, event.getBoolean("attending"), categoryList));
 					}
 					Collections.sort(eventList);
 				}catch(JSONException e){

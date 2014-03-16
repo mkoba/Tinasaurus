@@ -25,10 +25,11 @@ public class Events implements Comparable<Events>, Parcelable {
 	private List<String> attendees;
 	private boolean attending;
 	private String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Oct", "Nov", "Dec"};
+	private List<String> categories;
 
 	public Events(String eventid, String name, int time, String location,
 			int month, int date, int year, String description, String host,
-			int iconid, String[] attendees, boolean attending) {
+			int iconid, String[] attendees, boolean attending, String[] categories) {
 		super();
 		this.eventid = eventid;
 		this.name = name;
@@ -42,6 +43,7 @@ public class Events implements Comparable<Events>, Parcelable {
 		this.iconid = iconid;
 		this.attendees = Arrays.asList(attendees);
 		this.attending = attending;
+		this.categories = Arrays.asList(categories);
 	}
 	public String getEventid() {
 		return eventid;
@@ -129,6 +131,9 @@ public class Events implements Comparable<Events>, Parcelable {
 	public boolean getAttending(){
 		return attending;
 	}
+	public List<String> getCategories(){
+		return categories;
+	}
 
 	@Override
 	public int describeContents() {
@@ -149,6 +154,7 @@ public class Events implements Comparable<Events>, Parcelable {
 		dest.writeInt(iconid);
 		dest.writeStringArray(attendees.toArray(new String[attendees.size()]));
 		dest.writeByte((byte) (attending ? 1 : 0));
+		dest.writeStringArray(categories.toArray(new String[categories.size()]));
 	}
 
 	public static final Parcelable.Creator<Events> CREATOR =
@@ -157,7 +163,7 @@ public class Events implements Comparable<Events>, Parcelable {
 		public Events createFromParcel(Parcel source) {
 			Events event = new Events(source.readString(), source.readString(), source.readInt(), source.readString(), source.readInt(), 
 					source.readInt(), source.readInt(), source.readString(), source.readString(), source.readInt(), source.createStringArray(), 
-					source.readByte() != 0);
+					source.readByte() != 0, source.createStringArray());
 			return event;
 
 		}

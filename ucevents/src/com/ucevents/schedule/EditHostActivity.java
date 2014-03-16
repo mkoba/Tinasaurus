@@ -55,7 +55,7 @@ public class EditHostActivity extends MenuActivity {
 	Button pDone;
 	private String email;
 	private ArrayList<String> interests = new ArrayList<String>(7);
-	private ArrayList<String> dbInterests = new ArrayList<String>();
+	private List<String> dbInterests = new ArrayList<String>();
 	private ArrayList<String> interestsFinal = new ArrayList<String>();
 	private CheckBox cbCareer;
 	private CheckBox cbFood;
@@ -122,7 +122,8 @@ public class EditHostActivity extends MenuActivity {
 			//Log.d("description is", (e.getDescription()));
 			eventLocation.setText(e.getLocation());
 			eventDescription.setText(e.getDescription());
-						
+			dbInterests = e.getCategories();	
+			updateEventInfo();
 		}
 		catch(NullPointerException e2){
 			e2.printStackTrace();
@@ -242,149 +243,44 @@ public class EditHostActivity extends MenuActivity {
 		return s;
 	}
 
-	public void updateUserInfo() {
+	public void updateEventInfo() {
 		/* DB: populate interest list here 
 		 *  to dbInterests
 		 */
-		
 		// temp values  (hard-coded)
-		dbInterests.add("other");
-		dbInterests.add("social");
 		for( int i = 0; i < dbInterests.size(); i++) {
 			if(dbInterests.get(i).equals("career")) {
-				cbCareer = (CheckBox) findViewById(R.id.career);
+				cbCareer = (CheckBox) findViewById(R.id.career_event);
 				cbCareer.setChecked(true);
-				interests.set(0, "career");
 			}
 			else if(dbInterests.get(i).equals("food")) {
-				cbFood = (CheckBox) findViewById(R.id.food);
+				cbFood = (CheckBox) findViewById(R.id.food_event);
 				cbFood.setChecked(true);
-				interests.set(1,"food");
 			}
 			else if(dbInterests.get(i).equals("organization")) {
-				cbOrganization = (CheckBox)findViewById(R.id.organization);
+				cbOrganization = (CheckBox)findViewById(R.id.organization_event);
 				cbOrganization.setChecked(true);
-				interests.set(2,"organization");
 			}
 			else if(dbInterests.get(i).equals("social")) {
-				cbSocial = (CheckBox)findViewById(R.id.social);
+				cbSocial = (CheckBox)findViewById(R.id.social_event);
 				cbSocial.setChecked(true);
-				interests.set(3,"social");
 			}
 			else if(dbInterests.get(i).equals("sport")) {
-				cbSport = (CheckBox)findViewById(R.id.sport);
+				cbSport = (CheckBox)findViewById(R.id.sport_event);
 				cbSport.setChecked(true);
-				interests.set(4,"sport");
 			}
 			else if(dbInterests.get(i).equals("study")) {
-				cbStudy = (CheckBox) findViewById(R.id.study);
+				cbStudy = (CheckBox) findViewById(R.id.study_event);
 				cbStudy.setChecked(true);
-				interests.set(5,"study");
 			}
 			else { //if(dbInterests.get(i).equals("other")) {
-				cbOther = (CheckBox) findViewById(R.id.other);
+				cbOther = (CheckBox) findViewById(R.id.other_event);
 				cbOther.setChecked(true);
-				interests.set(6,"other");
 			}
 		}
 		
 	}
 	
-	private void grabInterests() {
-		cbCareer = (CheckBox) findViewById(R.id.career);
-		cbCareer.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(((CheckBox) v).isChecked()) {
-					Toast.makeText(EditHostActivity.this, "Career", Toast.LENGTH_SHORT).show();
-					interests.set(0,"career");
-				}
-				else {
-					interests.set(0, "false");
-				}
-			}
-		});
-		cbFood = (CheckBox) findViewById(R.id.food);
-		cbFood.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(((CheckBox) v).isChecked()) {
-					Toast.makeText(EditHostActivity.this, "Food", Toast.LENGTH_SHORT).show();
-					interests.set(1,"food");
-				}
-				else {
-					interests.set(1, "false");
-				}
-			}
-		});
-		cbOrganization = (CheckBox)findViewById(R.id.organization);
-		cbOrganization.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(((CheckBox) v).isChecked()) {
-					Toast.makeText(EditHostActivity.this, "organization", Toast.LENGTH_SHORT).show();
-					interests.set(2,"organization");
-				}
-				else {
-					interests.set(2, "false");
-				}
-			}
-		});
-		cbSocial = (CheckBox)findViewById(R.id.social);
-		cbSocial.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(((CheckBox) v).isChecked()) {
-					Toast.makeText(EditHostActivity.this, "social", Toast.LENGTH_SHORT).show();
-					interests.set(3,"social");
-				}
-				else {
-					interests.set(3, "false");
-				}
-			}
-		});
-		cbSport = (CheckBox) findViewById(R.id.sport);
-		cbSport.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(((CheckBox) v).isChecked()) {
-					Toast.makeText(EditHostActivity.this, "Sport", Toast.LENGTH_SHORT).show();
-					interests.set(4,"sport");
-				}
-				else {
-					interests.set(4, "false");
-				}
-			}
-		});
-		cbStudy = (CheckBox) findViewById(R.id.study);
-		cbStudy.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(((CheckBox) v).isChecked()) {
-					Toast.makeText(EditHostActivity.this, "study", Toast.LENGTH_SHORT).show();
-					interests.set(5,"study");
-				}
-				else {
-					interests.set(5, "false");
-				}
-			}
-		});
-		cbOther = (CheckBox) findViewById(R.id.other);
-		cbOther.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(((CheckBox) v).isChecked()) {
-					Toast.makeText(EditHostActivity.this, "other", Toast.LENGTH_SHORT).show();
-					interests.set(6,"other");
-				}
-				else {
-					interests.set(6, "false");
-				}
-			}
-		});
-		
-		
-	}
 	private void getInput(){
 		System.out.println("SUP DOG");
 		System.out.println("SUP DOG");
