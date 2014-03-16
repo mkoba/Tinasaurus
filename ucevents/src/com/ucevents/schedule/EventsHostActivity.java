@@ -57,7 +57,11 @@ public class EventsHostActivity extends MenuActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_allevents);
 		Bundle bundle = getIntent().getExtras();
-		value = bundle.getString("key");
+		try{
+			value = bundle.getString("key");
+		}catch(NullPointerException e){
+			e.printStackTrace();
+		}
 
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		userid = appState.getUserId();
