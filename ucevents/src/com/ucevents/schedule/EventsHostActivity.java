@@ -57,6 +57,7 @@ public class EventsHostActivity extends MenuActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_allevents);
 		Bundle bundle = getIntent().getExtras();
+		
 		try{
 			value = bundle.getString("key");
 		}catch(NullPointerException e){
