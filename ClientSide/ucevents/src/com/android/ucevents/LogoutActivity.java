@@ -28,17 +28,14 @@ public class LogoutActivity extends MenuActivity {
 			public void onClick(View arg0){
 				Session session = Session.getActiveSession();
 				if (session != null) {
-					System.out.println("got a session");
+					// logout of fb and redirect to login
 			        if (!session.isClosed()) {
 			            session.closeAndClearTokenInformation();
 			            Intent i = new Intent(LogoutActivity.this, MainActivity.class);
 			            startActivity(i);
-			            //clear your preferences if saved
 			        }
 			    } else {
-	
 			    	System.out.println("cannot find session");
-	
 			    }
 			}
 			
