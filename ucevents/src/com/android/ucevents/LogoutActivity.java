@@ -2,6 +2,7 @@ package com.android.ucevents;
 
 import com.facebook.Session;
 import com.ucevents.events.CategoryEventsActivity;
+import com.ucevents.menu.MenuActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class LogoutActivity extends Activity {
+public class LogoutActivity extends MenuActivity {
 	private Button logout;
 	private Button cancel;
 	
