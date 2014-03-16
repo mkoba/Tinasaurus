@@ -1,10 +1,10 @@
 package com.ucevents.schedule;
 import java.util.ArrayList;
 
-import com.android.ucevents.MainActivity;
 import com.android.ucevents.R;
-import com.android.ucevents.UCEvents_App;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.ucevents.login.MainActivity;
+import com.ucevents.login.UCEvents_App;
 import com.ucevents.menu.MenuActivity;
 import com.ucevents.signup.signupActivity;
 

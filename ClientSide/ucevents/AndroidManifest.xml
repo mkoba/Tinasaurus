@@ -30,26 +30,6 @@
             android:name="com.ucevents.signup.signupActivity"
             android:label="Sign up" >
         </activity>
-        <activity
-            android:name="com.ucevents.tab.Tabs"
-            android:label="tab" >
-        </activity>
-        <activity
-            android:name="com.ucevents.tab.FragEvents"
-            android:label="tabevents" >
-        </activity>
-        <activity
-            android:name="comcom.ucevents.tab.FragProfile"
-                       android:label="tabprof" >
-        </activity>
-        <activity
-            android:name="comcom.ucevents.tab.FragSchedule"
-                      android:label="tabsched" >
-        </activity>
-        <activity
-            android:name="com.ucevents.login.loginActivity"
-            android:label="Login" >
-        </activity>
 		<activity
             android:name="com.ucevents.events.EventsActivity"
             android:label="Events" >

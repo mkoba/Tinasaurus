@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <!-- Search / will display always -->
+    <!-- events -->
     <item android:id="@+id/action_event"
           android:icon="@drawable/home_icon"
           android:title="@string/events"
           android:showAsAction="always"/>
      
-    <!-- Location Found -->
+    <!-- schedule -->
     <item android:id="@+id/action_schedule"
           android:icon="@drawable/schedule_icon"
           android:title="@string/schedule"
           android:showAsAction="always" />
      
-    <!-- Refresh -->
+    <!-- profile -->
     <item android:id="@+id/action_profile"
           android:icon="@drawable/profile_icon"
           android:title="@string/profile"

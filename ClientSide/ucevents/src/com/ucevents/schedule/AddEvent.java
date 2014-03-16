@@ -35,9 +35,9 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.android.ucevents.MainActivity;
 import com.android.ucevents.R;
-import com.android.ucevents.UCEvents_App;
+import com.ucevents.login.MainActivity;
+import com.ucevents.login.UCEvents_App;
 import com.ucevents.menu.MenuActivity;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.ucevents.signup.signupActivity;

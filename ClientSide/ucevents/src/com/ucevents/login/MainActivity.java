@@ -1,4 +1,4 @@
-package com.android.ucevents;
+package com.ucevents.login;
 
 import com.google.analytics.tracking.android.*;
 import com.ucevents.signup.signupActivity;
@@ -42,15 +42,15 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphObject;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import com.android.ucevents.R;
 import com.crashlytics.android.Crashlytics;
+
 
 
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
-	private static final String TAG = "MainFragment";
 	private UiLifecycleHelper uiHelper;
-	private TextView userInfoTextView;
 	private String firstname;
 	private String lastname;
 	private String email;
@@ -63,13 +63,13 @@ public class MainActivity extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activityfb_login);
-		Crashlytics.start(this);
+		Crashlytics.start(this); // start crash analytics
+		
+		// login to Facebook
 		LoginButton authButton = (LoginButton) findViewById(R.id.authButton);
 		authButton.setReadPermissions(Arrays.asList("email", "basic_info"));
-
-		//textview to add info
-		//userInfoTextView = (TextView) findViewById(R.id.userInfoTextView);
-
+		
+		// manages session changes
 		uiHelper = new UiLifecycleHelper(MainActivity.this, callback);
 		uiHelper.onCreate(savedInstanceState);
 	}
@@ -78,25 +78,17 @@ public class MainActivity extends FragmentActivity {
 	@SuppressWarnings("deprecation")
 	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 		if (state.isOpened()) {
-			//Log.i(TAG, "Logged in...");
-			//userInfoTextView.setVisibility(View.VISIBLE);
 			// Request user data and show the results
 			Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
 
 				@Override
 				public void onCompleted(GraphUser user, Response response) {
 					if (user != null) {
-						// Display the parsed user info
-						//userInfoTextView.setText(buildUserInfoDisplay(user));
-						System.out.println("firstname " + user.getFirstName()
-								+ " lastname " + user.getLastName() + " id " 
-								+ user.getId() );
 						email = user.asMap().get("email").toString();
 						// System.out.println("email: " + email);
 						firstname = user.getFirstName();
 						lastname = user.getLastName();
 						userid = user.getId();
-
 
 						// checking if fb user is part of UCSD network
 						String fqlQuery = "SELECT name FROM user WHERE uid = me() AND 'UCSD' in affiliations";
@@ -107,43 +99,25 @@ public class MainActivity extends FragmentActivity {
 						Request request = new Request(session2,"/fql",params,HttpMethod.GET,new Request.Callback(){
 							public void onCompleted(Response response){
 
-								//Log.i("H", "Result: " + response.toString() +  " " + response.getGraphObject() );
 								GraphObject graphObject = response.getGraphObject();
-								//  String nameVal = graphObject.getProperty("name").toString();
-								System.out.println("graph name" + graphObject.getInnerJSONObject());
 								JSONObject network = graphObject.getInnerJSONObject();
-								// Add the language name to a list. Use JSON
-								// methods to get access to the name field. 
-								// try {
 								try {
-									System.out.println("Network  " + network.getString("data"));
 									JSONArray data = network.getJSONArray("data");
 									JSONObject inner = data.getJSONObject(0);
-									System.out.println( "grabbed value: " + inner.getString("name"));
 									ucsdNetwork=true;
-
 								} catch (JSONException e) {
 									ucsdNetwork=false;
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-
 								ucsdUpdated();
 							}
 						});
-
 						Request.executeBatchAsync(request);
-
-
-
-
-
 					}
 				}
 			});
 		} else if (state.isClosed()) {
 			//Log.i(TAG, "Logged out...");
-			//userInfoTextView.setVisibility(View.INVISIBLE);
 		}
 	}
 
@@ -154,7 +128,7 @@ public class MainActivity extends FragmentActivity {
 			 * If first time user: go to signupActivity.java
 			 * else go to EventsActivity.java
 			 */
-			// new user
+			// check if new user
 			checkIfUserExists(email);
 			
 		}
@@ -162,8 +136,6 @@ public class MainActivity extends FragmentActivity {
 			// if not part of UCSD network, then logout and reprompt for login
 			Toast.makeText(getApplicationContext(), "Not part of UCSD network. Please login as valid user", 
 					Toast.LENGTH_LONG).show();
-			//Intent i = new Intent(MainActivity.this, com.android.ucevents.LogoutActivity.class);
-			//startActivity(i);
 		}
 	}
 
@@ -219,29 +191,6 @@ public class MainActivity extends FragmentActivity {
 	}
 
 
-	//parses through Json for info
-	private String buildUserInfoDisplay(GraphUser user) {
-		System.out.println("user info? : " + user);
-		StringBuilder userInfo = new StringBuilder("");
-
-		// Example: typed access (name)
-		// - no special permissions required
-		userInfo.append(String.format("Name: %s\n\n", 
-				user.getName()));
-
-		email = user.asMap().get("email").toString();
-		// System.out.println("email: " + email);
-		firstname = user.getFirstName();
-		lastname = user.getLastName();
-
-		userInfo.append(String.format("Email: %s\n\n", email));
-		userInfo.append(String.format("First: %s\n\n", firstname));
-		userInfo.append(String.format("Last: %s\n\n", lastname));
-
-		return userInfo.toString();
-	}
-
-
 	/**
 	 * An example Activity using Google Analytics and EasyTracker.
 	 */
@@ -259,6 +208,7 @@ public class MainActivity extends FragmentActivity {
 		EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	}
 
+	// check if FB user exists in db 
 	private void checkIfUserExists(String fbemail){
 		class eventsTask extends AsyncTask<String, Void, String> {
 			protected String doInBackground(String[] args){
@@ -278,17 +228,14 @@ public class MainActivity extends FragmentActivity {
 					}
 					result = sb.toString();
 					result = result.substring(result.indexOf("<body>")+6, result.indexOf("</body>"));
-					Log.d("HTML RESULT: ", result);
 					if (result.contains("True")){
 						return "SUCCESS";
 					}
 				} catch (ClientProtocolException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					Log.d("CLIENTPROTOCAL", e1.toString());
 					return null;
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					Log.d("IOEXCEPTION", e1.toString());
 					return null;
@@ -319,7 +266,6 @@ public class MainActivity extends FragmentActivity {
 					
 				
 					i.putExtras(b);
-					//Intent i = new Intent(MainActivity.this, LogoutActivity.class);
 					startActivity(i);
 					return;
 				}
@@ -333,28 +279,15 @@ public class MainActivity extends FragmentActivity {
 		}
 		eventsTask sendPostReqAsyncTask = new eventsTask();
 		sendPostReqAsyncTask.execute(email);
-		Log.d("HERE", "AFTER CALL TO EXECUTE");
 		return;
 	}
 
+	// for removing special characters from http request
 	public String encodeHTML(String s)
 	{
-		//s = s.replaceAll("%", "%25");
 		s = s.replaceAll(" ", "%20");
 		s = s.replaceAll("!", "%21");
-		//s = s.replaceAll("\"", "%22");
-		//s = s.replaceAll("#", "%23");
-		//s = s.replaceAll("$", "%24");
-		//s = s.replaceAll("&", "%26");
 		s = s.replaceAll("'", "%27");
-		//s = s.replaceAll("(", "%28");
-		//s = s.replaceAll(")", "%29");
-		//s = s.replaceAll("*", "%2A");
-		//s = s.replaceAll("+", "%2B");
-		//s = s.replaceAll(",", "%2C");
-		//s = s.replaceAll("-", "%2D");
-		//s = s.replaceAll(".", "%2E");
-		//s = s.replaceAll("/", "%2F");
 		return s;
 	}
 }

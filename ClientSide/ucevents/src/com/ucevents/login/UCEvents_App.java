@@ -1,12 +1,12 @@
-package com.android.ucevents;
+package com.ucevents.login;
 
 import android.app.Application;
 
 public class UCEvents_App extends Application {
-    private String userId;
+    private String userId; // fb email login
     private String firstName;
     private String lastName;
-    private String fbid;
+    private String fbid; // fb user id
     public String getUserId() { return this.userId; }
     public void setUserId(String id) { this.userId = id; }
     public void setFirstName(String name) {this.firstName = name;}
