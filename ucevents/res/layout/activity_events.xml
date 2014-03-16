@@ -130,6 +130,7 @@
         android:layout_below="@id/tvDescription"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
+        android:visibility="invisible"
         android:text="RSVP Count:" />
     
     <CheckBox
@@ -139,6 +140,16 @@
         android:textColor ="@color/WHITE"
         android:layout_below="@id/textRSVPCount"
         android:layout_marginLeft="20dp"
+        android:visibility="invisible"
         android:text="RSVP" />
-
+    
+    <Button
+        android:id="@+id/editButton"
+        android:text="Edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor ="@color/WHITE"
+        android:layout_below="@id/checkBoxRSVP"
+        android:layout_marginLeft="20dp"
+        android:visibility="invisible"  />
 </RelativeLayout>

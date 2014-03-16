@@ -116,10 +116,6 @@ public class EventsListActivity extends MenuActivity{
 					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getAllEvents&param="+encodeHTML(userid));
 				}
 				else if(key.equals("interest")){
-					Log.d("definitely got", " here");
-					Log.d("definitely got", " here");
-					Log.d("definitely got", " here");
-
 					get = new HttpGet("http://ucevents-mjs7wmrfmz.elasticbeanstalk.com/get_query.jsp?method=getEventsFromUserInterests&param="+encodeHTML(userid));
 				}
 				else{

@@ -106,7 +106,7 @@ public class ScheduleActivity extends MenuActivity {
 
 			// Date:
 			TextView dateText = (TextView) itemView.findViewById(R.id.item_txtDate);
-			dateText.setText(""+currEvent.getMonth() + " " + currEvent.getDate() + " " + currEvent.getYear());
+			dateText.setText(""+monthString(currEvent.getMonth()) + " " + currEvent.getDate() + " " + currEvent.getYear());
 
 			// Location:
 			TextView locationText = (TextView) itemView.findViewById(R.id.item_txtLocation);
@@ -287,6 +287,40 @@ public class ScheduleActivity extends MenuActivity {
 		//s = s.replaceAll(".", "%2E");
 		//s = s.replaceAll("/", "%2F");
 		return s;
+	}
+	
+	public String monthString(int month){
+		String ret; 
+		   switch (month) {
+           case 1:  ret = "Jan";
+                    break;
+           case 2:  ret = "Feb";
+                    break;
+           case 3:  ret = "Mar";
+                    break;
+           case 4:  ret = "Apr";
+                    break;
+           case 5:  ret = "May";
+                    break;
+           case 6:  ret = "Jun";
+                    break;
+           case 7: 	ret = "Jul";
+                    break;
+           case 8:  ret = "Aug";
+                    break;
+           case 9:  ret = "Sep";
+                    break;
+           case 10: ret = "Oct";
+                    break;
+           case 11: ret = "Nov";
+                    break;
+           case 12: ret = "Dec";
+                    break;
+           default: ret = "Invalid month";
+                    break;
+       }
+			
+		return ret; 
 	}
 
 }
