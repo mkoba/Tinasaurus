@@ -26,6 +26,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -101,15 +102,21 @@ public class AddEvent extends MenuActivity{
 			categories.add("social");
 		}
 		
-		//Combining each category into a single string
-		String concatString = "";
-		concatString += categories.get(0);
-		for(int i = 1; i < categories.size(); i++) {
-		String tempStr = "+" + categories.get(i);
-			concatString += tempStr;
+		if(categories.size() == 0) {
+			Toast.makeText(getApplicationContext(), "Please select at least one interest" ,
+					Toast.LENGTH_LONG).show();
 		}
-		Log.d("concatString", "" + concatString);
-		sendPostRequest(title, location, Integer.toString(hour), Integer.toString(minute), "false", concatString, Integer.toString(month), Integer.toString(day), Integer.toString(year), description, host);
+		else {
+			//Combining each category into a single string
+			String concatString = "";
+			concatString += categories.get(0);
+			for(int i = 1; i < categories.size(); i++) {
+			String tempStr = "+" + categories.get(i);
+				concatString += tempStr;
+			}
+			Log.d("concatString", "" + concatString);
+			sendPostRequest(title, location, Integer.toString(hour), Integer.toString(minute), "false", concatString, Integer.toString(month), Integer.toString(day), Integer.toString(year), description, host);
+		}
 	}
 	
 	public void addListenerOnButton() {
