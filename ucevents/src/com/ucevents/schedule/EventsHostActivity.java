@@ -47,6 +47,7 @@ import android.widget.Toast;
 public class EventsHostActivity extends MenuActivity{
 	String value;
 	String userid;
+	
 	private List<Events> eventList = new ArrayList<Events>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +59,11 @@ public class EventsHostActivity extends MenuActivity{
 		Bundle bundle = getIntent().getExtras();
 		value = bundle.getString("key");
 
-
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
 		userid = appState.getUserId();
 		
 
-		populateEventList(value.toString());
+		populateEventList();
 		
 		populateListView();
 		registerClickCallback();
@@ -71,14 +71,14 @@ public class EventsHostActivity extends MenuActivity{
 	}
 
 	// this will be later populated from db
-	private void populateEventList(String value) {
-		sendPostRequest(value);
+	private void populateEventList() {
+		sendPostRequest();
 		Log.d("SIZEOF eventList", "" + eventList.size());
 	}
 
 
 	
-	private void sendPostRequest(final String key) {
+	private void sendPostRequest() {
 		class scheduleTask extends AsyncTask<String, Void, String>{
 			protected String doInBackground(String[] args){
 				JSONObject json = null;
@@ -262,8 +262,9 @@ public class EventsHostActivity extends MenuActivity{
 
 				Events clickedEvent = eventList.get(position);
 				//Toast.makeText(getApplicationContext(), clickedEvent.getDescription(), Toast.LENGTH_SHORT).show();
-				Intent i = new Intent(EventsHostActivity.this, com.ucevents.schedule.EditHostActivity.class);
+				Intent i = new Intent(EventsHostActivity.this, com.ucevents.events.IndividualEventsActivity.class);
 				Bundle b = new Bundle();
+				b.putString("FROM","HOST");
 				b.putParcelable("chosenEvent", clickedEvent);
 				i.putExtras(b);
 				startActivity(i);

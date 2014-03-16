@@ -11,25 +11,15 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-    <!--<ImageView
-        android:id="@+id/event_pic"
-        android:layout_width="66dp"
-        android:layout_height="66dp"
-        android:layout_weight="1.04"
-        android:src="@drawable/ic_launcher" />
-
-    <RadioButton
-        android:id="@+id/pubic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="publicOption" /> -->
 
     <EditText
         android:id="@+id/event_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textSize="20dp"
         android:textColor ="@color/WHITE"
+        android:textColorHint="#FFFFFF"
         android:hint="Event Name" />
     
      <EditText
@@ -38,6 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textSize="20dp"
+        android:textColorHint="#FFFFFF"
         android:hint="Event Location" />
 
     <EditText
@@ -45,22 +37,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textSize="20dp"
         android:textColor ="@color/WHITE"
+        android:textColorHint="#FFFFFF"
         android:hint="Event description" />
-
+<View
+    android:id="@+id/views"
+	android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#cccccc"
+    android:paddingRight="10dp" />
  <LinearLayout
         android:layout_width="match_parent"
     	android:layout_height="wrap_content"
     	android:orientation="vertical"
-    	android:background="@drawable/border2"
      	>
       <TextView
         android:id="@+id/select_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor ="@color/WHITE"
         android:paddingTop="10dp"
         android:paddingLeft="30dp"
+        android:textSize="20dp"
+        android:textColor ="@color/yellow2"
         android:text="Select Categories"></TextView>
     
      <LinearLayout
@@ -75,6 +74,7 @@
         android:layout_width="match_parent"
     	android:layout_height="wrap_content"
     	android:layout_weight="0.5"
+    	android:paddingBottom="10dp"
     	android:orientation="vertical" >
         
 	    <CheckBox
@@ -83,12 +83,14 @@
 	        android:layout_height="wrap_content"
 	        android:textColor ="@color/WHITE"
 	        android:layout_weight="0.3"
+	        android:textSize="20dp"
 	        android:text="Career" />
 	    <CheckBox
 	        android:id="@+id/food_event"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textColor ="@color/WHITE"
+	        android:textSize="20dp"
 	        android:text="Food" />
 	   <CheckBox
 	        android:id="@+id/organization_event"
@@ -101,6 +103,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textColor ="@color/WHITE"
+	        android:textSize="20dp"
 	        android:text="Other" />
    
 		</LinearLayout>
@@ -115,24 +118,32 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textColor ="@color/WHITE"
+	        android:textSize="20dp"
 	        android:text="Social" />    
 	    <CheckBox
 	        android:id="@+id/sport_event"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textColor ="@color/WHITE"
+	        android:textSize="20dp"
 	        android:text="Sport" />
 	    <CheckBox
 	        android:id="@+id/study_event"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:textColor ="@color/WHITE"
+	        android:textSize="20dp"
 	        android:text="Study" />
 
 		</LinearLayout>
 	</LinearLayout>
 	</LinearLayout>
-    
+    <View
+	    android:id="@+id/views2"
+		android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="#cccccc"
+	    android:paddingRight="10dp" />
     <LinearLayout
         android:layout_width="match_parent"
    		android:layout_height="wrap_content"
@@ -145,15 +156,15 @@
 	   		android:layout_height="wrap_content"
 	    	android:orientation="vertical"
 	    	android:layout_weight="0.5"
-	    	android:background="@drawable/border2"
 	    	android:paddingTop="10dp"
 	    	>
 			    <TextView
 			        android:id="@+id/select_time"
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
-			        android:textColor ="@color/WHITE"
+			        android:textColor ="@color/yellow2"
 			        android:paddingLeft="30dp"
+			        android:textSize="20dp"
 			        android:text="Select Time: ">
 			    </TextView>    
 			    <TimePicker
@@ -164,22 +175,27 @@
 			
 			        android:paddingTop="20dp" />
 		</LinearLayout>
-		
+		<View
+		    android:id="@+id/views3"
+			android:layout_width="match_parent"
+		    android:layout_height="1dp"
+		    android:background="#cccccc"
+		    android:paddingRight="10dp" />
 	    <LinearLayout
 	        android:layout_width="match_parent"
 	   		android:layout_height="wrap_content"
 	    	android:orientation="vertical"
 	    	android:layout_weight="0.5"
-	    	android:background="@drawable/border2"
 	    	android:paddingTop="10dp"
 	    	>
 			    <TextView
 			        android:id="@+id/select_date"
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
-			        android:textColor ="@color/WHITE"
+			        android:textColor ="@color/yellow2"
 			        android:paddingTop="20dp"
 			        android:paddingLeft="30dp"
+			        android:textSize="20dp"
 			        android:text="Select Date: ">
 			    </TextView>   
 			        
@@ -187,13 +203,15 @@
 			        android:id="@+id/datePicker1"
 			        android:textColor ="@color/WHITE"
 			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content" />
+			        android:layout_height="wrap_content"
+			        android:paddingBottom="20dp" />
 		</LinearLayout>
 		</LinearLayout>
    
 	    <Button
         android:id="@+id/Done"
-        android:paddingTop="20dp"
+        android:textSize="20dp"
+        android:background="@drawable/darkbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor ="@color/WHITE"

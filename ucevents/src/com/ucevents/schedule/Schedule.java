@@ -119,6 +119,7 @@ public class Schedule implements Comparable<Schedule>, Parcelable{
 	public int describeContents() {
 		return 0;
 	}
+	
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
