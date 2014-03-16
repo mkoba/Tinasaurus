@@ -73,7 +73,7 @@
             android:label="Edit Profile">
         </activity>
         <activity
-            android:name="com.android.ucevents.LogoutActivity"
+            android:name="com.ucevents.login.LogoutActivity"
             android:label="Logout"></activity>
         <activity
             android:name="com.ucevents.schedule.EditHostActivity"
