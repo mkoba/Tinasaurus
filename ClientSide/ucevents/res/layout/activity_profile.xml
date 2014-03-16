@@ -1,6 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+  	 xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<RelativeLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/box"
@@ -81,7 +85,7 @@
         android:paddingTop="20dp"
         android:paddingLeft="30dp"
         android:paddingBottom="10dp"
-        android:text="Interest" 
+        android:text="Interest(s): " 
         android:textSize="20dp"
         android:textColor ="@color/yellow2"/>
         
@@ -115,7 +119,7 @@
    
 	<CheckBox
         android:id="@+id/social"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="80dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/career"
@@ -148,16 +152,18 @@
         android:textColor ="@color/WHITE" />
     
      <CheckBox
-        android:id="@+id/other"
+        android:id="@+id/other" 
         android:layout_alignLeft="@id/organization"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/organization"
         android:text="Other" 
          android:textSize="20dp"
+        
         android:textColor ="@color/WHITE"/>
     
     </RelativeLayout>
    
 
 </RelativeLayout>
+</ScrollView>
