@@ -71,6 +71,21 @@
 				e.printStackTrace();
 			}
 		}
+		else if (method.equals("insertUserInterest")){
+			String user = request.getParameter("user");
+			String interest = request.getParameter("interest");
+			try{
+				db.insertUserInterest(user, interest);
+				%>
+				Success
+				<%
+			} catch(Exception e){
+				%>
+				Failed
+				<%
+				e.printStackTrace();
+			}
+		}
 	%>
 </body>
 </html>

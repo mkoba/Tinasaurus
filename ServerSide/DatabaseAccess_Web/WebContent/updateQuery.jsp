@@ -10,7 +10,6 @@
 <body>
 	<%
 		String method = request.getParameter("method");
-		//String param = request.getParameter("param");
 		System.out.println("method: " + method);
 		database.DB_Access db = new database.DB_Access();
 		JSONObject result;
