@@ -85,13 +85,15 @@
                     android:layout_height="wrap_content"
                     android:text="RSVP"
                     android:textColor="@color/yellow2"
+                    android:visibility="invisible"
                     android:textSize="17dp" />
             </LinearLayout>
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" 
+            >
 
             <TextView
                 android:id="@+id/tvLocationLabel"
@@ -147,6 +149,7 @@
             android:paddingTop="10dp"
             android:text="RSVP Count:"
             android:textColor="@color/yellow2"
+            android:visibility="invisible"
             android:textSize="20dp" />
 
         <ListView
@@ -160,12 +163,25 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/box"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/ivIconID"
         android:layout_centerHorizontal="true"
         android:background="#cccccc"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:paddingLeft="10dp"/>
 
+    
+    <Button
+        android:id="@+id/editButton"
+        android:text="Edit"
+        android:layout_below="@id/dateTimeRSVP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor ="@color/WHITE"
+        android:layout_marginLeft="20dp"
+        android:visibility="invisible" 
+        android:paddingRight="10dp" />
 </RelativeLayout>
+
+
