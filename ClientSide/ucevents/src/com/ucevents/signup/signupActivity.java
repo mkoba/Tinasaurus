@@ -144,7 +144,7 @@ public class signupActivity extends LogoutMenuActivity{
 			public void onClick(View v) {
 				if(((CheckBox) v).isChecked()) {
 					Toast.makeText(signupActivity.this, "Sport", Toast.LENGTH_SHORT).show();
-					interests.set(4,"sport");
+					interests.set(4,"sports");
 				}
 				else {
 					interests.set(4, "false");

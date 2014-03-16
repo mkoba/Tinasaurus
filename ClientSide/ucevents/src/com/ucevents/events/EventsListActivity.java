@@ -184,7 +184,11 @@ public class EventsListActivity extends MenuActivity{
 						for (int j = 0; j < json_attendees.length(); j++){
 							attendees[j] = json_attendees.getString(j);
 						}
-						eventList.add(new Events(event.getString("name"), event.getString("name").substring(event.getString("name").indexOf("_") + 1),
+						String eventName = event.getString("name").substring(event.getString("name").indexOf("_") + 1);
+						while(eventName.contains("_")){
+							eventName = eventName.substring(eventName.indexOf("_")+1);
+						}
+						eventList.add(new Events(event.getString("name"), eventName,
 								event.getInt("hour")*100+event.getInt("min"), event.getString("location"),event.getInt("month"),event.getInt("date"),
 								event.getInt("year"), event.getString("description"), event.getString("host"), iconid, attendees, event.getBoolean("attending"), categoryList));
 					}
