@@ -15,7 +15,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.android.ucevents.R;
+import com.android.ucevents.UCEvents_App;
 import com.android.ucevents.R.layout;
+import com.facebook.widget.ProfilePictureView;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.ucevents.login.loginActivity;
 import com.ucevents.menu.LogoutMenuActivity;
@@ -50,6 +52,9 @@ public class signupActivity extends LogoutMenuActivity{
 	private CheckBox cbStudy;
 	private CheckBox cbOther;
 	private StringBuilder userInfo = new StringBuilder("");
+	private ProfilePictureView profilePictureView;
+	private String useremail;
+	private TextView tvEmail;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,9 +64,18 @@ public class signupActivity extends LogoutMenuActivity{
 		firstname = b.getString("firstname");
 		lastname = b.getString("lastname");
 		email = b.getString("email");
-		userInfoTextView = (TextView) findViewById(R.id.userInfoTextView);
-		userInfoTextView.setText(buildUserInfoDisplay());
-
+		userInfoTextView = (TextView) findViewById(R.id.f_name);
+		userInfoTextView.setText(firstname + " " + lastname);
+		
+		// Find the user's profile picture custom view
+		profilePictureView = (ProfilePictureView) findViewById(R.id.selection_profile_pic);
+		profilePictureView.setCropped(true);
+		UCEvents_App appState = ((UCEvents_App)getApplicationContext());	
+		useremail = appState.getUserId();
+		tvEmail = (TextView) findViewById(R.id.email);
+		tvEmail.setText(useremail);
+		profilePictureView.setProfileId(appState.getUserFbId());
+		
 		//initialize interests array
 		for(int i = 0; i < 7; i++) {
 			interests.add("false");
