@@ -77,7 +77,9 @@ public class AddEvent extends MenuActivity{
 		day = ((DatePicker)findViewById(R.id.datePicker1)).getDayOfMonth();
 		year = ((DatePicker)findViewById(R.id.datePicker1)).getYear();
 		categories = new ArrayList<String>();
+		
 		if (((CheckBox)findViewById(R.id.career_event)).isChecked()){
+			System.out.println("hmm, should perhaps get through this");
 			categories.add("career");
 		}
 		if (((CheckBox)findViewById(R.id.food_event)).isChecked()){
