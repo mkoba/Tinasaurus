@@ -95,6 +95,9 @@ public class AddEvent extends MenuActivity{
 		if (((CheckBox)findViewById(R.id.other_event)).isChecked()){
 			categories.add("other");
 		}
+		if (((CheckBox)findViewById(R.id.social_event)).isChecked()){
+			categories.add("social");
+		}
 		
 		//Combining each category into a single string
 		String concatString = "";
