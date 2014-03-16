@@ -103,7 +103,7 @@ public class ScheduleActivity extends MenuActivity {
 			// Date:
 			TextView dateText = (TextView) itemView.findViewById(R.id.item_txtDate);
 
-			dateText.setText(""+monthString(currEvent.getMonth()) + " " + currEvent.getDate() + " " + currEvent.getYear());
+			dateText.setText(currEvent.getEventDate());
 
 
 			// Location:
