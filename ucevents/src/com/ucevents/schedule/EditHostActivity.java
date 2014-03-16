@@ -26,8 +26,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -39,12 +37,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.ucevents.R;
 import com.android.ucevents.UCEvents_App;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.ucevents.events.Events;
+import com.ucevents.events.IndividualEventsActivity;
 import com.ucevents.menu.MenuActivity;
 import com.ucevents.signup.signupActivity;
 
@@ -62,12 +63,14 @@ public class EditHostActivity extends MenuActivity {
 	private CheckBox cbSport;
 	private CheckBox cbStudy;
 	private CheckBox cbOther;
+	TextView tvName;
+	ImageView ivIconID;
 	
 	private TextView eventName;
 	private TimePicker eventTime;
-	private TextView eventLocation;
+	private EditText eventLocation;
 	private DatePicker eventDate;
-	private TextView eventDescription;
+	private EditText eventDescription;
 
 	//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
    // int month, int day, int year, String description, String name, String ucsd_email)
@@ -90,7 +93,7 @@ public class EditHostActivity extends MenuActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hostedit);
 
-		eventName = (EditText) findViewById(R.id.event_name);	
+		eventName = (TextView) findViewById(R.id.tvName);	
 		eventTime = (TimePicker) findViewById(R.id.eventTime);
 		eventDate = (DatePicker) findViewById(R.id.datePicker1);
 		eventLocation = (EditText) findViewById(R.id.location);
@@ -123,7 +126,8 @@ public class EditHostActivity extends MenuActivity {
 		catch(NullPointerException e2){
 			e2.printStackTrace();
 		}
-				
+		
+		addListenerOnButton();
 	}
 /*
 	//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
@@ -247,6 +251,24 @@ public class EditHostActivity extends MenuActivity {
 		sendPostReqAsyncTask.execute();
 		Log.d("HERE", "AFTER CALL TO EXECUTE");
 		return;
+=======
+		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
+		email = appState.getUserId();
+
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_hostedit);
+		Bundle b = this.getIntent().getExtras();
+
+		// grab event clicked from bundle
+		Events chosenEvent = b.getParcelable("chosenEvent");
+		Log.d("NAME", "" + chosenEvent.getName());
+		tvName = (TextView) findViewById(R.id.tvName);
+		tvName.setText(chosenEvent.getName());
+		ivIconID = (ImageView) findViewById(R.id.ivIconID);
+		ivIconID.setImageResource(chosenEvent.getIconid());
+
+		
+>>>>>>> 6d51d5e9b9a321570f8727511c929197bfa2eebe
 	}
 */	
 	/* 		public void updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
@@ -397,45 +419,98 @@ public class EditHostActivity extends MenuActivity {
 		
 	}
 	private void getInput(){
+		System.out.println("SUP DOG");
+		System.out.println("SUP DOG");
+		System.out.println("SUP DOG");
+		System.out.println("SUP DOG");
+		System.out.println("SUP DOG");
+
 		UCEvents_App appState = ((UCEvents_App)getApplicationContext());
+		System.out.println(appState.toString());
+
 		host = appState.getUserId();
-		name = host + "_" + ((EditText)findViewById(R.id.event_name)).getText().toString();
+		System.out.println("host is " + host);
+
+		System.out.println(eventName.getText().toString());
+		name = host + "_" + (eventName.toString());
+		System.out.println("2");
+
 		location = ((EditText)findViewById(R.id.location)).getText().toString();
+		System.out.println("3 " + location.toString());
+
 		description = ((EditText)findViewById(R.id.description)).getText().toString();
+		System.out.println("4");
+
 		minute = ((TimePicker)findViewById(R.id.eventTime)).getCurrentMinute();
+		System.out.println("5");
+
 		hour = ((TimePicker)findViewById(R.id.eventTime)).getCurrentHour();
+		System.out.println("6");
+
 		Log.d("HOUR", "" + hour);
-		//TODO: remove pm as parameter for DB_Access methods. Apparently hour is in 24hr format
-		pm = false;
+		System.out.println("7");
+
 		month = ((DatePicker)findViewById(R.id.datePicker1)).getMonth();
+		System.out.println("8");
+
 		day = ((DatePicker)findViewById(R.id.datePicker1)).getDayOfMonth();
+		System.out.println("9");
+
 		year = ((DatePicker)findViewById(R.id.datePicker1)).getYear();
+		System.out.println("10");
+
 		categories = new ArrayList<String>();
+
+		System.out.println("waetwatwatatwawteataw");
+		System.out.println("waetwatwatatwawteataw");
+		System.out.println("waetwatwatatwawteataw");
+
 		if (((CheckBox)findViewById(R.id.career_event)).isChecked()){
+			System.out.println("career");
+
 			categories.add("career");
 		}
 		if (((CheckBox)findViewById(R.id.food_event)).isChecked()){
+			System.out.println("food");
+
 			categories.add("food");
 		}
 		if (((CheckBox)findViewById(R.id.organization_event)).isChecked()){
+			System.out.println("org");
+
 			categories.add("organization");
 		}
 		if (((CheckBox)findViewById(R.id.sport_event)).isChecked()){
+			System.out.println("sport");
+
 			categories.add("sport");
 		}	
 		if (((CheckBox)findViewById(R.id.study_event)).isChecked()){
+			System.out.println("study");
+
 			categories.add("study");
 		}
 		if (((CheckBox)findViewById(R.id.other_event)).isChecked()){
+			System.out.println("other");
+
 			categories.add("other");
 		}
 		if (((CheckBox)findViewById(R.id.social_event)).isChecked()){
+			System.out.println("social");
+
 			categories.add("social");
 		}
-		
+		System.out.println("test123123123");
+		System.out.println("test123123123");
+		System.out.println("test123123123");
+
 		//Combining each category into a single string
 		String concatString = "";
+		System.out.println("asdfsafsaftest123123123");
+
 		concatString += categories.get(0);
+		System.out.println("hell no noonono");
+
 		for(int i = 1; i < categories.size(); i++) {
 		String tempStr = "+" + categories.get(i);
 			concatString += tempStr;
@@ -444,27 +519,33 @@ public class EditHostActivity extends MenuActivity {
 		//updateEvents(String location, int hour, int minute, String[] interests, boolean pm,
    //     int month, int day, int year, String description, String name, String ucsd_email)
 		Boolean pm = false;
-		Log.d("hour is...", ""+hour);
-		Log.d("hour is...", ""+hour);
-		Log.d("hour is...", ""+hour);
-		Log.d("hour is...", ""+hour);
-		Log.d("hour is...", ""+hour);
+		pm = false;
+		System.out.println(" i sing the body electric ");
+		System.out.println(" i sing the body electric ");
+		System.out.println(" i sing the body electric ");
+		System.out.println(" i sing the body electric ");
+		System.out.println(" i sing the body electric ");
 
 		//sendPostRequest(location, Integer.toString(hour), Integer.toString(minute), "false", concatString, pm.toString(), Integer.toString(month), Integer.toString(day), Integer.toString(year), description, name, host);
 	}
+
 	public void addListenerOnButton() {
-		pDone = (Button) findViewById(R.id.done);
-		pDone.setOnClickListener(new OnClickListener() {
+		Button updateEvent;
+		updateEvent = (Button) findViewById(R.id.Done);
+		updateEvent.setOnClickListener(new OnClickListener() {
 			 
 			//@Override
 			public void onClick(View arg0) {
-				Log.d("umm", "this is a click");
-				Log.d("umm", "this is a click");
-				Log.d("umm", "this is a click");
-				Log.d("umm", "this is a click");
-				Log.d("umm", "this is a click");
+					Log.d("get", "in here");
+				try{
+					getInput();
+				}
+				catch(NullPointerException e){
+					Log.d("npe", "yeah not goot");
+					Log.d("npe", "yeah not goot");
+					Log.d("npe", "yeah not goot");
 
-				getInput();
+				}
 				//grab list of interest to add to db
 			   	 for(int i = 0; i < interests.size(); i++) {
 					 if(!interests.get(i).equals("false")) {

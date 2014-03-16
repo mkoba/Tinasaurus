@@ -124,6 +124,9 @@ public class IndividualScheduleActivity extends MenuActivity {
 
 		cbRSVP = (CheckBox) findViewById(R.id.checkBoxRSVP);
 		cbRSVP.setChecked(true);
+		if(chosenEvent.getHostId().equals(userid)){
+			cbRSVP.setEnabled(false);
+		}
 		
 		//bDecline = (Button) findViewById(R.id.decline);
 			

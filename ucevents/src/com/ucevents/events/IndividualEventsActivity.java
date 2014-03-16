@@ -56,6 +56,7 @@ public class IndividualEventsActivity extends MenuActivity {
 	Button edit;
 	Events chosenEvent;
 	ListView attList; 
+	String hostid;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,7 @@ public class IndividualEventsActivity extends MenuActivity {
 		tvDescription.setText(chosenEvent.getDescription());
 
 		eventid = chosenEvent.getEventid();
+		hostid = chosenEvent.getHostId();
 
 		userid = ((UCEvents_App)getApplicationContext()).getUserId();
 		tvRSVPCount = (TextView) findViewById(R.id.textRSVPCount);
@@ -356,6 +358,9 @@ public class IndividualEventsActivity extends MenuActivity {
 					Log.d("SUCCESS", result);
 					if (result.equals("true")){
 						cbRSVP.setChecked(true);
+						if(hostid.equals(userid)){
+							cbRSVP.setEnabled(false);
+						}
 						/*cbRSVP.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View v) {

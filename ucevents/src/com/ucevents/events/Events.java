@@ -113,8 +113,11 @@ public class Events implements Comparable<Events>, Parcelable {
 	public String getDescription() {
 		return description;
 	}
-	public String getHostid() {
+	public String getHost() {
 		return host;
+	}
+	public String getHostId(){
+		return eventid.substring(0, eventid.indexOf("_"));
 	}
 
 	public int getIconid() {
