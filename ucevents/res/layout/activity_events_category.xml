@@ -4,18 +4,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
 	tools:context=".DeviceFragment"
-    android:background="@drawable/blue_solid" >
-
-    <TextView
-        android:id="@+id/events2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textColor ="@color/WHITE"
-        android:text="@string/events"/>
+    android:background="@drawable/box" >
 
     
-
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"

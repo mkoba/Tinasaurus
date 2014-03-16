@@ -15,6 +15,8 @@ public class Events implements Comparable<Events>, Parcelable {
 	private int time;
 	private String location;
 	private int month;
+	private int hours;
+	private int minutes;
 	private int date;
 	private int year;
 	private String description;
@@ -50,6 +52,12 @@ public class Events implements Comparable<Events>, Parcelable {
 	public int getTime() {
 		return time;
 	}
+	public int getHour(){
+		return hours;
+	}
+	public int getMinutes(){
+		return minutes;
+	}
 	public String getTimeDisplay(){
 		int hour = time/100;
 		int min = time%100;
@@ -82,6 +90,9 @@ public class Events implements Comparable<Events>, Parcelable {
 		else{
 			timeDisp += "am";
 		}
+		hours = hour;
+		minutes = min;
+
 		return timeDisp;
 	}
 	public String getLocation() {

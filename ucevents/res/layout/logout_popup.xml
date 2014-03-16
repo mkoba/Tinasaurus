@@ -4,7 +4,7 @@
    android:id="@+id/popup"
    android:gravity="center"
    android:layout_height="match_parent"
-    android:background="@drawable/blue_solid"
+    android:background="@drawable/box"
    android:orientation="vertical" >
  
 <TextView
@@ -27,17 +27,19 @@
    android:id="@+id/logout"
    android:layout_marginTop="10dp"
    android:layout_gravity="center_horizontal"
-   android:layout_width="wrap_content"
+   android:layout_width="match_parent"
    android:layout_height="wrap_content"
    android:textColor ="@color/WHITE"
+   android:background="@drawable/darkbar"
    android:text="Logout" />
 
 <Button
    android:id="@+id/cancel"
    android:layout_marginTop="10dp"
    android:layout_gravity="center_horizontal"
-   android:layout_width="wrap_content"
+   android:layout_width="match_parent"
    android:layout_height="wrap_content"
+   android:background="@drawable/darkbar"
    android:textColor ="@color/WHITE"
    android:text="Cancel" />
  
