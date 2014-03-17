@@ -6,7 +6,7 @@
 	erikgallegos_886@hotmail.com
 	mynamelsfrank@yahoo.com
 */
-
+/*
 INSERT INTO events (name, location, hour, min, month, date, year, description, host, public) VALUES ('erikgallegos_886@hotmail.com_Sun God Festival', 'Rimac Field', 17, 30, 5, 17, 2014, 'Join us at the festival of gods!', 'erikgallegos_886@hotmail.com', true);
 INSERT INTO events (name, location, hour, min, month, date, year, description, host, public) VALUES ('erikgallegos_886@hotmail.com_Game Night!', 'International Center', 18, 00, 3, 25, 2014, 'GAME ON!!!', 'erikgallegos_886@hotmail.com', true);
 INSERT INTO events (name, location, hour, min, month, date, year, description, host, public) VALUES ('erikgallegos_886@hotmail.com_Free Desserts!', 'MOM', 9, 30, 3, 20, 2014, 'Stressed is Desserts Backwards!', 'erikgallegos_886@hotmail.com', true);
@@ -122,7 +122,9 @@ INSERT INTO attendees (event, attendee) VALUES ('mynamelsfrank@yahoo.com_Microso
 INSERT INTO attendees (event, attendee) VALUES ('mynamelsfrank@yahoo.com_Open Mic Night', 'mynamelsfrank@yahoo.com');
 INSERT INTO attendees (event, attendee) VALUES ('mynamelsfrank@yahoo.com_Taco Tuesday!', 'mynamelsfrank@yahoo.com');
 INSERT INTO attendees (event, attendee) VALUES ('snapdragon514@yahoo.com_CSE Interview Practice', 'snapdragon514@yahoo.com');
-INSERT INTO attendees (event, attendee) VALUES ('snapdragon514@yahoo.com_HKN Study Inn', 'snapdragon514@yahoo.com');
+INSERT INTO attendees (event, attendee) VALUES ('snapdragon514@yahoo.com_HKN Study Inn', 'snapdragon514@yahoo.com');*/
+INSERT INTO attendees (event, attendee) VALUES ('snapdragon514@yahoo.com_CSE 190 Presentations', 'snapdragon514@yahoo.com');
+INSERT INTO attendees (event, attendee) VALUES ('lcam@ucsd.edu_Casino Night', 'lcam@ucsd.edu');
 
 SELECT * FROM user_information;
 SELECT * FROM interests;
